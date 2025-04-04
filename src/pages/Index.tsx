@@ -1,4 +1,3 @@
-
 import Layout from "@/components/Layout";
 import Hero from "@/components/Hero";
 import ServiceCard from "@/components/ServiceCard";
@@ -6,7 +5,7 @@ import StatsCounter from "@/components/StatsCounter";
 import Accordion from "@/components/Accordion";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { Check, ChevronRight, Users, Award, Tool } from "lucide-react";
+import { Check, ChevronRight, Users, Award, Wrench } from "lucide-react";
 
 const HomePage = () => {
   const services = [
@@ -169,7 +168,7 @@ const HomePage = () => {
             
             <div className="bg-white p-8 rounded-lg shadow-sm text-center">
               <div className="bg-theme-teal/10 w-16 h-16 flex items-center justify-center rounded-full mx-auto mb-6">
-                <Tool className="h-8 w-8 text-theme-teal" />
+                <Wrench className="h-8 w-8 text-theme-teal" />
               </div>
               <h3 className="text-xl font-bold text-theme-blue mb-3">Ücretsiz Teknik Keşif</h3>
               <p className="text-gray-600">
