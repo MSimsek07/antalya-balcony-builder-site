@@ -1,3 +1,6 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -13,10 +16,10 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 222.2 47.4% 11.2%;
+    --primary: 221 64% 19%;
     --primary-foreground: 210 40% 98%;
 
-    --secondary: 210 40% 96.1%;
+    --secondary: 195 95% 43%;
     --secondary-foreground: 222.2 47.4% 11.2%;
 
     --muted: 210 40% 96.1%;
@@ -35,19 +38,12 @@
     --radius: 0.5rem;
 
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
@@ -97,5 +93,32 @@
 
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer components {
+  .container-custom {
+    @apply container mx-auto px-4 md:px-8;
+  }
+  
+  .btn-primary {
+    @apply bg-theme-teal hover:bg-theme-teal/90 text-white px-6 py-2 rounded-md font-medium transition-colors;
+  }
+  
+  .btn-outline {
+    @apply border border-theme-teal text-theme-teal hover:bg-theme-teal hover:text-white px-6 py-2 rounded-md font-medium transition-colors;
+  }
+  
+  .section-title {
+    @apply text-2xl md:text-3xl font-bold mb-8 text-theme-blue relative;
+  }
+  
+  .section-title::after {
+    content: '';
+    @apply block absolute bottom-0 left-0 w-16 h-1 bg-theme-teal mt-2;
+  }
+  
+  .section-padding {
+    @apply py-16 md:py-24;
   }
 }
