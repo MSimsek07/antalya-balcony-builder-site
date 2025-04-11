@@ -6,6 +6,15 @@ import Accordion from "@/components/Accordion";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Check, ChevronRight, Users, Award, Wrench } from "lucide-react";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import { Card } from "@/components/ui/card";
+import Autoplay from "embla-carousel-autoplay";
 
 const HomePage = () => {
   const services = [
@@ -56,7 +65,58 @@ const HomePage = () => {
         buttonText="İletişime Geçin"
         buttonLink="/contact"
       />
-    
+
+      {/* Image Carousel Section */}
+      <section className="py-16">
+        <div className="container-custom">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-theme-blue mb-4">Projelerimizden Örnekler</h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Tamamladığımız başarılı projeleri ve müşterilerimize sunduğumuz kaliteli hizmetleri keşfedin
+            </p>
+          </div>
+
+          <Carousel
+            opts={{
+              align: "start",
+              loop: true,
+            }}
+            plugins={[
+              Autoplay({
+                delay: 5000,
+              }),
+            ]}
+            className="w-full"
+          >
+            <CarouselContent>
+              {[
+                "/carousel_images/2022-03-22 (1).jpg",
+                "/carousel_images/2022-03-22 (2).jpg",
+                "/carousel_images/2022-03-22.jpg",
+                "/carousel_images/2025-01-28 (1).jpg",
+                "/carousel_images/2025-01-28.jpg"
+              ].map((src, index) => (
+                <CarouselItem key={index}>
+                  <Card className="overflow-hidden rounded-lg">
+                    <div className="relative aspect-[16/9]">
+                      <img
+                        src={src}
+                        alt={`Carousel Image ${index + 1}`}
+                        className="object-cover w-full h-full"
+                      />
+                    </div>
+                  </Card>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <div className="hidden md:block">
+              <CarouselPrevious className="absolute left-4 top-1/2 -translate-y-1/2" />
+              <CarouselNext className="absolute right-4 top-1/2 -translate-y-1/2" />
+            </div>
+          </Carousel>
+        </div>
+      </section>
+
       {/* Company Profile Section */}
       <section className="py-16 md:py-24 bg-white">
         <div className="container-custom">
