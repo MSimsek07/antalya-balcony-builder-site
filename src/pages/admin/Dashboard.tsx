@@ -4,7 +4,6 @@ import { useNavigate, Routes, Route } from "react-router-dom";
 import { 
   Home, 
   Package, 
-  MessageSquare, 
   Settings,
   Image, 
   LogOut,
@@ -14,8 +13,6 @@ import {
   Lock
 } from "lucide-react";
 import AdminHome from "./Home";
-import AdminMessages from "./Messages";
-import AdminProjects from "./Projects";
 import AdminServices from "./Services";
 import AdminGallery from "./Gallery";
 import AdminProfileSettings from "./settings/ProfileSettings";
@@ -35,10 +32,7 @@ import {
   SidebarGroup,
   SidebarGroupLabel,
   SidebarGroupContent,
-  SidebarMenuBadge,
-  SidebarMenuSub,
-  SidebarMenuSubButton,
-  SidebarMenuSubItem
+  SidebarMenuBadge
 } from "@/components/ui/sidebar";
 
 interface AdminDashboardProps {
@@ -60,10 +54,8 @@ const AdminDashboard = ({ onLogout }: AdminDashboardProps) => {
 
   const mainNavItems = [
     { name: "Panel", icon: Home, path: "/admin" },
-    { name: "Projeler", icon: Package, path: "/admin/projects" },
     { name: "Hizmetler", icon: Package, path: "/admin/services" },
     { name: "Galeri", icon: Image, path: "/admin/gallery" },
-    { name: "Mesajlar", icon: MessageSquare, path: "/admin/messages", badge: "5" },
   ];
 
   const settingsNavItems = [
@@ -94,11 +86,6 @@ const AdminDashboard = ({ onLogout }: AdminDashboardProps) => {
                       >
                         <item.icon className="h-5 w-5" />
                         <span>{item.name}</span>
-                        {item.badge && (
-                          <SidebarMenuBadge className="bg-theme-teal text-white">
-                            {item.badge}
-                          </SidebarMenuBadge>
-                        )}
                       </SidebarMenuButton>
                     </SidebarMenuItem>
                   ))}
@@ -142,10 +129,8 @@ const AdminDashboard = ({ onLogout }: AdminDashboardProps) => {
           <main className="p-6">
             <Routes>
               <Route path="/" element={<AdminHome />} />
-              <Route path="/projects" element={<AdminProjects />} />
               <Route path="/services" element={<AdminServices />} />
               <Route path="/gallery" element={<AdminGallery />} />
-              <Route path="/messages" element={<AdminMessages />} />
               <Route path="/settings/profile" element={<AdminProfileSettings />} />
               <Route path="/settings/security" element={<AdminSecuritySettings />} />
               <Route path="/settings/company" element={<AdminCompanySettings />} />
