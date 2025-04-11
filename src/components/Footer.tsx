@@ -33,10 +33,7 @@ const Footer = () => {
               </a>
               <a href="#" className="text-gray-300 hover:text-theme-teal transition-colors">
                 <Instagram size={20} />
-              </a>
-              <a href="#" className="text-gray-300 hover:text-theme-teal transition-colors">
-                <Linkedin size={20} />
-              </a>
+              </a>              
             </div>
           </div>
 
@@ -121,13 +118,13 @@ const Footer = () => {
               <li className="flex items-start">
                 <MapPin className="mr-2 h-5 w-5 text-theme-teal shrink-0 mt-0.5" />
                 <span className="text-gray-300">
-                  Altınkale Mahallesi, 1. Cadde, No:25, Döşemealtı, Antalya
+                  Yeni mahalle 2609 sk no 26 daire 3 ışkın apartmanı, 07000 Kepez/Antalya
                 </span>
               </li>
               <li className="flex items-center">
                 <Phone className="mr-2 h-5 w-5 text-theme-teal" />
                 <a href="tel:+902422294567" className="text-gray-300 hover:text-theme-teal transition-colors">
-                  +90 242 229 45 67
+                +90 545 404 34 62
                 </a>
               </li>
               <li className="flex items-center">

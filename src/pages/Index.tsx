@@ -56,7 +56,7 @@ const HomePage = () => {
         buttonText="İletişime Geçin"
         buttonLink="/contact"
       />
-
+    
       {/* Company Profile Section */}
       <section className="py-16 md:py-24 bg-white">
         <div className="container-custom">
@@ -247,7 +247,7 @@ const HomePage = () => {
               Cam balkon, PVC pencere ve diğer hizmetlerimiz hakkında detaylı bilgi almak veya ücretsiz keşif için hemen iletişime geçin.
             </p>
             <a 
-              href="https://api.whatsapp.com/send?phone=905555555555" 
+              href="https://api.whatsapp.com/send?phone=905454043462" 
               target="_blank" 
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-md bg-green-500 hover:bg-green-600 px-8 py-2.5 text-lg font-medium text-white transition-colors"

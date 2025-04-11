@@ -2,11 +2,31 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X, ChevronDown } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+
+type Language = 'tr' | 'en';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [currentLang, setCurrentLang] = useState<Language>('tr');
   const location = useLocation();
+
+  const languages = {
+    tr: { name: 'Turkish', flag: '/turkey.png' },
+    en: { name: 'English', flag: '/england.png' }
+  };
+
+  const handleLanguageChange = (lang: Language) => {
+    setCurrentLang(lang);
+    // Here you would typically handle language change in your app
+    // For example, using i18n or a context
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -79,7 +99,7 @@ const Navbar = () => {
 
           <div className="flex items-center space-x-2">
             <a 
-              href="https://api.whatsapp.com/send?phone=905555555555" 
+              href="https://api.whatsapp.com/send?phone=905454043462" 
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-md bg-green-500 hover:bg-green-600 px-4 py-2 text-sm font-medium text-white transition-colors"
@@ -88,15 +108,29 @@ const Navbar = () => {
               WhatsApp
             </a>
             <div className="border-l border-white/20 h-6 mx-2"></div>
-            <div className="flex items-center space-x-2">
-              <Button variant="ghost" className="p-0 h-auto text-white hover:text-theme-teal">
-                TR
-              </Button>
-              <span className="text-white/50">|</span>
-              <Button variant="ghost" className="p-0 h-auto text-white/50 hover:text-theme-teal">
-                EN
-              </Button>
-            </div>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="p-0 h-auto text-white hover:text-theme-teal inline-flex items-center gap-2">
+                  <img src={languages[currentLang].flag} alt={languages[currentLang].name} className="h-5 w-5" />
+                  <span>{languages[currentLang].name}</span>
+                  <ChevronDown className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-36">
+                {Object.entries(languages).map(([code, lang]) => (
+                  <DropdownMenuItem
+                    key={code}
+                    onClick={() => handleLanguageChange(code as Language)}
+                    className={`flex items-center gap-2 ${
+                      currentLang === code ? 'bg-accent' : ''
+                    }`}
+                  >
+                    <img src={lang.flag} alt={lang.name} className="h-5 w-5" />
+                    <span>{lang.name}</span>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </div>
 
@@ -137,7 +171,7 @@ const Navbar = () => {
             </nav>
             <div className="mt-8">
               <a 
-                href="https://api.whatsapp.com/send?phone=905555555555" 
+                href="https://api.whatsapp.com/send?phone=905454043462" 
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 w-full rounded-md bg-green-500 hover:bg-green-600 px-4 py-2 text-sm font-medium text-white transition-colors"
@@ -146,13 +180,33 @@ const Navbar = () => {
                 WhatsApp ile İletişim
               </a>
             </div>
-            <div className="mt-6 flex justify-center space-x-4">
-              <Button variant="ghost" className="text-white hover:text-theme-teal">
-                TR
-              </Button>
-              <Button variant="ghost" className="text-white/50 hover:text-theme-teal">
-                EN
-              </Button>
+            <div className="mt-6 flex justify-center">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" className="text-white hover:text-theme-teal inline-flex items-center gap-2">
+                    <img src={languages[currentLang].flag} alt={languages[currentLang].name} className="h-5 w-5" />
+                    <span>{languages[currentLang].name}</span>
+                    <ChevronDown className="h-4 w-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="center" className="w-36">
+                  {Object.entries(languages).map(([code, lang]) => (
+                    <DropdownMenuItem
+                      key={code}
+                      onClick={() => {
+                        handleLanguageChange(code as Language);
+                        closeMenu();
+                      }}
+                      className={`flex items-center gap-2 ${
+                        currentLang === code ? 'bg-accent' : ''
+                      }`}
+                    >
+                      <img src={lang.flag} alt={lang.name} className="h-5 w-5" />
+                      <span>{lang.name}</span>
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           </div>
         </div>

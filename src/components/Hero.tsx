@@ -37,7 +37,7 @@ const Hero = ({
           </p>
           {buttonText && (
             <a 
-              href="https://api.whatsapp.com/send?phone=905555555555"
+              href="https://api.whatsapp.com/send?phone=905454043462"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-md bg-green-500 hover:bg-green-600 px-8 py-2.5 text-lg font-medium text-white transition-colors"

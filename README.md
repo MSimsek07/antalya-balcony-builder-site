@@ -147,7 +147,7 @@ Katkılarınızı bekliyoruz! Lütfen şunları yapın:
 
 - Website: [cambalkonantalya.com](https://cambalkonantalya.com)
 - Email: [info@cambalkonantalya.com](mailto:info@cambalkonantalya.com)
-- WhatsApp: [+90 555 555 55 55](https://wa.me/905555555555)
+- WhatsApp: [+90 555 555 55 55](https://wa.me/905454043462)
 
 ---
 
