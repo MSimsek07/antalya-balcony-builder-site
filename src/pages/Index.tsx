@@ -246,11 +246,15 @@ const HomePage = () => {
             <p className="text-white/80 max-w-2xl mx-auto mb-8">
               Cam balkon, PVC pencere ve diğer hizmetlerimiz hakkında detaylı bilgi almak veya ücretsiz keşif için hemen iletişime geçin.
             </p>
-            <Link to="/contact">
-              <Button className="bg-theme-teal hover:bg-theme-teal/90 text-white px-8 py-2.5 text-lg">
-                İletişim
-              </Button>
-            </Link>
+            <a 
+              href="https://api.whatsapp.com/send?phone=905555555555" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-md bg-green-500 hover:bg-green-600 px-8 py-2.5 text-lg font-medium text-white transition-colors"
+            >
+              <img src="/whatsapp.png" alt="WhatsApp" className="h-6 w-6" />
+              WhatsApp ile İletişim
+            </a>
           </div>
         </div>
       </section>

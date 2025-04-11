@@ -61,7 +61,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link to="/gallery" className="text-gray-300 hover:text-theme-teal transition-colors">
-                  Galeri
+                  Projeler
                 </Link>
               </li>
               <li>
