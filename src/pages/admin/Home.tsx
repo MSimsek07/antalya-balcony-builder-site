@@ -1,118 +1,98 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { 
-  Users, 
   Package, 
-  MessageSquare, 
-  Calendar, 
+  Image, 
   TrendingUp, 
-  TrendingDown
+  TrendingDown,
+  Eye,
+  Edit
 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 const AdminHome = () => {
+  const navigate = useNavigate();
+  
   // Mock data
   const stats = [
     { 
-      title: "Toplam Proje", 
-      value: 1909, 
+      title: "Toplam Hizmet", 
+      value: 8, 
       icon: Package, 
-      change: "+12%", 
-      trend: "up" 
+      change: "+2", 
+      trend: "up",
+      link: "/admin/services" 
     },
     { 
-      title: "Aktif Projeler", 
-      value: 28, 
-      icon: Calendar, 
-      change: "+4%", 
-      trend: "up" 
-    },
-    { 
-      title: "Yeni Mesajlar", 
-      value: 14, 
-      icon: MessageSquare, 
-      change: "-3%", 
-      trend: "down" 
-    },
-    { 
-      title: "Toplam Müşteri", 
-      value: 4172, 
-      icon: Users, 
-      change: "+8%", 
-      trend: "up" 
+      title: "Galeri Öğeleri", 
+      value: 12, 
+      icon: Image, 
+      change: "+4", 
+      trend: "up",
+      link: "/admin/gallery" 
     },
   ];
 
-  const recentProjects = [
-    { 
-      id: "PRJ-2025-042", 
-      customer: "Mehmet Yılmaz", 
-      service: "Cam Balkon", 
-      status: "In Progress", 
-      date: "03.04.2025", 
-      amount: "4500₺" 
+  const serviceItems = [
+    {
+      id: "1",
+      title: "Cam Balkon",
+      description: "Balkonunuzu dört mevsim kullanılabilir bir alana çeviriyoruz.",
+      views: 452,
+      lastUpdated: "01.04.2025"
     },
-    { 
-      id: "PRJ-2025-041", 
-      customer: "Ayşe Kaya", 
-      service: "PVC Pencere", 
-      status: "Pending", 
-      date: "02.04.2025", 
-      amount: "6200₺" 
+    {
+      id: "2",
+      title: "Isıcamlı PVC Pencere",
+      description: "Yüksek ısı ve ses yalıtımı sağlayan sistemler.",
+      views: 386,
+      lastUpdated: "02.04.2025"
     },
-    { 
-      id: "PRJ-2025-040", 
-      customer: "Ali Demir", 
-      service: "Ofis Bölme", 
-      status: "Completed", 
-      date: "01.04.2025", 
-      amount: "7800₺" 
+    {
+      id: "3",
+      title: "Ofis Cam Bölmesi",
+      description: "Modern ofis alanları için şık ve fonksiyonel çözümler.",
+      views: 247,
+      lastUpdated: "03.04.2025"
     },
-    { 
-      id: "PRJ-2025-039", 
-      customer: "Fatma Şahin", 
-      service: "Sineklik", 
-      status: "Completed", 
-      date: "31.03.2025", 
-      amount: "1200₺" 
-    },
-    { 
-      id: "PRJ-2025-038", 
-      customer: "Hasan Yıldız", 
-      service: "Cam Balkon", 
-      status: "Completed", 
-      date: "30.03.2025", 
-      amount: "3800₺" 
+    {
+      id: "4",
+      title: "Sineklik",
+      description: "Yaz aylarında böceklerden korunmanızı sağlayan sistemler.",
+      views: 183,
+      lastUpdated: "04.04.2025"
     },
   ];
 
-  const recentMessages = [
+  const galleryItems = [
     {
-      id: "MSG-2025-068",
-      name: "Murat Acar",
-      subject: "Fiyat Teklifi",
-      date: "04.04.2025",
-      read: false
+      id: "1",
+      category: "Cam Balkon",
+      image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c",
+      views: 225,
+      lastUpdated: "02.04.2025"
     },
     {
-      id: "MSG-2025-067",
-      name: "Zeynep Çelik",
-      subject: "Proje Bilgisi",
-      date: "03.04.2025",
-      read: false
+      id: "2",
+      category: "PVC Pencere",
+      image: "https://images.unsplash.com/photo-1600573472556-e636c2acda88",
+      views: 198,
+      lastUpdated: "03.04.2025"
     },
     {
-      id: "MSG-2025-066",
-      name: "Oğuz Şen",
-      subject: "Montaj Talebi",
-      date: "03.04.2025",
-      read: true
+      id: "3",
+      category: "Ofis Bölme",
+      image: "https://images.unsplash.com/photo-1527853787696-f7be74f2e39a",
+      views: 163,
+      lastUpdated: "03.04.2025"
     },
     {
-      id: "MSG-2025-065",
-      name: "Selin Koç",
-      subject: "Garanti Koşulları",
-      date: "02.04.2025",
-      read: true
+      id: "4",
+      category: "Cam Balkon",
+      image: "https://images.unsplash.com/photo-1600607686527-6fb886090705",
+      views: 142,
+      lastUpdated: "04.04.2025"
     },
   ];
 
@@ -124,7 +104,7 @@ const AdminHome = () => {
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {stats.map((stat, index) => (
           <Card key={index} className="shadow-sm">
             <CardHeader className="pb-2">
@@ -151,54 +131,70 @@ const AdminHome = () => {
                   {stat.change} son 30 günde
                 </span>
               </div>
+              <div className="mt-4">
+                <Button 
+                  variant="outline" 
+                  className="w-full" 
+                  onClick={() => navigate(stat.link)}
+                >
+                  Yönet
+                </Button>
+              </div>
             </CardContent>
           </Card>
         ))}
       </div>
 
-      {/* Recent Projects */}
+      {/* Popular Services */}
       <Card className="shadow-sm">
         <CardHeader>
-          <CardTitle className="text-xl">Son Projeler</CardTitle>
+          <div className="flex justify-between items-center">
+            <CardTitle className="text-xl">Popüler Hizmetler</CardTitle>
+            <Button 
+              variant="outline" 
+              size="sm"
+              onClick={() => navigate("/admin/services")}
+            >
+              Tümünü Gör
+            </Button>
+          </div>
         </CardHeader>
         <CardContent>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b">
-                  <th className="px-4 py-3 text-left font-medium text-gray-500">ID</th>
-                  <th className="px-4 py-3 text-left font-medium text-gray-500">Müşteri</th>
                   <th className="px-4 py-3 text-left font-medium text-gray-500">Hizmet</th>
-                  <th className="px-4 py-3 text-left font-medium text-gray-500">Durum</th>
-                  <th className="px-4 py-3 text-left font-medium text-gray-500">Tarih</th>
-                  <th className="px-4 py-3 text-right font-medium text-gray-500">Tutar</th>
+                  <th className="px-4 py-3 text-left font-medium text-gray-500">Görüntülenme</th>
+                  <th className="px-4 py-3 text-left font-medium text-gray-500">Son Güncelleme</th>
+                  <th className="px-4 py-3 text-right font-medium text-gray-500">İşlem</th>
                 </tr>
               </thead>
               <tbody>
-                {recentProjects.map((project, index) => (
-                  <tr key={index} className={index !== recentProjects.length - 1 ? "border-b" : ""}>
-                    <td className="px-4 py-3">{project.id}</td>
-                    <td className="px-4 py-3">{project.customer}</td>
-                    <td className="px-4 py-3">{project.service}</td>
+                {serviceItems.map((item, index) => (
+                  <tr key={index} className={index !== serviceItems.length - 1 ? "border-b" : ""}>
                     <td className="px-4 py-3">
-                      <span 
-                        className={`px-2 py-1 rounded-full text-xs ${
-                          project.status === "Completed" 
-                            ? "bg-green-100 text-green-800" 
-                            : project.status === "In Progress"
-                            ? "bg-blue-100 text-blue-800"
-                            : "bg-yellow-100 text-yellow-800"
-                        }`}
-                      >
-                        {project.status === "Completed" 
-                          ? "Tamamlandı" 
-                          : project.status === "In Progress"
-                          ? "Devam Ediyor"
-                          : "Beklemede"}
-                      </span>
+                      <div>
+                        <div className="font-medium">{item.title}</div>
+                        <div className="text-xs text-gray-500 mt-1">{item.description}</div>
+                      </div>
                     </td>
-                    <td className="px-4 py-3">{project.date}</td>
-                    <td className="px-4 py-3 text-right font-medium">{project.amount}</td>
+                    <td className="px-4 py-3">
+                      <div className="flex items-center">
+                        <Eye className="h-4 w-4 text-gray-400 mr-2" />
+                        {item.views}
+                      </div>
+                    </td>
+                    <td className="px-4 py-3">{item.lastUpdated}</td>
+                    <td className="px-4 py-3 text-right">
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={() => navigate("/admin/services")}
+                      >
+                        <Edit className="h-4 w-4" />
+                      </Button>
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -207,23 +203,51 @@ const AdminHome = () => {
         </CardContent>
       </Card>
 
-      {/* Recent Messages */}
+      {/* Popular Gallery Items */}
       <Card className="shadow-sm">
         <CardHeader>
-          <CardTitle className="text-xl">Son Mesajlar</CardTitle>
+          <div className="flex justify-between items-center">
+            <CardTitle className="text-xl">Popüler Galeri Öğeleri</CardTitle>
+            <Button 
+              variant="outline" 
+              size="sm"
+              onClick={() => navigate("/admin/gallery")}
+            >
+              Tümünü Gör
+            </Button>
+          </div>
         </CardHeader>
         <CardContent>
-          <div className="space-y-4">
-            {recentMessages.map((message, index) => (
-              <div key={index} className="flex items-center justify-between p-3 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors">
-                <div className="flex items-center space-x-3">
-                  <div className={`w-2 h-2 rounded-full ${message.read ? "bg-gray-300" : "bg-theme-teal"}`} />
-                  <div>
-                    <div className="font-medium">{message.name}</div>
-                    <div className="text-sm text-gray-500">{message.subject}</div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            {galleryItems.map((item, index) => (
+              <div key={index} className="relative group">
+                <div className="aspect-square rounded-md overflow-hidden bg-gray-100">
+                  <img 
+                    src={item.image} 
+                    alt={item.category}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 transition-all duration-300 flex items-center justify-center">
+                  <Button 
+                    variant="ghost" 
+                    size="icon"
+                    className="opacity-0 group-hover:opacity-100 text-white bg-black bg-opacity-50 hover:bg-opacity-70"
+                    onClick={() => navigate("/admin/gallery")}
+                  >
+                    <Edit className="h-4 w-4" />
+                  </Button>
+                </div>
+                <div className="mt-2">
+                  <div className="font-medium text-sm">{item.category}</div>
+                  <div className="flex items-center justify-between text-xs text-gray-500 mt-1">
+                    <div className="flex items-center">
+                      <Eye className="h-3 w-3 mr-1" />
+                      {item.views}
+                    </div>
+                    <div>{item.lastUpdated}</div>
                   </div>
                 </div>
-                <div className="text-sm text-gray-500">{message.date}</div>
               </div>
             ))}
           </div>
