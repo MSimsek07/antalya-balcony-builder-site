@@ -1,73 +1,154 @@
-# Welcome to your Lovable project
+# 🏗️ Cam Balkon Antalya Website
 
-## Project info
+[![React](https://img.shields.io/badge/React-18.x-blue.svg)](https://reactjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue.svg)](https://www.typescriptlang.org/)
+[![Vite](https://img.shields.io/badge/Vite-5.x-646CFF.svg)](https://vitejs.dev/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.x-38B2AC.svg)](https://tailwindcss.com/)
+[![shadcn/ui](https://img.shields.io/badge/shadcn/ui-Latest-black.svg)](https://ui.shadcn.com/)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-**URL**: https://lovable.dev/projects/c7141fcb-3861-4349-985b-ca328c966189
+Modern, profesyonel ve kullanıcı dostu bir cam balkon şirketi web sitesi.
 
-## How can I edit this code?
+![Website Preview](public/placeholder.svg)
 
-There are several ways of editing your application.
+## 📚 İçindekiler
 
-**Use Lovable**
+- [🚀 Özellikler](#-özellikler)
+- [⚙️ Teknolojiler](#️-teknolojiler)
+- [🛠️ Kurulum](#️-kurulum)
+- [👩‍💻 Geliştirme](#-geliştirme)
+- [📋 Proje Yapısı](#-proje-yapısı)
+- [🔒 Admin Paneli](#-admin-paneli)
+- [🌐 Deployment](#-deployment)
+- [📄 Lisans](#-lisans)
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/c7141fcb-3861-4349-985b-ca328c966189) and start prompting.
+## 🚀 Özellikler
 
-Changes made via Lovable will be committed automatically to this repo.
+- ✨ Modern ve duyarlı tasarım
+- 📱 Mobil öncelikli kullanıcı arayüzü
+- 🎨 Özelleştirilebilir tema sistemi
+- 🖼️ Dinamik galeri ve portföy yönetimi
+- 📝 Blog ve içerik yönetim sistemi
+- 📊 Kapsamlı admin paneli
+- 🔍 SEO optimizasyonu
+- 🌍 Çoklu dil desteği (TR/EN)
+- 💬 WhatsApp entegrasyonu
+- 📈 Google Analytics entegrasyonu
 
-**Use your preferred IDE**
+## ⚙️ Teknolojiler
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+- **Frontend Framework:** React 18
+- **Dil:** TypeScript
+- **Build Tool:** Vite
+- **Styling:** Tailwind CSS
+- **UI Components:** shadcn/ui
+- **State Management:** React Context
+- **Form Management:** React Hook Form
+- **Validasyon:** Zod
+- **Routing:** React Router
+- **HTTP Client:** Axios
+- **Icons:** Lucide Icons
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## 🛠️ Kurulum
 
-Follow these steps:
+```bash
+# Depoyu klonlayın
+git clone https://github.com/yourusername/antalya-balcony-builder-site.git
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+# Proje dizinine gidin
+cd antalya-balcony-builder-site
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+# Bağımlılıkları yükleyin
+npm install
 
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Geliştirme sunucusunu başlatın
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+## 👩‍💻 Geliştirme
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### Ortam Değişkenleri
 
-**Use GitHub Codespaces**
+\`.env\` dosyasını oluşturun:
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+```env
+VITE_API_URL=your_api_url
+VITE_WHATSAPP_NUMBER=your_whatsapp_number
+```
 
-## What technologies are used for this project?
+### Komutlar
 
-This project is built with:
+```bash
+# Geliştirme sunucusu
+npm run dev
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+# Production build
+npm run build
 
-## How can I deploy this project?
+# Preview production build
+npm run preview
 
-Simply open [Lovable](https://lovable.dev/projects/c7141fcb-3861-4349-985b-ca328c966189) and click on Share -> Publish.
+# Linting
+npm run lint
 
-## Can I connect a custom domain to my Lovable project?
+# Type checking
+npm run typecheck
+```
 
-Yes it is!
+## 📋 Proje Yapısı
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+```
+src/
+├── components/     # UI bileşenleri
+├── hooks/         # Custom React hooks
+├── lib/           # Yardımcı fonksiyonlar
+├── pages/         # Sayfa bileşenleri
+└── admin/         # Admin panel bileşenleri
+```
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+## 🔒 Admin Paneli
+
+Admin paneli şu özelliklere sahiptir:
+
+- 📊 Dashboard ve analitikler
+- 🖼️ Galeri yönetimi
+- 📝 İçerik yönetimi
+- 💬 Mesaj yönetimi
+- ⚙️ Site ayarları
+- 👥 Kullanıcı yönetimi
+
+## 🌐 Deployment
+
+Bu proje [Lovable](https://lovable.dev) platformunda barındırılmaktadır.
+
+### Özel Alan Adı Yapılandırması
+
+1. DNS sağlayıcınızda bir CNAME kaydı oluşturun
+2. Lovable'da "Domains" bölümüne gidin
+3. Alan adınızı ekleyin ve yapılandırın
+
+Detaylı bilgi için: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain)
+
+## 📄 Lisans
+
+Bu proje MIT lisansı altında lisanslanmıştır. Detaylar için [LICENSE](LICENSE) dosyasına bakın.
+
+## 🤝 Katkıda Bulunma
+
+Katkılarınızı bekliyoruz! Lütfen şunları yapın:
+
+1. Bu depoyu fork edin
+2. Yeni bir özellik dalı oluşturun (`git checkout -b feature/amazing-feature`)
+3. Değişikliklerinizi commit edin (`git commit -m 'feat: add amazing feature'`)
+4. Dalınıza push yapın (`git push origin feature/amazing-feature`)
+5. Bir Pull Request açın
+
+## 📧 İletişim
+
+- Website: [cambalkonantalya.com](https://cambalkonantalya.com)
+- Email: [info@cambalkonantalya.com](mailto:info@cambalkonantalya.com)
+- WhatsApp: [+90 555 555 55 55](https://wa.me/905555555555)
+
+---
+
+Developed with ❤️ in Antalya
