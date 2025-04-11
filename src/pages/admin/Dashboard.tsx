@@ -31,7 +31,8 @@ import {
   SidebarMenuItem,
   SidebarGroup,
   SidebarGroupLabel,
-  SidebarGroupContent
+  SidebarGroupContent,
+  SidebarMenuBadge
 } from "@/components/ui/sidebar";
 
 interface AdminDashboardProps {

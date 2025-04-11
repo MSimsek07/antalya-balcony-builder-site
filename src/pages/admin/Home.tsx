@@ -1,54 +1,42 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { 
-  Package, 
-  Calendar, 
-  MessageSquare, 
   Users, 
+  Package, 
+  MessageSquare, 
+  Calendar, 
   TrendingUp, 
   TrendingDown
 } from "lucide-react";
-import { 
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow
-} from "@/components/ui/table";
 
 const AdminHome = () => {
   // Mock data
   const stats = [
     { 
       title: "Toplam Proje", 
-      icon: Package,
-      iconColor: "#33C3F0",
       value: 1909, 
+      icon: Package, 
       change: "+12%", 
       trend: "up" 
     },
     { 
       title: "Aktif Projeler", 
-      icon: Calendar,
-      iconColor: "#33C3F0",
       value: 28, 
+      icon: Calendar, 
       change: "+4%", 
       trend: "up" 
     },
     { 
       title: "Yeni Mesajlar", 
-      icon: MessageSquare,
-      iconColor: "#33C3F0",
       value: 14, 
+      icon: MessageSquare, 
       change: "-3%", 
       trend: "down" 
     },
     { 
       title: "Toplam Müşteri", 
-      icon: Users,
-      iconColor: "#33C3F0",
       value: 4172, 
+      icon: Users, 
       change: "+8%", 
       trend: "up" 
     },
@@ -128,24 +116,6 @@ const AdminHome = () => {
     },
   ];
 
-  const getStatusLabel = (status: string) => {
-    switch(status) {
-      case "Completed": return "Tamamlandı";
-      case "In Progress": return "Devam Ediyor";
-      case "Pending": return "Beklemede";
-      default: return status;
-    }
-  };
-
-  const getStatusClass = (status: string) => {
-    switch(status) {
-      case "Completed": return "bg-green-100 text-green-800";
-      case "In Progress": return "bg-blue-100 text-blue-800";
-      case "Pending": return "bg-yellow-100 text-yellow-800";
-      default: return "bg-gray-100 text-gray-800";
-    }
-  };
-
   return (
     <div className="space-y-6">
       <div>
@@ -156,13 +126,13 @@ const AdminHome = () => {
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {stats.map((stat, index) => (
-          <Card key={index} className="shadow-sm border border-gray-100">
+          <Card key={index} className="shadow-sm">
             <CardHeader className="pb-2">
               <div className="flex justify-between items-center">
                 <CardTitle className="text-sm font-medium text-gray-500">
                   {stat.title}
                 </CardTitle>
-                <stat.icon className="h-5 w-5" style={{ color: stat.iconColor }} />
+                <stat.icon className="h-5 w-5 text-theme-teal" />
               </div>
             </CardHeader>
             <CardContent>
@@ -186,47 +156,59 @@ const AdminHome = () => {
         ))}
       </div>
 
-      {/* Recent Projects Table */}
-      <Card className="shadow-sm border border-gray-100">
+      {/* Recent Projects */}
+      <Card className="shadow-sm">
         <CardHeader>
           <CardTitle className="text-xl">Son Projeler</CardTitle>
         </CardHeader>
         <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>ID</TableHead>
-                <TableHead>Müşteri</TableHead>
-                <TableHead>Hizmet</TableHead>
-                <TableHead>Durum</TableHead>
-                <TableHead>Tarih</TableHead>
-                <TableHead className="text-right">Tutar</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {recentProjects.map((project, index) => (
-                <TableRow key={index}>
-                  <TableCell className="font-medium">{project.id}</TableCell>
-                  <TableCell>{project.customer}</TableCell>
-                  <TableCell>{project.service}</TableCell>
-                  <TableCell>
-                    <span 
-                      className={`px-2 py-1 rounded-full text-xs ${getStatusClass(project.status)}`}
-                    >
-                      {getStatusLabel(project.status)}
-                    </span>
-                  </TableCell>
-                  <TableCell>{project.date}</TableCell>
-                  <TableCell className="text-right font-medium">{project.amount}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b">
+                  <th className="px-4 py-3 text-left font-medium text-gray-500">ID</th>
+                  <th className="px-4 py-3 text-left font-medium text-gray-500">Müşteri</th>
+                  <th className="px-4 py-3 text-left font-medium text-gray-500">Hizmet</th>
+                  <th className="px-4 py-3 text-left font-medium text-gray-500">Durum</th>
+                  <th className="px-4 py-3 text-left font-medium text-gray-500">Tarih</th>
+                  <th className="px-4 py-3 text-right font-medium text-gray-500">Tutar</th>
+                </tr>
+              </thead>
+              <tbody>
+                {recentProjects.map((project, index) => (
+                  <tr key={index} className={index !== recentProjects.length - 1 ? "border-b" : ""}>
+                    <td className="px-4 py-3">{project.id}</td>
+                    <td className="px-4 py-3">{project.customer}</td>
+                    <td className="px-4 py-3">{project.service}</td>
+                    <td className="px-4 py-3">
+                      <span 
+                        className={`px-2 py-1 rounded-full text-xs ${
+                          project.status === "Completed" 
+                            ? "bg-green-100 text-green-800" 
+                            : project.status === "In Progress"
+                            ? "bg-blue-100 text-blue-800"
+                            : "bg-yellow-100 text-yellow-800"
+                        }`}
+                      >
+                        {project.status === "Completed" 
+                          ? "Tamamlandı" 
+                          : project.status === "In Progress"
+                          ? "Devam Ediyor"
+                          : "Beklemede"}
+                      </span>
+                    </td>
+                    <td className="px-4 py-3">{project.date}</td>
+                    <td className="px-4 py-3 text-right font-medium">{project.amount}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </CardContent>
       </Card>
 
       {/* Recent Messages */}
-      <Card className="shadow-sm border border-gray-100">
+      <Card className="shadow-sm">
         <CardHeader>
           <CardTitle className="text-xl">Son Mesajlar</CardTitle>
         </CardHeader>
