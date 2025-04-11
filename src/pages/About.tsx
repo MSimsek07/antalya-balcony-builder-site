@@ -58,7 +58,7 @@ const AboutPage = () => {
             </div>
             <div>
               <img
-                src="https://images.unsplash.com/photo-1577415124269-fc1140a69e91?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80"
+                src="https://lh3.googleusercontent.com/p/AF1QipN0yIbHYjwkp5FCD4uwuOceWa9I6DnyFAWEB_fs=w427-h240-k-no"
                 alt="Cam Balkon Antalya Ekibi"
                 className="rounded-lg shadow-xl"
               />
