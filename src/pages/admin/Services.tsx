@@ -1,11 +1,11 @@
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { Save, Edit, Trash, Plus } from "lucide-react";
+import { Save, Edit, Trash, Plus, Upload } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -33,7 +33,7 @@ interface ServiceItem {
   title: string;
   description: string;
   image: string;
-  link: string;
+  imageFile?: File | null;
 }
 
 const AdminServices = () => {
@@ -41,6 +41,7 @@ const AdminServices = () => {
   const [saving, setSaving] = useState(false);
   const [editingService, setEditingService] = useState<ServiceItem | null>(null);
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   
   // Sample data - in a real app this would come from an API
   const [services, setServices] = useState<ServiceItem[]>([
@@ -49,32 +50,29 @@ const AdminServices = () => {
       title: "Cam Balkon",
       description: "Balkonunuzu dört mevsim kullanılabilir bir alana çeviriyoruz.",
       image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c",
-      link: "/services#cam-balkon"
     },
     {
       id: "2",
       title: "Isıcamlı PVC Pencere",
       description: "Yüksek ısı ve ses yalıtımı sağlayan, estetik ve dayanıklı ısıcamlı PVC pencere sistemleri.",
       image: "https://images.unsplash.com/photo-1600573472556-e636c2acda88",
-      link: "/services#pvc-pencere"
     },
     {
       id: "3",
       title: "Ofis Cam Bölmesi",
       description: "Modern ofis alanları için şık ve fonksiyonel cam bölme sistemleri.",
       image: "https://images.unsplash.com/photo-1497366811353-6870744d04b2",
-      link: "/services#ofis-cam-bolme"
     },
   ]);
 
   const handleSave = () => {
     setSaving(true);
     
-    // Simulate saving
+    // Simulate saving and updating gallery categories
     setTimeout(() => {
       toast({
         title: "Başarılı",
-        description: "Hizmet bilgileri kaydedildi.",
+        description: "Hizmet bilgileri kaydedildi ve galeri kategorileri güncellendi.",
       });
       setSaving(false);
     }, 1000);
@@ -95,13 +93,23 @@ const AdminServices = () => {
   const handleUpdateService = () => {
     if (!editingService) return;
     
+    // Process file upload if there's one
+    let updatedService = { ...editingService };
+    
+    if (editingService.imageFile) {
+      // In a real app, you would upload the file to a server here
+      // For now, we'll create a temporary URL
+      const imageUrl = URL.createObjectURL(editingService.imageFile);
+      updatedService.image = imageUrl;
+    }
+    
     setServices(services.map(service => 
-      service.id === editingService.id ? editingService : service
+      service.id === editingService.id ? updatedService : service
     ));
     
     toast({
       title: "Güncellendi",
-      description: "Hizmet bilgileri güncellendi.",
+      description: "Hizmet bilgileri güncellendi ve galeri kategorileri yenilendi.",
     });
     
     setEditingService(null);
@@ -110,20 +118,44 @@ const AdminServices = () => {
   const handleAddService = () => {
     if (!editingService) return;
     
-    const newService = {
-      ...editingService,
-      id: Date.now().toString()
-    };
+    // Process file upload if there's one
+    let newService = { ...editingService };
+    
+    if (editingService.imageFile) {
+      // In a real app, you would upload the file to a server here
+      // For now, we'll create a temporary URL
+      const imageUrl = URL.createObjectURL(editingService.imageFile);
+      newService.image = imageUrl;
+    }
+    
+    newService.id = Date.now().toString();
     
     setServices([...services, newService]);
     
     toast({
       title: "Eklendi",
-      description: "Yeni hizmet başarıyla eklendi.",
+      description: "Yeni hizmet başarıyla eklendi ve galeri kategorileri güncellendi.",
     });
     
     setEditingService(null);
     setIsAddDialogOpen(false);
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files && e.target.files[0];
+    if (file && editingService) {
+      setEditingService({
+        ...editingService,
+        imageFile: file,
+        image: URL.createObjectURL(file)
+      });
+    }
+  };
+
+  const triggerFileInput = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
   };
 
   return (
@@ -143,7 +175,7 @@ const AdminServices = () => {
                 title: '',
                 description: '',
                 image: '',
-                link: ''
+                imageFile: null
               })}
             >
               <Plus className="h-4 w-4" />
@@ -177,21 +209,43 @@ const AdminServices = () => {
               </div>
               
               <div className="space-y-2">
-                <label className="text-sm font-medium">Resim URL</label>
-                <Input 
-                  value={editingService?.image || ''}
-                  onChange={(e) => setEditingService(prev => prev ? {...prev, image: e.target.value} : null)}
-                  placeholder="https://example.com/image.jpg"
-                />
-              </div>
-              
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Link</label>
-                <Input 
-                  value={editingService?.link || ''}
-                  onChange={(e) => setEditingService(prev => prev ? {...prev, link: e.target.value} : null)}
-                  placeholder="/services#service-name"
-                />
+                <label className="text-sm font-medium">Resim</label>
+                <div className="flex flex-col items-center p-4 border-2 border-dashed rounded-md">
+                  {editingService?.image ? (
+                    <div className="relative w-full">
+                      <img 
+                        src={editingService.image} 
+                        alt="Preview" 
+                        className="max-h-40 mx-auto rounded-md mb-2"
+                      />
+                      <Button 
+                        variant="outline"
+                        size="sm"
+                        className="w-full mt-2"
+                        onClick={triggerFileInput}
+                      >
+                        Resmi Değiştir
+                      </Button>
+                    </div>
+                  ) : (
+                    <Button 
+                      variant="outline"
+                      type="button"
+                      className="flex items-center gap-2 w-full"
+                      onClick={triggerFileInput}
+                    >
+                      <Upload className="h-4 w-4" />
+                      Resim Yükle
+                    </Button>
+                  )}
+                  <input 
+                    ref={fileInputRef}
+                    type="file" 
+                    accept="image/*"
+                    className="hidden"
+                    onChange={handleFileChange}
+                  />
+                </div>
               </div>
             </div>
             
@@ -202,6 +256,7 @@ const AdminServices = () => {
               <Button 
                 className="bg-theme-teal hover:bg-theme-teal/90"
                 onClick={handleAddService}
+                disabled={!editingService?.title || !editingService?.image}
               >
                 Ekle
               </Button>
@@ -273,19 +328,43 @@ const AdminServices = () => {
                         </div>
                         
                         <div className="space-y-2">
-                          <label className="text-sm font-medium">Resim URL</label>
-                          <Input 
-                            value={editingService?.image || ''}
-                            onChange={(e) => setEditingService(prev => prev ? {...prev, image: e.target.value} : null)}
-                          />
-                        </div>
-                        
-                        <div className="space-y-2">
-                          <label className="text-sm font-medium">Link</label>
-                          <Input 
-                            value={editingService?.link || ''}
-                            onChange={(e) => setEditingService(prev => prev ? {...prev, link: e.target.value} : null)}
-                          />
+                          <label className="text-sm font-medium">Resim</label>
+                          <div className="flex flex-col items-center p-4 border-2 border-dashed rounded-md">
+                            {editingService?.image ? (
+                              <div className="relative w-full">
+                                <img 
+                                  src={editingService.image} 
+                                  alt="Preview" 
+                                  className="max-h-40 mx-auto rounded-md mb-2"
+                                />
+                                <Button 
+                                  variant="outline"
+                                  size="sm"
+                                  className="w-full mt-2"
+                                  onClick={triggerFileInput}
+                                >
+                                  Resmi Değiştir
+                                </Button>
+                              </div>
+                            ) : (
+                              <Button 
+                                variant="outline"
+                                type="button"
+                                className="flex items-center gap-2 w-full"
+                                onClick={triggerFileInput}
+                              >
+                                <Upload className="h-4 w-4" />
+                                Resim Yükle
+                              </Button>
+                            )}
+                            <input 
+                              ref={fileInputRef}
+                              type="file" 
+                              accept="image/*"
+                              className="hidden"
+                              onChange={handleFileChange}
+                            />
+                          </div>
                         </div>
                       </div>
                       
