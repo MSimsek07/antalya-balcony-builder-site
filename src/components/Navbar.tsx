@@ -77,7 +77,7 @@ const Navbar = () => {
               className="h-12 w-auto rounded-md"
             />
             <span className="text-white font-bold text-xl md:text-2xl">
-              CAM BALKON ANTALYA
+              ZEN YAPI ANTALYA
             </span>
           </div>
         </Link>

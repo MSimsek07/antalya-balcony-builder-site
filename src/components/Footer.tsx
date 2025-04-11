@@ -20,18 +20,18 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Company Info */}
           <div>
-            <h3 className="text-xl font-bold mb-4">CAM BALKON ANTALYA</h3>
+            <h3 className="text-xl font-bold mb-4">ZEN YAPI ANTALYA</h3>
             <p className="text-gray-300 mb-4">
               Antalya'nın önde gelen cam balkon ve cam sistemleri firması olarak, kaliteli ürünler ve profesyonel hizmet sunuyoruz.
             </p>
             <div className="flex space-x-3 mt-4">
-              <a href="#" className="text-gray-300 hover:text-theme-teal transition-colors">
+              <a href="https://www.facebook.com/p/Antalya-zen-yap%C4%B1-cam-balkon-100075705893989/?_rdr" target="_blank" className="text-gray-300 hover:text-theme-teal transition-colors">
                 <Facebook size={20} />
               </a>
               <a href="#" className="text-gray-300 hover:text-theme-teal transition-colors">
                 <Twitter size={20} />
               </a>
-              <a href="#" className="text-gray-300 hover:text-theme-teal transition-colors">
+              <a href="https://www.instagram.com/devran_babababa/" target="blank" className="text-gray-300 hover:text-theme-teal transition-colors">
                 <Instagram size={20} />
               </a>              
             </div>
@@ -118,7 +118,9 @@ const Footer = () => {
               <li className="flex items-start">
                 <MapPin className="mr-2 h-5 w-5 text-theme-teal shrink-0 mt-0.5" />
                 <span className="text-gray-300">
+                <a href="https://maps.app.goo.gl/BwTFk8xeAfuZu2Q8A" target="_blank" className="text-gray-300 hover:text-theme-teal transition-colors">
                   Yeni mahalle 2609 sk no 26 daire 3 ışkın apartmanı, 07000 Kepez/Antalya
+                </a>
                 </span>
               </li>
               <li className="flex items-center">
@@ -148,7 +150,7 @@ const Footer = () => {
       <div className="border-t border-gray-800">
         <div className="container-custom py-6 flex flex-col md:flex-row justify-between items-center">
           <p className="text-gray-400 text-sm">
-            &copy; {currentYear} Cam Balkon Antalya. Tüm hakları saklıdır.
+            &copy; {currentYear} Zen Yapı Antalya. Tüm hakları saklıdır.
           </p>
           <div className="mt-4 md:mt-0">
             <a href="#" className="text-gray-400 text-sm hover:text-theme-teal transition-colors">

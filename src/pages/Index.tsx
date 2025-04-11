@@ -88,7 +88,7 @@ const HomePage = () => {
             ]}
             className="w-full"
           >
-            <CarouselContent>
+            <CarouselContent className="-ml-2 md:-ml-4">
               {[
                 "/carousel_images/2022-03-22 (1).jpg",
                 "/carousel_images/2022-03-22 (2).jpg",
@@ -96,9 +96,9 @@ const HomePage = () => {
                 "/carousel_images/2025-01-28 (1).jpg",
                 "/carousel_images/2025-01-28.jpg"
               ].map((src, index) => (
-                <CarouselItem key={index}>
+                <CarouselItem key={index} className="pl-2 md:pl-4 transition-opacity duration-300 data-[active]:opacity-100 data-[inactive]:opacity-40">
                   <Card className="overflow-hidden rounded-lg">
-                    <div className="relative aspect-[16/9]">
+                    <div className="relative aspect-[16/9] transform transition-transform duration-500 hover:scale-105">
                       <img
                         src={src}
                         alt={`Carousel Image ${index + 1}`}
@@ -110,8 +110,8 @@ const HomePage = () => {
               ))}
             </CarouselContent>
             <div className="hidden md:block">
-              <CarouselPrevious className="absolute left-4 top-1/2 -translate-y-1/2" />
-              <CarouselNext className="absolute right-4 top-1/2 -translate-y-1/2" />
+              <CarouselPrevious className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white border-none transition-all duration-200 hover:scale-110" />
+              <CarouselNext className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white border-none transition-all duration-200 hover:scale-110" />
             </div>
           </Carousel>
         </div>

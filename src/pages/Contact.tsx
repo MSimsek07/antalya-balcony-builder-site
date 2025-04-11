@@ -159,7 +159,9 @@ const ContactPage = () => {
                   <div>
                     <h3 className="font-medium text-theme-blue text-lg mb-1">Adres</h3>
                     <p className="text-gray-600">
-                      Altınkale Mahallesi, 1. Cadde, No:25, Döşemealtı, Antalya
+                    <a href="https://maps.app.goo.gl/BwTFk8xeAfuZu2Q8A" target="_blank" className="text-gray-600 hover:text-theme-teal transition-colors">
+                      Yeni mahalle 2609 sk no 26 daire 3 ışkın apartmanı, 07000 Kepez/Antalya
+                    </a>
                     </p>
                   </div>
                 </div>
@@ -171,15 +173,16 @@ const ContactPage = () => {
                   <div>
                     <h3 className="font-medium text-theme-blue text-lg mb-1">Telefon</h3>
                     <p className="text-gray-600">
-                      <a href="tel:+902422294567" className="hover:text-theme-teal transition-colors">
-                        +90 242 229 45 67
+                      <a href="tel:+905454043462" className="hover:text-theme-teal transition-colors">
+                      +90 545 404 34 62
                       </a>
                     </p>
                     <p className="text-gray-600">
-                      <a href="tel:+905301234567" className="hover:text-theme-teal transition-colors">
-                        +90 530 123 45 67
+                      <a href="tel:+905012877107" className="hover:text-theme-teal transition-colors">
+                      +90 501 287 71 07
                       </a>
                     </p>
+                    
                   </div>
                 </div>
                 
@@ -224,7 +227,7 @@ const ContactPage = () => {
         <div className="container-custom">
           <div className="bg-white rounded-lg shadow-md overflow-hidden">
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d102244.60283405908!2d30.617451592388134!3d36.91784797196078!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14c39aaeddadadc1%3A0x95c69f73f9e32e33!2sAntalya%2C%20D%C3%B6%C5%9Femealt%C4%B1%2FAntalya!5e0!3m2!1str!2str!4v1646305789658!5m2!1str!2str"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3189.66941557505!2d30.63650821193798!3d36.92216777209671!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14c38f7450b22087%3A0x812c96aee98ee421!2sAntalya%20cam%20balkon%20zen%20yap%C4%B1!5e0!3m2!1str!2str!4v1744400754687!5m2!1str!2str"
               width="100%"
               height="450"
               style={{ border: 0 }}

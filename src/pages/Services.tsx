@@ -1,8 +1,8 @@
-
 import Layout from "@/components/Layout";
 import Hero from "@/components/Hero";
 import ServiceCard from "@/components/ServiceCard";
-import { Check } from "lucide-react";
+import AntalyaMap from "@/components/AntalyaMap";
+import { Check, MapPin } from "lucide-react";
 
 const ServicesPage = () => {
   const services = [
@@ -209,6 +209,31 @@ const ServicesPage = () => {
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Service Areas Map */}
+      <section className="py-16 bg-gray-50">
+        <div className="container-custom">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-theme-blue mb-4">Hizmet Bölgelerimiz</h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Antalya'nın tüm merkez ilçeleri ve çevre ilçelerinde profesyonel hizmet veriyoruz
+            </p>
+          </div>
+          
+          <div className="bg-white rounded-xl shadow-sm p-8">
+            <AntalyaMap />
+            
+            <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {["Merkez", "Kemer", "Serik", "Manavgat", "Kumluca", "Elmalı", "Korkuteli"].map((district) => (
+                <div key={district} className="flex items-center gap-2">
+                  <MapPin className="h-5 w-5 text-theme-teal shrink-0" />
+                  <span className="text-gray-600">{district}</span>
+                </div>
+              ))}
             </div>
           </div>
         </div>
