@@ -1,5 +1,5 @@
 
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 
 interface ProtectedRouteProps {
   isAuthenticated: boolean;
@@ -12,8 +12,10 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   redirectPath,
   children,
 }) => {
+  const location = useLocation();
+
   if (!isAuthenticated) {
-    return <Navigate to={redirectPath} replace />;
+    return <Navigate to={redirectPath} state={{ from: location }} replace />;
   }
 
   return <>{children}</>;
