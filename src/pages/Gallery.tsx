@@ -1,5 +1,4 @@
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Layout from "@/components/Layout";
 import Hero from "@/components/Hero";
 import { 
@@ -16,18 +15,35 @@ interface GalleryImage {
   category: string;
 }
 
+interface Category {
+  id: string;
+  name: string;
+}
+
 const GalleryPage = () => {
   const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null);
   const [activeCategory, setActiveCategory] = useState("all");
   const [dialogOpen, setDialogOpen] = useState(false);
 
-  const categories = [
+  const [categories, setCategories] = useState<Category[]>([
     { id: "all", name: "Tümü" },
     { id: "cambalkon", name: "Cam Balkon" },
     { id: "pvc", name: "PVC Pencere" },
     { id: "office", name: "Ofis Bölme" },
     { id: "other", name: "Diğer" },
-  ];
+  ]);
+
+  useEffect(() => {
+    const serviceCategories = [
+      { id: "all", name: "Tümü" },
+      { id: "cambalkon", name: "Cam Balkon" },
+      { id: "pvc", name: "PVC Pencere" },
+      { id: "office", name: "Ofis Bölme" },
+      { id: "other", name: "Diğer" },
+    ];
+    
+    setCategories(serviceCategories);
+  }, []);
 
   const images: GalleryImage[] = [
     {
@@ -138,7 +154,6 @@ const GalleryPage = () => {
 
       <section className="py-16 md:py-24">
         <div className="container-custom">
-          {/* Category Filter */}
           <div className="flex flex-wrap justify-center mb-12 gap-2">
             {categories.map(category => (
               <button
@@ -155,7 +170,6 @@ const GalleryPage = () => {
             ))}
           </div>
 
-          {/* Gallery Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {filteredImages.map(image => (
               <div key={image.id} className="group relative overflow-hidden rounded-lg aspect-square">

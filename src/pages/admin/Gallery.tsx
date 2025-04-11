@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -47,6 +47,12 @@ interface GalleryImage {
   src: string;
   alt: string;
   category: string;
+  imageFile?: File | null;
+}
+
+interface ServiceCategory {
+  id: string;
+  name: string;
 }
 
 const AdminGallery = () => {
@@ -54,6 +60,7 @@ const AdminGallery = () => {
   const [saving, setSaving] = useState(false);
   const [editingImage, setEditingImage] = useState<GalleryImage | null>(null);
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   
   // Sample data - in a real app this would come from an API
   const [images, setImages] = useState<GalleryImage[]>([
@@ -83,12 +90,27 @@ const AdminGallery = () => {
     },
   ]);
   
-  const categories = [
+  // Get categories from services
+  const [categories, setCategories] = useState<ServiceCategory[]>([
     { id: "cambalkon", name: "Cam Balkon" },
     { id: "pvc", name: "PVC Pencere" },
     { id: "office", name: "Ofis Bölme" },
     { id: "other", name: "Diğer" },
-  ];
+  ]);
+
+  // Load service categories when component mounts
+  useEffect(() => {
+    // In a real app, this would fetch from an API
+    // For now, we'll use the sample data
+    const serviceCategories = [
+      { id: "cambalkon", name: "Cam Balkon" },
+      { id: "pvc", name: "PVC Pencere" },
+      { id: "office", name: "Ofis Bölme" },
+      { id: "other", name: "Diğer" },
+    ];
+    
+    setCategories(serviceCategories);
+  }, []);
 
   const handleSave = () => {
     setSaving(true);
@@ -118,8 +140,18 @@ const AdminGallery = () => {
   const handleUpdateImage = () => {
     if (!editingImage) return;
     
+    // Process file upload if there's one
+    let updatedImage = { ...editingImage };
+    
+    if (editingImage.imageFile) {
+      // In a real app, you would upload the file to a server here
+      // For now, we'll create a temporary URL
+      const imageUrl = URL.createObjectURL(editingImage.imageFile);
+      updatedImage.src = imageUrl;
+    }
+    
     setImages(images.map(image => 
-      image.id === editingImage.id ? editingImage : image
+      image.id === editingImage.id ? updatedImage : image
     ));
     
     toast({
@@ -133,10 +165,17 @@ const AdminGallery = () => {
   const handleAddImage = () => {
     if (!editingImage) return;
     
-    const newImage = {
-      ...editingImage,
-      id: Date.now().toString()
-    };
+    // Process file upload if there's one
+    let newImage = { ...editingImage };
+    
+    if (editingImage.imageFile) {
+      // In a real app, you would upload the file to a server here
+      // For now, we'll create a temporary URL
+      const imageUrl = URL.createObjectURL(editingImage.imageFile);
+      newImage.src = imageUrl;
+    }
+    
+    newImage.id = Date.now().toString();
     
     setImages([...images, newImage]);
     
@@ -147,6 +186,23 @@ const AdminGallery = () => {
     
     setEditingImage(null);
     setIsAddDialogOpen(false);
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files && e.target.files[0];
+    if (file && editingImage) {
+      setEditingImage({
+        ...editingImage,
+        imageFile: file,
+        src: URL.createObjectURL(file)
+      });
+    }
+  };
+
+  const triggerFileInput = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
   };
 
   const getCategoryName = (categoryId: string) => {
@@ -170,7 +226,8 @@ const AdminGallery = () => {
                 id: '',
                 src: '',
                 alt: '',
-                category: 'cambalkon'
+                category: categories.length > 0 ? categories[0].id : '',
+                imageFile: null
               })}
             >
               <Plus className="h-4 w-4" />
@@ -186,21 +243,6 @@ const AdminGallery = () => {
             </DialogHeader>
             
             <div className="space-y-4 py-4">
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Resim URL</label>
-                <div className="flex gap-2">
-                  <Input 
-                    value={editingImage?.src || ''}
-                    onChange={(e) => setEditingImage(prev => prev ? {...prev, src: e.target.value} : null)}
-                    placeholder="https://example.com/image.jpg"
-                    className="flex-1"
-                  />
-                  <Button variant="outline" size="icon" className="shrink-0">
-                    <Upload className="h-4 w-4" />
-                  </Button>
-                </div>
-              </div>
-              
               <div className="space-y-2">
                 <label className="text-sm font-medium">Açıklama</label>
                 <Input 
@@ -229,21 +271,45 @@ const AdminGallery = () => {
                 </Select>
               </div>
               
-              {editingImage?.src && (
-                <div className="border rounded-md p-2 mt-4">
-                  <p className="text-sm text-gray-500 mb-2">Önizleme:</p>
-                  <div className="h-40 overflow-hidden rounded-md">
-                    <img 
-                      src={editingImage.src} 
-                      alt={editingImage.alt} 
-                      className="w-full h-full object-cover"
-                      onError={(e) => {
-                        (e.target as HTMLImageElement).src = 'https://placehold.co/400x300/EFEFEF/999999?text=Resim+Yüklenemedi';
-                      }}
-                    />
-                  </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Resim</label>
+                <div className="flex flex-col items-center p-4 border-2 border-dashed rounded-md">
+                  {editingImage?.src ? (
+                    <div className="relative w-full">
+                      <img 
+                        src={editingImage.src} 
+                        alt={editingImage.alt || "Önizleme"} 
+                        className="max-h-40 mx-auto rounded-md mb-2"
+                      />
+                      <Button 
+                        variant="outline"
+                        size="sm"
+                        className="w-full mt-2"
+                        onClick={triggerFileInput}
+                      >
+                        Resmi Değiştir
+                      </Button>
+                    </div>
+                  ) : (
+                    <Button 
+                      variant="outline"
+                      type="button"
+                      className="flex items-center gap-2 w-full"
+                      onClick={triggerFileInput}
+                    >
+                      <Upload className="h-4 w-4" />
+                      Resim Yükle
+                    </Button>
+                  )}
+                  <input 
+                    ref={fileInputRef}
+                    type="file" 
+                    accept="image/*"
+                    className="hidden"
+                    onChange={handleFileChange}
+                  />
                 </div>
-              )}
+              </div>
             </div>
             
             <DialogFooter>
@@ -253,6 +319,7 @@ const AdminGallery = () => {
               <Button 
                 className="bg-theme-teal hover:bg-theme-teal/90"
                 onClick={handleAddImage}
+                disabled={!editingImage?.alt || !editingImage?.src}
               >
                 Ekle
               </Button>
@@ -307,20 +374,6 @@ const AdminGallery = () => {
                       
                       <div className="space-y-4 py-4">
                         <div className="space-y-2">
-                          <label className="text-sm font-medium">Resim URL</label>
-                          <div className="flex gap-2">
-                            <Input 
-                              value={editingImage?.src || ''}
-                              onChange={(e) => setEditingImage(prev => prev ? {...prev, src: e.target.value} : null)}
-                              className="flex-1"
-                            />
-                            <Button variant="outline" size="icon" className="shrink-0">
-                              <Upload className="h-4 w-4" />
-                            </Button>
-                          </div>
-                        </div>
-                        
-                        <div className="space-y-2">
                           <label className="text-sm font-medium">Açıklama</label>
                           <Input 
                             value={editingImage?.alt || ''}
@@ -347,21 +400,45 @@ const AdminGallery = () => {
                           </Select>
                         </div>
                         
-                        {editingImage?.src && (
-                          <div className="border rounded-md p-2 mt-4">
-                            <p className="text-sm text-gray-500 mb-2">Önizleme:</p>
-                            <div className="h-40 overflow-hidden rounded-md">
-                              <img 
-                                src={editingImage.src} 
-                                alt={editingImage.alt} 
-                                className="w-full h-full object-cover"
-                                onError={(e) => {
-                                  (e.target as HTMLImageElement).src = 'https://placehold.co/400x300/EFEFEF/999999?text=Resim+Yüklenemedi';
-                                }}
-                              />
-                            </div>
+                        <div className="space-y-2">
+                          <label className="text-sm font-medium">Resim</label>
+                          <div className="flex flex-col items-center p-4 border-2 border-dashed rounded-md">
+                            {editingImage?.src ? (
+                              <div className="relative w-full">
+                                <img 
+                                  src={editingImage.src} 
+                                  alt={editingImage.alt} 
+                                  className="max-h-40 mx-auto rounded-md mb-2"
+                                />
+                                <Button 
+                                  variant="outline"
+                                  size="sm"
+                                  className="w-full mt-2"
+                                  onClick={triggerFileInput}
+                                >
+                                  Resmi Değiştir
+                                </Button>
+                              </div>
+                            ) : (
+                              <Button 
+                                variant="outline"
+                                type="button"
+                                className="flex items-center gap-2 w-full"
+                                onClick={triggerFileInput}
+                              >
+                                <Upload className="h-4 w-4" />
+                                Resim Yükle
+                              </Button>
+                            )}
+                            <input 
+                              ref={fileInputRef}
+                              type="file" 
+                              accept="image/*"
+                              className="hidden"
+                              onChange={handleFileChange}
+                            />
                           </div>
-                        )}
+                        </div>
                       </div>
                       
                       <DialogFooter>
@@ -422,7 +499,8 @@ const AdminGallery = () => {
                     id: '',
                     src: '',
                     alt: '',
-                    category: 'cambalkon'
+                    category: categories.length > 0 ? categories[0].id : '',
+                    imageFile: null
                   })}
                 >
                   <Plus className="h-8 w-8 text-gray-400" />
@@ -449,3 +527,4 @@ const AdminGallery = () => {
 };
 
 export default AdminGallery;
+
