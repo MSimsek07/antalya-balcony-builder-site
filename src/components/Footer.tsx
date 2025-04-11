@@ -25,13 +25,13 @@ const Footer = () => {
               Antalya'nın önde gelen cam balkon ve cam sistemleri firması olarak, kaliteli ürünler ve profesyonel hizmet sunuyoruz.
             </p>
             <div className="flex space-x-3 mt-4">
-              <a href="#" className="text-gray-300 hover:text-theme-teal transition-colors">
+              <a href="https://www.facebook.com/p/Antalya-zen-yap%C4%B1-cam-balkon-100075705893989/?_rdr" target="_blank" className="text-gray-300 hover:text-theme-teal transition-colors">
                 <Facebook size={20} />
               </a>
               <a href="#" className="text-gray-300 hover:text-theme-teal transition-colors">
                 <Twitter size={20} />
               </a>
-              <a href="#" className="text-gray-300 hover:text-theme-teal transition-colors">
+              <a href="https://www.instagram.com/devran_babababa/" target="blank" className="text-gray-300 hover:text-theme-teal transition-colors">
                 <Instagram size={20} />
               </a>              
             </div>
