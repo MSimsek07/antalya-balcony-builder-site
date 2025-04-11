@@ -55,7 +55,7 @@ const AdminDashboard = ({ onLogout }: AdminDashboardProps) => {
   const mainNavItems = [
     { name: "Panel", icon: Home, path: "/admin" },
     { name: "Hizmetler", icon: Package, path: "/admin/services" },
-    { name: "Galeri", icon: Image, path: "/admin/gallery" },
+    { name: "Projeler", icon: Image, path: "/admin/gallery" },
   ];
 
   const settingsNavItems = [

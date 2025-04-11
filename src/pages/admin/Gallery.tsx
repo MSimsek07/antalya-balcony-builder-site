@@ -119,7 +119,7 @@ const AdminGallery = () => {
     setTimeout(() => {
       toast({
         title: "Başarılı",
-        description: "Galeri bilgileri kaydedildi.",
+        description: "Proje bilgileri kaydedildi.",
       });
       setSaving(false);
     }, 1000);
@@ -214,8 +214,8 @@ const AdminGallery = () => {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-2xl font-bold text-theme-blue">Galeri</h1>
-          <p className="text-gray-500">Web sitesinde gösterilen galeri resimlerini düzenleyin</p>
+          <h1 className="text-2xl font-bold text-theme-blue">Projelerimiz</h1>
+          <p className="text-gray-500">Web sitesinde gösterilen proje resimlerini düzenleyin</p>
         </div>
         
         <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
@@ -330,7 +330,7 @@ const AdminGallery = () => {
 
       <Card className="shadow-sm">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle>Galeri Resimleri</CardTitle>
+          <CardTitle>Proje Resimleri</CardTitle>
           <div className="flex items-center space-x-2">
             <Button variant="outline" size="sm" className="text-xs">
               <MoveHorizontal className="h-3.5 w-3.5 mr-1" />
