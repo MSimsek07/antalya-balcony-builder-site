@@ -121,52 +121,7 @@ const AboutPage = () => {
         </div>
       </section>
 
-      {/* Milestones */}
-      <section className="py-16 md:py-24">
-        <div className="container-custom">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-theme-blue mb-4">Kilometre Taşlarımız</h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Firmamızın kuruluşundan bugüne kadar geçirdiği önemli aşamalar
-            </p>
-          </div>
-          
-          <div className="relative">
-            {/* Timeline Line */}
-            <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-gray-200"></div>
-            
-            {/* Timeline Items */}
-            {milestones.map((milestone, index) => (
-              <div
-                key={index}
-                className={`relative z-10 flex items-center mb-12 ${
-                  index % 2 === 0 ? "flex-row-reverse" : ""
-                }`}
-              >
-                {/* Year Bubble */}
-                <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center justify-center">
-                  <div className="w-16 h-16 rounded-full bg-theme-teal flex items-center justify-center text-white font-bold shadow-lg">
-                    {milestone.year}
-                  </div>
-                </div>
-                
-                {/* Content */}
-                <div className={`w-5/12 ${index % 2 === 0 ? "text-right pr-8" : "pl-8"}`}>
-                  <div className="bg-white p-6 rounded-lg shadow-sm">
-                    <h3 className="text-xl font-bold text-theme-blue mb-2">{milestone.title}</h3>
-                    <p className="text-gray-600">{milestone.description}</p>
-                  </div>
-                </div>
-                
-                {/* Empty space for the other side */}
-                <div className="w-5/12"></div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Mission & Vision */}
+{/* Mission & Vision */}
       <section className="py-16 bg-theme-blue text-white">
         <div className="container-custom">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
