@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Layout from "@/components/Layout";
 import Hero from "@/components/Hero";
 import { 
@@ -7,118 +7,14 @@ import {
   DialogTrigger 
 } from "@/components/ui/dialog";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
-
-interface GalleryImage {
-  id: number;
-  src: string;
-  alt: string;
-  category: string;
-}
-
-interface Category {
-  id: string;
-  name: string;
-}
+import { useGalleryStore } from "@/data/galleryData";
+import type { GalleryImage } from "@/data/galleryData";
 
 const GalleryPage = () => {
+  const { images, categories } = useGalleryStore();
   const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null);
   const [activeCategory, setActiveCategory] = useState("all");
   const [dialogOpen, setDialogOpen] = useState(false);
-
-  const [categories, setCategories] = useState<Category[]>([
-    { id: "all", name: "Tümü" },
-    { id: "cambalkon", name: "Cam Balkon" },
-    { id: "pvc", name: "PVC Pencere" },
-    { id: "office", name: "Ofis Bölme" },
-    { id: "other", name: "Diğer" },
-  ]);
-
-  useEffect(() => {
-    const serviceCategories = [
-      { id: "all", name: "Tümü" },
-      { id: "cambalkon", name: "Cam Balkon" },
-      { id: "pvc", name: "PVC Pencere" },
-      { id: "office", name: "Ofis Bölme" },
-      { id: "other", name: "Diğer" },
-    ];
-    
-    setCategories(serviceCategories);
-  }, []);
-
-  const images: GalleryImage[] = [
-    {
-      id: 1,
-      src: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c",
-      alt: "Cam Balkon Projesi 1",
-      category: "cambalkon"
-    },
-    {
-      id: 2,
-      src: "https://images.unsplash.com/photo-1600573472556-e636c2acda88",
-      alt: "PVC Pencere Projesi 1",
-      category: "pvc"
-    },
-    {
-      id: 3,
-      src: "https://images.unsplash.com/photo-1527853787696-f7be74f2e39a",
-      alt: "Ofis Bölme Projesi 1",
-      category: "office"
-    },
-    {
-      id: 4,
-      src: "https://images.unsplash.com/photo-1600607686527-6fb886090705",
-      alt: "Cam Balkon Projesi 2",
-      category: "cambalkon"
-    },
-    {
-      id: 5,
-      src: "https://images.unsplash.com/photo-1604014237800-1c9102c219da",
-      alt: "PVC Pencere Projesi 2",
-      category: "pvc"
-    },
-    {
-      id: 6,
-      src: "https://images.unsplash.com/photo-1558442074-3c19857bc1dc",
-      alt: "Ofis Bölme Projesi 2",
-      category: "office"
-    },
-    {
-      id: 7,
-      src: "https://images.unsplash.com/photo-1600607687644-c7f33055a191",
-      alt: "Cam Balkon Projesi 3",
-      category: "cambalkon"
-    },
-    {
-      id: 8,
-      src: "https://images.unsplash.com/photo-1600566752229-250ed79470f8",
-      alt: "Sineklik Projesi 1",
-      category: "other"
-    },
-    {
-      id: 9,
-      src: "https://images.unsplash.com/photo-1593696140826-c58b021acf8b",
-      alt: "PVC Pencere Projesi 3",
-      category: "pvc"
-    },
-    {
-      id: 10,
-      src: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3",
-      alt: "Cam Balkon Projesi 4",
-      category: "cambalkon"
-    },
-    {
-      id: 11,
-      src: "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde",
-      alt: "Kış Bahçesi Projesi 1",
-      category: "other"
-    },
-    {
-      id: 12,
-      src: "https://images.unsplash.com/photo-1600566752355-09c5a789932a",
-      alt: "Ofis Bölme Projesi 3",
-      category: "office"
-    },
-  ];
 
   const filteredImages = activeCategory === "all" 
     ? images 

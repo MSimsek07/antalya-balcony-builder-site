@@ -1,5 +1,3 @@
-
-import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
 interface ServiceCardProps {
@@ -7,12 +5,13 @@ interface ServiceCardProps {
   description: string;
   image: string;
   link: string;
+  onDetailsClick: () => void;
 }
 
-const ServiceCard = ({ title, description, image, link }: ServiceCardProps) => {
+const ServiceCard = ({ title, description, image, onDetailsClick }: ServiceCardProps) => {
   return (
     <div className="bg-white rounded-md shadow-md overflow-hidden group">
-      <div className="h-48 overflow-hidden">
+      <div className="relative h-48 overflow-hidden">
         <img
           src={image}
           alt={title}
@@ -21,12 +20,14 @@ const ServiceCard = ({ title, description, image, link }: ServiceCardProps) => {
       </div>
       <div className="p-6">
         <h3 className="text-xl font-bold text-theme-blue mb-3">{title}</h3>
-        <p className="text-gray-600 mb-4">{description}</p>
-        <Link to={link}>
-          <Button variant="outline" className="border-theme-teal text-theme-teal hover:bg-theme-teal hover:text-white">
-            Detaylı Bilgi
-          </Button>
-        </Link>
+        <p className="text-gray-600 mb-4 line-clamp-3">{description}</p>
+        <Button 
+          variant="outline" 
+          className="w-full border-theme-teal text-theme-teal hover:bg-theme-teal hover:text-white"
+          onClick={onDetailsClick}
+        >
+          Detaylı Bilgi
+        </Button>
       </div>
     </div>
   );
