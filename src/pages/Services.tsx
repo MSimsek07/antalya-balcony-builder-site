@@ -1,58 +1,128 @@
+import { useState } from "react";
 import Layout from "@/components/Layout";
 import Hero from "@/components/Hero";
 import ServiceCard from "@/components/ServiceCard";
-import AntalyaMap from "@/components/AntalyaMap";
+import { Button } from "@/components/ui/button";
 import { Check, MapPin } from "lucide-react";
+import AntalyaMap from "@/components/AntalyaMap";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+
+interface Service {
+  title: string;
+  description: string;
+  image: string;
+  link: string;
+  detailedDescription?: string;
+  features?: { title: string; description: string }[];
+}
 
 const ServicesPage = () => {
-  const services = [
+  const [selectedService, setSelectedService] = useState<Service | null>(null);
+
+  const services: Service[] = [
     {
       title: "Cam Balkon",
-      description: "Balkonunuzu dört mevsim kullanılabilir bir alana çeviriyoruz. Farklı sistemler ve özel çözümlerle ihtiyacınıza en uygun cam balkon sistemini sunuyoruz.",
+      description: "Balkonlarınızı dört mevsim kullanılabilir bir yaşam alanına dönüştürün. Yüksek kaliteli cam balkon sistemleri ile konfor ve estetik bir arada.",
       image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fGJhbGNvbnl8ZW58MHx8MHx8fDA%3D",
-      link: "/services#cam-balkon"
+      link: "/services#cam-balkon",
+      detailedDescription: "Balkonlarınızı dört mevsim kullanılabilir bir alana çeviren cam balkon sistemleri, hem fonksiyonel hem de estetik çözümler sunar. 8mm temperli cam kullanarak üretilen sistemlerimiz, güvenli ve dayanıklıdır. Alüminyum profiller farklı renk seçenekleriyle evinizin stiline uyum sağlar.",
+      features: [
+        { title: "Katlanır Cam Balkon", description: "Tam açılım sağlayan sistemler" },
+        { title: "Sürme Cam Balkon", description: "Alan tasarrufu sağlayan sistemler" },
+        { title: "Isıcamlı Sistemler", description: "Yüksek ısı yalıtımı sağlayan sistemler" },
+        { title: "Özel Tasarımlar", description: "İhtiyaca göre özel çözümler" }
+      ]
+    },
+    {
+      title: "Cam Balkon Perde",
+      description: "Cam balkonlarınız için özel tasarlanmış, kullanımı kolay ve estetik perde sistemleri. Güneş kontrolü ve mahremiyet için ideal çözümler.",
+      image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fGJhbGNvbnl8ZW58MHx8MHx8fDA%3D",
+      link: "/services#cam-balkon",
+      detailedDescription: "Balkonlarınızı dört mevsim kullanılabilir bir alana çeviren cam balkon sistemleri, hem fonksiyonel hem de estetik çözümler sunar. 8mm temperli cam kullanarak üretilen sistemlerimiz, güvenli ve dayanıklıdır. Alüminyum profiller farklı renk seçenekleriyle evinizin stiline uyum sağlar.",
+      features: [
+        { title: "Katlanır Cam Balkon", description: "Tam açılım sağlayan sistemler" },
+        { title: "Sürme Cam Balkon", description: "Alan tasarrufu sağlayan sistemler" },
+        { title: "Isıcamlı Sistemler", description: "Yüksek ısı yalıtımı sağlayan sistemler" },
+        { title: "Özel Tasarımlar", description: "İhtiyaca göre özel çözümler" }
+      ]
     },
     {
       title: "Isıcamlı PVC Pencere",
       description: "Yüksek ısı ve ses yalıtımı sağlayan, estetik ve dayanıklı ısıcamlı PVC pencere sistemleri ile evinizde konfor ve tasarruf sunuyoruz.",
-      image: "https://images.unsplash.com/photo-1600573472556-e636c2acda88?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fHdpbmRvd3N8ZW58MHx8MHx8fDA%3D",
-      link: "/services#pvc-pencere"
+      image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fGJhbGNvbnl8ZW58MHx8MHx8fDA%3D",
+      link: "/services#cam-balkon",
+      detailedDescription: "Balkonlarınızı dört mevsim kullanılabilir bir alana çeviren cam balkon sistemleri, hem fonksiyonel hem de estetik çözümler sunar. 8mm temperli cam kullanarak üretilen sistemlerimiz, güvenli ve dayanıklıdır. Alüminyum profiller farklı renk seçenekleriyle evinizin stiline uyum sağlar.",
+      features: [
+        { title: "Katlanır Cam Balkon", description: "Tam açılım sağlayan sistemler" },
+        { title: "Sürme Cam Balkon", description: "Alan tasarrufu sağlayan sistemler" },
+        { title: "Isıcamlı Sistemler", description: "Yüksek ısı yalıtımı sağlayan sistemler" },
+        { title: "Özel Tasarımlar", description: "İhtiyaca göre özel çözümler" }
+      ]
     },
     {
       title: "Ofis Cam Bölmesi",
       description: "Modern ofis alanları için şık ve fonksiyonel cam bölme sistemleri. Aydınlık, ferah ve profesyonel çalışma alanları için ideal çözümler.",
-      image: "https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8b2ZmaWNlJTIwZ2xhc3N8ZW58MHx8MHx8fDA%3D",
-      link: "/services#ofis-cam-bolme"
-    },
-    {
-      title: "Cam Balkon Perdesi",
-      description: "Cam balkonlarınız için özel tasarlanmış, kullanımı kolay ve estetik perde sistemleri. Güneş kontrolü ve mahremiyet için ideal çözümler.",
-      image: "https://images.unsplash.com/photo-1617806501736-233297eb1aa0?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8Y3VydGFpbnN8ZW58MHx8MHx8fDA%3D",
-      link: "/services#cam-balkon-perde"
+      image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fGJhbGNvbnl8ZW58MHx8MHx8fDA%3D",
+      link: "/services#cam-balkon",
+      detailedDescription: "Balkonlarınızı dört mevsim kullanılabilir bir alana çeviren cam balkon sistemleri, hem fonksiyonel hem de estetik çözümler sunar. 8mm temperli cam kullanarak üretilen sistemlerimiz, güvenli ve dayanıklıdır. Alüminyum profiller farklı renk seçenekleriyle evinizin stiline uyum sağlar.",
+      features: [
+        { title: "Katlanır Cam Balkon", description: "Tam açılım sağlayan sistemler" },
+        { title: "Sürme Cam Balkon", description: "Alan tasarrufu sağlayan sistemler" },
+        { title: "Isıcamlı Sistemler", description: "Yüksek ısı yalıtımı sağlayan sistemler" },
+        { title: "Özel Tasarımlar", description: "İhtiyaca göre özel çözümler" }
+      ]
     },
     {
       title: "Sineklik",
       description: "Yaz aylarında böcek ve sineklerden korunmanızı sağlayan, pencere ve kapılarınıza uygun çeşitli sineklik modelleri. Pileli, menteşeli ve sürgülü seçenekler.",
-      image: "https://images.unsplash.com/photo-1592305245698-894655947413?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8d2luZG93JTIwc2NyZWVufGVufDB8fDB8fHww",
-      link: "/services#sineklik"
+      image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fGJhbGNvbnl8ZW58MHx8MHx8fDA%3D",
+      link: "/services#cam-balkon",
+      detailedDescription: "Balkonlarınızı dört mevsim kullanılabilir bir alana çeviren cam balkon sistemleri, hem fonksiyonel hem de estetik çözümler sunar. 8mm temperli cam kullanarak üretilen sistemlerimiz, güvenli ve dayanıklıdır. Alüminyum profiller farklı renk seçenekleriyle evinizin stiline uyum sağlar.",
+      features: [
+        { title: "Katlanır Cam Balkon", description: "Tam açılım sağlayan sistemler" },
+        { title: "Sürme Cam Balkon", description: "Alan tasarrufu sağlayan sistemler" },
+        { title: "Isıcamlı Sistemler", description: "Yüksek ısı yalıtımı sağlayan sistemler" },
+        { title: "Özel Tasarımlar", description: "İhtiyaca göre özel çözümler" }
+      ]
     },
     {
       title: "Panjur Sistemleri",
       description: "Güneş kontrolü, ısı yalıtımı ve güvenlik için modern panjur sistemleri. Manuel veya motorlu seçeneklerle konfor ve kontrol sizin elinizde.",
-      image: "https://images.unsplash.com/photo-1616788045717-56116e22e1df?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8c2h1dHRlcnN8ZW58MHx8MHx8fDA%3D",
-      link: "/services#panjur"
+      image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fGJhbGNvbnl8ZW58MHx8MHx8fDA%3D",
+      link: "/services#cam-balkon",
+      detailedDescription: "Balkonlarınızı dört mevsim kullanılabilir bir alana çeviren cam balkon sistemleri, hem fonksiyonel hem de estetik çözümler sunar. 8mm temperli cam kullanarak üretilen sistemlerimiz, güvenli ve dayanıklıdır. Alüminyum profiller farklı renk seçenekleriyle evinizin stiline uyum sağlar.",
+      features: [
+        { title: "Katlanır Cam Balkon", description: "Tam açılım sağlayan sistemler" },
+        { title: "Sürme Cam Balkon", description: "Alan tasarrufu sağlayan sistemler" },
+        { title: "Isıcamlı Sistemler", description: "Yüksek ısı yalıtımı sağlayan sistemler" },
+        { title: "Özel Tasarımlar", description: "İhtiyaca göre özel çözümler" }
+      ]
     },
     {
       title: "Alüminyum Doğrama",
       description: "Dayanıklı ve estetik alüminyum doğrama sistemleri ile kapı, pencere ve cephe uygulamaları. Yüksek kalite ve uzun ömürlü çözümler.",
-      image: "https://images.unsplash.com/photo-1638775686635-81b008239d5b?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fGFsdW1pbnVtJTIwZG9vcnxlbnwwfHwwfHx8MA%3D%3D",
-      link: "/services#aluminyum-dograma"
+      image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fGJhbGNvbnl8ZW58MHx8MHx8fDA%3D",
+      link: "/services#cam-balkon",
+      detailedDescription: "Balkonlarınızı dört mevsim kullanılabilir bir alana çeviren cam balkon sistemleri, hem fonksiyonel hem de estetik çözümler sunar. 8mm temperli cam kullanarak üretilen sistemlerimiz, güvenli ve dayanıklıdır. Alüminyum profiller farklı renk seçenekleriyle evinizin stiline uyum sağlar.",
+      features: [
+        { title: "Katlanır Cam Balkon", description: "Tam açılım sağlayan sistemler" },
+        { title: "Sürme Cam Balkon", description: "Alan tasarrufu sağlayan sistemler" },
+        { title: "Isıcamlı Sistemler", description: "Yüksek ısı yalıtımı sağlayan sistemler" },
+        { title: "Özel Tasarımlar", description: "İhtiyaca göre özel çözümler" }
+      ]
     },
     {
       title: "Kış Bahçesi",
       description: "Evinize ekstra yaşam alanı katan, dört mevsim kullanılabilen şık ve konforlu kış bahçesi sistemleri. Özel tasarım ve profesyonel uygulama.",
-      image: "https://images.unsplash.com/photo-1584280795027-75b0facfc969?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8d2ludGVyJTIwZ2FyZGVufGVufDB8fDB8fHww",
-      link: "/services#kis-bahcesi"
+      image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fGJhbGNvbnl8ZW58MHx8MHx8fDA%3D",
+      link: "/services#cam-balkon",
+      detailedDescription: "Balkonlarınızı dört mevsim kullanılabilir bir alana çeviren cam balkon sistemleri, hem fonksiyonel hem de estetik çözümler sunar. 8mm temperli cam kullanarak üretilen sistemlerimiz, güvenli ve dayanıklıdır. Alüminyum profiller farklı renk seçenekleriyle evinizin stiline uyum sağlar.",
+      features: [
+        { title: "Katlanır Cam Balkon", description: "Tam açılım sağlayan sistemler" },
+        { title: "Sürme Cam Balkon", description: "Alan tasarrufu sağlayan sistemler" },
+        { title: "Isıcamlı Sistemler", description: "Yüksek ısı yalıtımı sağlayan sistemler" },
+        { title: "Özel Tasarımlar", description: "İhtiyaca göre özel çözümler" }
+      ]
     }
   ];
 
@@ -82,137 +152,66 @@ const ServicesPage = () => {
                 description={service.description}
                 image={service.image}
                 link={service.link}
+                onDetailsClick={() => setSelectedService(service)}
               />
             ))}
           </div>
-        </div>
+        </div>  
       </section>
 
-      {/* Service Details - Cam Balkon */}
-      <section id="cam-balkon" className="py-16 bg-gray-50">
-        <div className="container-custom">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="section-title">Cam Balkon</h2>
-              <p className="text-gray-600 mb-6">
-                Balkonlarınızı dört mevsim kullanılabilir bir alana çeviren cam balkon sistemleri, hem fonksiyonel hem de estetik çözümler sunar. Katlanır, sürme veya sabit cam balkon sistemleri arasından ihtiyacınıza en uygun olanı seçebilirsiniz.
-              </p>
-              <p className="text-gray-600 mb-6">
-                8mm temperli cam kullanarak üretilen sistemlerimiz, güvenli ve dayanıklıdır. Alüminyum profiller farklı renk seçenekleriyle evinizin stiline uyum sağlar.
-              </p>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-                <div className="flex items-start">
-                  <div className="bg-theme-teal/10 p-2 rounded-full mr-3">
-                    <Check className="h-5 w-5 text-theme-teal" />
-                  </div>
-                  <div>
-                    <h4 className="font-medium text-theme-blue">Katlanır Cam Balkon</h4>
-                    <p className="text-sm text-gray-500">Tam açılım sağlayan sistemler</p>
-                  </div>
-                </div>
-                <div className="flex items-start">
-                  <div className="bg-theme-teal/10 p-2 rounded-full mr-3">
-                    <Check className="h-5 w-5 text-theme-teal" />
-                  </div>
-                  <div>
-                    <h4 className="font-medium text-theme-blue">Sürme Cam Balkon</h4>
-                    <p className="text-sm text-gray-500">Alan tasarrufu sağlayan sistemler</p>
-                  </div>
-                </div>
-                <div className="flex items-start">
-                  <div className="bg-theme-teal/10 p-2 rounded-full mr-3">
-                    <Check className="h-5 w-5 text-theme-teal" />
-                  </div>
-                  <div>
-                    <h4 className="font-medium text-theme-blue">Isıcamlı Sistemler</h4>
-                    <p className="text-sm text-gray-500">Yüksek ısı yalıtımı sağlayan sistemler</p>
-                  </div>
-                </div>
-                <div className="flex items-start">
-                  <div className="bg-theme-teal/10 p-2 rounded-full mr-3">
-                    <Check className="h-5 w-5 text-theme-teal" />
-                  </div>
-                  <div>
-                    <h4 className="font-medium text-theme-blue">Özel Tasarımlar</h4>
-                    <p className="text-sm text-gray-500">İhtiyaca göre özel çözümler</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div>
-              <img
-                src="https://images.unsplash.com/photo-1616096233461-373515df79aa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
-                alt="Cam Balkon Sistemi"
-                className="rounded-lg shadow-xl"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Service Details Modal */}
+      <Dialog open={!!selectedService} onOpenChange={() => setSelectedService(null)}>
+        <DialogContent className="max-w-3xl">
+          {selectedService && (
+            <>
+              <DialogHeader className="border-b pb-4">
+                <DialogTitle className="text-2xl font-bold text-theme-blue">{selectedService.title}</DialogTitle>
+                <DialogDescription className="text-base text-gray-600 mt-2">
+                  {selectedService.detailedDescription || selectedService.description}
+                </DialogDescription>
+              </DialogHeader>
 
-      {/* Service Details - PVC Pencere */}
-      <section id="pvc-pencere" className="py-16 md:py-24">
-        <div className="container-custom">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="order-2 lg:order-1">
-              <img
-                src="https://images.unsplash.com/photo-1513694203232-719a280e022f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80"
-                alt="PVC Pencere Sistemi"
-                className="rounded-lg shadow-xl"
-              />
-            </div>
-            <div className="order-1 lg:order-2">
-              <h2 className="section-title">Isıcamlı PVC Pencere</h2>
-              <p className="text-gray-600 mb-6">
-                Modern PVC pencere sistemleri, üstün ısı ve ses yalıtımı özellikleri ile enerji tasarrufu sağlar ve yaşam konforunuzu artırır. Çift cam veya üç cam seçenekleriyle farklı iklim koşullarına uygun çözümler sunuyoruz.
-              </p>
-              <p className="text-gray-600 mb-6">
-                UV ışınlarına dayanıklı, solmayan ve çürümeyen PVC profiller, uzun yıllar boyunca ilk günkü görünümünü korur. Farklı renk ve desen seçenekleri ile evinizin tarzına uyum sağlar.
-              </p>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-                <div className="flex items-start">
-                  <div className="bg-theme-teal/10 p-2 rounded-full mr-3">
-                    <Check className="h-5 w-5 text-theme-teal" />
-                  </div>
-                  <div>
-                    <h4 className="font-medium text-theme-blue">Yüksek Isı Yalıtımı</h4>
-                    <p className="text-sm text-gray-500">Enerji tasarrufu sağlar</p>
-                  </div>
+              <div className="mt-6 space-y-6">
+                <div className="aspect-[16/9] w-full overflow-hidden rounded-lg bg-gray-100">
+                  <img 
+                    src={selectedService.image} 
+                    alt={selectedService.title}
+                    className="w-full h-full object-cover"
+                  />
                 </div>
-                <div className="flex items-start">
-                  <div className="bg-theme-teal/10 p-2 rounded-full mr-3">
-                    <Check className="h-5 w-5 text-theme-teal" />
+
+                {selectedService.features && (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {selectedService.features.map((feature, index) => (
+                      <div key={index} className="flex items-start gap-3">
+                        <div className="bg-theme-teal/10 p-2 rounded-full shrink-0">
+                          <Check className="h-5 w-5 text-theme-teal" />
+                        </div>
+                        <div>
+                          <h4 className="font-medium text-theme-blue">{feature.title}</h4>
+                          <p className="text-sm text-gray-600 mt-1">{feature.description}</p>
+                        </div>
+                      </div>
+                    ))}
                   </div>
-                  <div>
-                    <h4 className="font-medium text-theme-blue">Ses Yalıtımı</h4>
-                    <p className="text-sm text-gray-500">Dış gürültüyü minimize eder</p>
-                  </div>
-                </div>
-                <div className="flex items-start">
-                  <div className="bg-theme-teal/10 p-2 rounded-full mr-3">
-                    <Check className="h-5 w-5 text-theme-teal" />
-                  </div>
-                  <div>
-                    <h4 className="font-medium text-theme-blue">Dayanıklılık</h4>
-                    <p className="text-sm text-gray-500">Uzun ömürlü ve bakım gerektirmez</p>
-                  </div>
-                </div>
-                <div className="flex items-start">
-                  <div className="bg-theme-teal/10 p-2 rounded-full mr-3">
-                    <Check className="h-5 w-5 text-theme-teal" />
-                  </div>
-                  <div>
-                    <h4 className="font-medium text-theme-blue">Farklı Açılım Seçenekleri</h4>
-                    <p className="text-sm text-gray-500">Vasistas, çift açılım, sürme</p>
-                  </div>
+                )}
+
+                <div className="border-t pt-6 mt-6 flex justify-end">
+                  <a 
+                    href="https://api.whatsapp.com/send?phone=905454043462"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-medium transition-colors"
+                  >
+                    <img src="/whatsapp.png" alt="WhatsApp" className="h-5 w-5" />
+                    Teklif Al
+                  </a>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
 
       {/* Service Areas Map */}
       <section className="py-16 bg-gray-50">
@@ -238,8 +237,6 @@ const ServicesPage = () => {
           </div>
         </div>
       </section>
-
-      {/* Continue with other services in similar pattern... */}
     </Layout>
   );
 };

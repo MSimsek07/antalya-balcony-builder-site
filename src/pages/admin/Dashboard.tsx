@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate, Routes, Route } from "react-router-dom";
 import { 
@@ -113,7 +112,15 @@ const AdminDashboard = ({ onLogout }: AdminDashboardProps) => {
             </SidebarGroup>
           </SidebarContent>
           
-          <SidebarFooter className="border-t border-sidebar-border p-4">
+          <SidebarFooter className="border-t border-sidebar-border p-4 space-y-2">
+            <SidebarMenuButton 
+              variant="outline"
+              onClick={() => navigate("/")}
+            >
+              <Home className="h-5 w-5" />
+              <span>Ana Sayfaya Dön</span>
+            </SidebarMenuButton>
+            
             <SidebarMenuButton 
               variant="outline"
               onClick={handleLogout}

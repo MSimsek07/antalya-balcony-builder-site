@@ -1,9 +1,9 @@
-
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
+import { ArrowLeft } from "lucide-react";
 
 interface AdminLoginProps {
   onLogin: () => void;
@@ -53,6 +53,14 @@ const AdminLogin = ({ onLogin }: AdminLoginProps) => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="max-w-md w-full p-8 bg-white rounded-lg shadow-md">
+        <Link 
+          to="/"
+          className="inline-flex items-center text-theme-teal hover:text-theme-teal/90 mb-6"
+        >
+          <ArrowLeft className="h-4 w-4 mr-2" />
+          Ana Sayfaya Dön
+        </Link>
+
         <div className="text-center mb-8">
           <h1 className="text-2xl font-bold text-theme-blue">Cam Balkon Antalya</h1>
           <p className="text-gray-600 mt-2">Yönetim Paneli Girişi</p>
