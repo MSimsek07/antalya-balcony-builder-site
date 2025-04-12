@@ -1,5 +1,3 @@
-import { useState } from "react";
-import { useNavigate, Routes, Route } from "react-router-dom";
 import { 
   Home, 
   Package, 
@@ -9,8 +7,11 @@ import {
   User,
   Building,
   Globe,
-  Lock
+  Lock,
+  ArrowLeft
 } from "lucide-react";
+import { useState } from "react";
+import { useNavigate, Routes, Route, Link } from "react-router-dom";
 import AdminHome from "./Home";
 import AdminServices from "./Services";
 import AdminGallery from "./Gallery";
@@ -69,6 +70,13 @@ const AdminDashboard = ({ onLogout }: AdminDashboardProps) => {
       <div className="min-h-screen flex w-full bg-gray-100">
         <Sidebar>
           <SidebarHeader className="p-4 border-b border-sidebar-border">
+            <Link 
+              to="/"
+              className="inline-flex items-center text-theme-teal hover:text-theme-teal/90 mb-2"
+            >
+              <ArrowLeft className="h-4 w-4 mr-2" />
+              Ana Sayfaya Dön
+            </Link>
             <h1 className="text-xl font-bold">Admin Panel</h1>
           </SidebarHeader>
           
@@ -112,15 +120,7 @@ const AdminDashboard = ({ onLogout }: AdminDashboardProps) => {
             </SidebarGroup>
           </SidebarContent>
           
-          <SidebarFooter className="border-t border-sidebar-border p-4 space-y-2">
-            <SidebarMenuButton 
-              variant="outline"
-              onClick={() => navigate("/")}
-            >
-              <Home className="h-5 w-5" />
-              <span>Ana Sayfaya Dön</span>
-            </SidebarMenuButton>
-            
+          <SidebarFooter className="border-t border-sidebar-border p-4">
             <SidebarMenuButton 
               variant="outline"
               onClick={handleLogout}
