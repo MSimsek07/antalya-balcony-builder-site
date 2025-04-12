@@ -1,5 +1,4 @@
-
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,8 +8,6 @@ import {
   Edit, 
   Trash, 
   Plus, 
-  MoveHorizontal,
-  X,
   Upload 
 } from "lucide-react";
 import {
@@ -41,19 +38,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-
-interface GalleryImage {
-  id: string;
-  src: string;
-  alt: string;
-  category: string;
-  imageFile?: File | null;
-}
-
-interface ServiceCategory {
-  id: string;
-  name: string;
-}
+import { useGalleryStore } from "@/data/galleryData";
+import type { GalleryImage } from "@/data/galleryData";
 
 const AdminGallery = () => {
   const { toast } = useToast();
@@ -62,75 +48,14 @@ const AdminGallery = () => {
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   
-  // Sample data - in a real app this would come from an API
-  const [images, setImages] = useState<GalleryImage[]>([
-    {
-      id: "1",
-      src: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c",
-      alt: "Cam Balkon Projesi 1",
-      category: "cambalkon"
-    },
-    {
-      id: "2",
-      src: "https://images.unsplash.com/photo-1600573472556-e636c2acda88",
-      alt: "PVC Pencere Projesi 1",
-      category: "pvc"
-    },
-    {
-      id: "3",
-      src: "https://images.unsplash.com/photo-1527853787696-f7be74f2e39a",
-      alt: "Ofis Bölme Projesi 1",
-      category: "office"
-    },
-    {
-      id: "4",
-      src: "https://images.unsplash.com/photo-1600607686527-6fb886090705",
-      alt: "Cam Balkon Projesi 2",
-      category: "cambalkon"
-    },
-  ]);
-  
-  // Get categories from services
-  const [categories, setCategories] = useState<ServiceCategory[]>([
-    { id: "cambalkon", name: "Cam Balkon" },
-    { id: "pvc", name: "PVC Pencere" },
-    { id: "office", name: "Ofis Bölme" },
-    { id: "other", name: "Diğer" },
-  ]);
-
-  // Load service categories when component mounts
-  useEffect(() => {
-    // In a real app, this would fetch from an API
-    // For now, we'll use the sample data
-    const serviceCategories = [
-      { id: "cambalkon", name: "Cam Balkon" },
-      { id: "pvc", name: "PVC Pencere" },
-      { id: "office", name: "Ofis Bölme" },
-      { id: "other", name: "Diğer" },
-    ];
-    
-    setCategories(serviceCategories);
-  }, []);
-
-  const handleSave = () => {
-    setSaving(true);
-    
-    // Simulate saving
-    setTimeout(() => {
-      toast({
-        title: "Başarılı",
-        description: "Proje bilgileri kaydedildi.",
-      });
-      setSaving(false);
-    }, 1000);
-  };
+  const { images, categories, addImage, updateImage, deleteImage } = useGalleryStore();
 
   const handleEdit = (image: GalleryImage) => {
     setEditingImage({...image});
   };
 
   const handleDelete = (id: string) => {
-    setImages(images.filter(image => image.id !== id));
+    deleteImage(id);
     toast({
       title: "Silindi",
       description: "Resim başarıyla silindi.",
@@ -140,19 +65,7 @@ const AdminGallery = () => {
   const handleUpdateImage = () => {
     if (!editingImage) return;
     
-    // Process file upload if there's one
-    let updatedImage = { ...editingImage };
-    
-    if (editingImage.imageFile) {
-      // In a real app, you would upload the file to a server here
-      // For now, we'll create a temporary URL
-      const imageUrl = URL.createObjectURL(editingImage.imageFile);
-      updatedImage.src = imageUrl;
-    }
-    
-    setImages(images.map(image => 
-      image.id === editingImage.id ? updatedImage : image
-    ));
+    updateImage(editingImage.id, editingImage);
     
     toast({
       title: "Güncellendi",
@@ -165,19 +78,12 @@ const AdminGallery = () => {
   const handleAddImage = () => {
     if (!editingImage) return;
     
-    // Process file upload if there's one
-    let newImage = { ...editingImage };
+    const newImage: GalleryImage = {
+      ...editingImage,
+      id: Date.now().toString(),
+    };
     
-    if (editingImage.imageFile) {
-      // In a real app, you would upload the file to a server here
-      // For now, we'll create a temporary URL
-      const imageUrl = URL.createObjectURL(editingImage.imageFile);
-      newImage.src = imageUrl;
-    }
-    
-    newImage.id = Date.now().toString();
-    
-    setImages([...images, newImage]);
+    addImage(newImage);
     
     toast({
       title: "Eklendi",
@@ -188,13 +94,15 @@ const AdminGallery = () => {
     setIsAddDialogOpen(false);
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files && e.target.files[0];
     if (file && editingImage) {
+      // In a real app, you would upload to a server and get a URL back
+      // For now, we'll create a local URL
+      const localUrl = URL.createObjectURL(file);
       setEditingImage({
         ...editingImage,
-        imageFile: file,
-        src: URL.createObjectURL(file)
+        src: localUrl
       });
     }
   };
@@ -226,8 +134,7 @@ const AdminGallery = () => {
                 id: '',
                 src: '',
                 alt: '',
-                category: categories.length > 0 ? categories[0].id : '',
-                imageFile: null
+                category: categories[1].id, // Skip "all" category
               })}
             >
               <Plus className="h-4 w-4" />
@@ -262,7 +169,7 @@ const AdminGallery = () => {
                     <SelectValue placeholder="Kategori seçin" />
                   </SelectTrigger>
                   <SelectContent>
-                    {categories.map(category => (
+                    {categories.slice(1).map(category => (
                       <SelectItem key={category.id} value={category.id}>
                         {category.name}
                       </SelectItem>
@@ -331,12 +238,6 @@ const AdminGallery = () => {
       <Card className="shadow-sm">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle>Proje Resimleri</CardTitle>
-          <div className="flex items-center space-x-2">
-            <Button variant="outline" size="sm" className="text-xs">
-              <MoveHorizontal className="h-3.5 w-3.5 mr-1" />
-              Sıralama Değiştir
-            </Button>
-          </div>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -391,7 +292,7 @@ const AdminGallery = () => {
                               <SelectValue placeholder="Kategori seçin" />
                             </SelectTrigger>
                             <SelectContent>
-                              {categories.map(category => (
+                              {categories.slice(1).map(category => (
                                 <SelectItem key={category.id} value={category.id}>
                                   {category.name}
                                 </SelectItem>
@@ -490,35 +391,6 @@ const AdminGallery = () => {
                 </div>
               </div>
             ))}
-            
-            {/* Add new image placeholder */}
-            <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
-              <DialogTrigger asChild>
-                <div className="border border-dashed rounded-lg h-48 flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50 transition-colors"
-                  onClick={() => setEditingImage({
-                    id: '',
-                    src: '',
-                    alt: '',
-                    category: categories.length > 0 ? categories[0].id : '',
-                    imageFile: null
-                  })}
-                >
-                  <Plus className="h-8 w-8 text-gray-400" />
-                  <p className="text-sm text-gray-500 mt-2">Yeni Resim Ekle</p>
-                </div>
-              </DialogTrigger>
-            </Dialog>
-          </div>
-          
-          <div className="mt-6">
-            <Button 
-              className="bg-theme-teal hover:bg-theme-teal/90 flex items-center gap-2"
-              onClick={handleSave}
-              disabled={saving}
-            >
-              <Save className="h-4 w-4" />
-              {saving ? "Kaydediliyor..." : "Tüm Değişiklikleri Kaydet"}
-            </Button>
           </div>
         </CardContent>
       </Card>
