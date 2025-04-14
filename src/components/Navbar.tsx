@@ -69,7 +69,7 @@ const Navbar = () => {
       }`}
     >
       <div className="container-custom flex justify-between items-center">
-        <Link to="/" className="z-50">
+        <Link to="/" className="relative z-[60]">
           <div className="flex items-center gap-3">
             <img 
               src="/logo.jpg" 
@@ -136,7 +136,7 @@ const Navbar = () => {
 
         <div className="lg:hidden flex items-center">
           <button
-            className="text-white p-2 focus:outline-none"
+            className="text-white p-2 focus:outline-none relative z-[60]"
             onClick={toggleMenu}
             aria-label="Toggle menu"
           >
@@ -150,7 +150,7 @@ const Navbar = () => {
 
         {/* Mobile menu */}
         <div
-          className={`fixed inset-0 bg-theme-blue/95 z-40 transition-transform duration-300 transform lg:hidden ${
+          className={`fixed inset-0 bg-theme-blue/95 z-[55] transition-transform duration-300 transform lg:hidden ${
             isOpen ? "translate-x-0" : "translate-x-full"
           }`}
         >
