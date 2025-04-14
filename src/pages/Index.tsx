@@ -144,7 +144,7 @@ const HomePage = () => {
               <p className="text-gray-600 mb-6">
                 Müşteri memnuniyetini ön planda tutan anlayışımız, kaliteli malzemeler ve ustalıkla gerçekleştirilen montaj hizmetlerimiz ile binlerce müşterimizin güvenini kazandık.
               </p>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
                 <div className="flex items-start">
                   <div className="bg-theme-teal/10 p-2 rounded-full mr-3">
@@ -183,7 +183,7 @@ const HomePage = () => {
                   </div>
                 </div>
               </div>
-              
+
               <Link to="/about">
                 <Button className="bg-theme-teal hover:bg-theme-teal/90 flex items-center">
                   Daha Fazla Bilgi
@@ -204,7 +204,7 @@ const HomePage = () => {
               Antalya'nın en çok tercih edilen cam balkon ve PVC firması olmamızın arkasındaki nedenler
             </p>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="bg-white p-8 rounded-lg shadow-sm text-center">
               <div className="bg-theme-teal/10 w-16 h-16 flex items-center justify-center rounded-full mx-auto mb-6">
@@ -215,7 +215,7 @@ const HomePage = () => {
                 Projenizi belirlenen sürede tamamlar, sizi bekletmeyiz. Teslimat tarihlerimize sadık kalır, planlarınızın aksamasını önleriz.
               </p>
             </div>
-            
+
             <div className="bg-white p-8 rounded-lg shadow-sm text-center">
               <div className="bg-theme-teal/10 w-16 h-16 flex items-center justify-center rounded-full mx-auto mb-6">
                 <Award className="h-8 w-8 text-theme-teal" />
@@ -225,7 +225,7 @@ const HomePage = () => {
                 Üretim süreçlerimizde Avrupa standartlarını takip eder, uluslararası kalite kriterlerine uygun ürünler sunarız.
               </p>
             </div>
-            
+
             <div className="bg-white p-8 rounded-lg shadow-sm text-center">
               <div className="bg-theme-teal/10 w-16 h-16 flex items-center justify-center rounded-full mx-auto mb-6">
                 <Wrench className="h-8 w-8 text-theme-teal" />
@@ -248,7 +248,7 @@ const HomePage = () => {
               Kaliteli ürünler ve profesyonel montaj hizmetleri ile yaşam alanlarınıza değer katıyoruz
             </p>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {services.map((service, index) => (
               <ServiceCard
@@ -257,10 +257,13 @@ const HomePage = () => {
                 description={service.description}
                 image={service.image}
                 link={service.link}
+                onDetailsClick={() => {
+                  console.log(`Details clicked for: ${service.title}`);
+                }}
               />
             ))}
           </div>
-          
+
           <div className="text-center mt-12">
             <Link to="/services">
               <Button className="bg-theme-teal hover:bg-theme-teal/90">
@@ -283,10 +286,10 @@ const HomePage = () => {
               Cam balkon sistemleri hakkında merak ettiğiniz soruların cevapları
             </p>
           </div>
-          
+
           <div className="max-w-3xl mx-auto">
             <Accordion items={faqItems} />
-            
+
             <div className="text-center mt-12">
               <Link to="/faq">
                 <Button variant="outline" className="border-theme-teal text-theme-teal hover:bg-theme-teal hover:text-white">
@@ -306,9 +309,9 @@ const HomePage = () => {
             <p className="text-white/80 max-w-2xl mx-auto mb-8">
               Cam balkon, PVC pencere ve diğer hizmetlerimiz hakkında detaylı bilgi almak veya ücretsiz keşif için hemen iletişime geçin.
             </p>
-            <a 
-              href="https://api.whatsapp.com/send?phone=905454043462" 
-              target="_blank" 
+            <a
+              href="https://api.whatsapp.com/send?phone=905454043462"
+              target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-md bg-green-500 hover:bg-green-600 px-8 py-2.5 text-lg font-medium text-white transition-colors"
             >
