@@ -3,41 +3,16 @@ import Layout from "@/components/Layout";
 import Hero from "@/components/Hero";
 import { Check, Users, Award, ThumbsUp, ClipboardCheck } from "lucide-react";
 
+
 const AboutPage = () => {
-  const milestones = [
-    {
-      year: "2009",
-      title: "Firmamızın Kuruluşu",
-      description: "Antalya'da küçük bir atölyede cam balkon sistemleri üretimi ve montajı ile faaliyetlerimize başladık."
-    },
-    {
-      year: "2012",
-      title: "PVC Pencere Üretimine Başlangıç",
-      description: "Ürün yelpazemizi genişleterek PVC pencere ve kapı sistemleri üretimine başladık."
-    },
-    {
-      year: "2015",
-      title: "Yeni Üretim Tesisi",
-      description: "Artan talep doğrultusunda daha büyük ve modern bir üretim tesisine taşındık."
-    },
-    {
-      year: "2018",
-      title: "ISO 9001 Kalite Sertifikası",
-      description: "Kalite standartlarımızı belgeleyerek ISO 9001 Kalite Yönetim Sistemi sertifikasını aldık."
-    },
-    {
-      year: "2022",
-      title: "Dijital Dönüşüm",
-      description: "Üretim süreçlerimizi dijitalleştirerek daha verimli ve hızlı hizmet sunmaya başladık."
-    }
-  ];
+  
 
   return (
     <Layout>
       <Hero
         title="Hakkımızda"
         subtitle="2009 yılından beri Antalya'da cam balkon ve PVC pencere sistemleri alanında kaliteli hizmet sunuyoruz."
-        image="https://images.unsplash.com/photo-1556912172-45b7abe8b7e1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+        image="https://ısıcamlıcambalkon.com/wp-content/uploads/2020/03/cankaya-cam-balkon-isicamli-cambalkon.jpg"
       />
 
       {/* About Us Content */}
@@ -58,7 +33,7 @@ const AboutPage = () => {
             </div>
             <div>
               <img
-                src="https://lh3.googleusercontent.com/p/AF1QipN0yIbHYjwkp5FCD4uwuOceWa9I6DnyFAWEB_fs=w427-h240-k-no"
+                src="/interface_images/images (4).jpg"
                 alt="Cam Balkon Antalya Ekibi"
                 className="rounded-lg shadow-xl"
               />

@@ -124,7 +124,7 @@ const HomePage = () => {
             <div>
               <div className="relative">
                 <img
-                  src="https://images.unsplash.com/photo-1600607686527-6fb886090705?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80"
+                  src="/interface_images/images (8).jpg"
                   alt="Cam Balkon Antalya Binası"
                   className="rounded-lg shadow-xl"
                 />
