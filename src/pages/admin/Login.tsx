@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { ArrowLeft } from "lucide-react";
+import { signInWithEmailAndPassword } from "firebase/auth"; // Import Firebase auth function
+import { auth } from "@/firebaseConfig"; // Import your Firebase auth instance
 
 interface AdminLoginProps {
   onLogin: () => void;
@@ -13,7 +15,7 @@ const AdminLogin = ({ onLogin }: AdminLoginProps) => {
   const { toast } = useToast();
   const navigate = useNavigate();
   const [credentials, setCredentials] = useState({
-    username: "",
+    email: "", // Changed from username to email
     password: "",
   });
   const [isLoading, setIsLoading] = useState(false);
@@ -26,34 +28,44 @@ const AdminLogin = ({ onLogin }: AdminLoginProps) => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
 
-    // Placeholder for real authentication
-    setTimeout(() => {
-      if (credentials.username === "admin" && credentials.password === "password") {
-        toast({
-          title: "Giriş başarılı",
-          description: "Yönetim paneline yönlendiriliyorsunuz.",
-        });
-        onLogin();
-        navigate("/admin");
+    try {
+      await signInWithEmailAndPassword(auth, credentials.email, credentials.password);
+      toast({
+        title: "Giriş başarılı",
+        description: "Yönetim paneline yönlendiriliyorsunuz.",
+      });
+      onLogin(); // Call the onLogin prop to update the parent state if needed
+      navigate("/admin"); // Navigate to the admin dashboard
+    } catch (error: any) {
+      console.error("Firebase Authentication Error:", error); // Log the error for debugging
+      // Map common Firebase errors to user-friendly messages
+      let description = "Giriş başarısız oldu. Lütfen bilgilerinizi kontrol edin.";
+      if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
+        description = "E-posta veya şifre hatalı.";
+      } else if (error.code === 'auth/invalid-email') {
+        description = "Geçersiz e-posta formatı.";
       } else {
-        toast({
-          title: "Giriş başarısız",
-          description: "Kullanıcı adı veya şifre hatalı.",
-          variant: "destructive",
-        });
+        description = `Bir hata oluştu: ${error.message}`; // More specific error if available
       }
+
+      toast({
+        title: "Giriş başarısız",
+        description: description,
+        variant: "destructive",
+      });
+    } finally {
       setIsLoading(false);
-    }, 1000);
+    }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="max-w-md w-full p-8 bg-white rounded-lg shadow-md">
-        <Link 
+        <Link
           to="/"
           className="inline-flex items-center text-theme-teal hover:text-theme-teal/90 mb-6"
         >
@@ -68,16 +80,18 @@ const AdminLogin = ({ onLogin }: AdminLoginProps) => {
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-1">
-              Kullanıcı Adı
+            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+              E-posta {/* Changed label */}
             </label>
             <Input
-              id="username"
-              name="username"
-              value={credentials.username}
+              id="email" // Changed id
+              name="email" // Changed name
+              type="email" // Ensure type is email
+              value={credentials.email}
               onChange={handleChange}
               required
               className="w-full"
+              placeholder="admin@example.com" // Added placeholder
             />
           </div>
 
@@ -93,6 +107,7 @@ const AdminLogin = ({ onLogin }: AdminLoginProps) => {
               onChange={handleChange}
               required
               className="w-full"
+              placeholder="********" // Added placeholder
             />
           </div>
 
@@ -105,6 +120,7 @@ const AdminLogin = ({ onLogin }: AdminLoginProps) => {
           </Button>
         </form>
 
+        {/* Commenting out password reset as signup is disabled and users are pre-added
         <div className="mt-6 text-center">
           <p className="text-sm text-gray-600">
             Şifrenizi mi unuttunuz?{" "}
@@ -113,7 +129,8 @@ const AdminLogin = ({ onLogin }: AdminLoginProps) => {
             </a>
           </p>
         </div>
-        
+        */}
+
         <div className="mt-8 pt-6 border-t border-gray-200 text-center text-xs text-gray-500">
           <p>© {new Date().getFullYear()} Cam Balkon Antalya. Tüm hakları saklıdır.</p>
         </div>
