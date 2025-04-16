@@ -121,16 +121,7 @@ const Footer = () => {
 
           {/* Hizmetlerimiz */}
           <div>
-            <h3 className="text-xl font-bold mb-4">Hizmetlerimiz</h3>
-            {/* Consider making this dynamic too if needed */}
-            <ul className="space-y-2">
-              <li><Link to="/services" className="text-gray-300 hover:text-theme-teal transition-colors">Cam Balkon</Link></li>
-              <li><Link to="/services" className="text-gray-300 hover:text-theme-teal transition-colors">Isıcamlı PVC Pencere</Link></li>
-              <li><Link to="/services" className="text-gray-300 hover:text-theme-teal transition-colors">Ofis Cam Bölmesi</Link></li>
-              <li><Link to="/services" className="text-gray-300 hover:text-theme-teal transition-colors">Cam Balkon Perdesi</Link></li>
-              <li><Link to="/services" className="text-gray-300 hover:text-theme-teal transition-colors">Sineklik</Link></li>
-              <li><Link to="/services" className="text-gray-300 hover:text-theme-teal transition-colors">Panjur Sistemleri</Link></li>
-            </ul>
+            
           </div>
 
           {/* Contact Info - Now Dynamic */}
