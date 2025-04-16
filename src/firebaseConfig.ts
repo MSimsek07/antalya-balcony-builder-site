@@ -1,10 +1,8 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-import { getFirestore } from "firebase/firestore"; // Import Firestore
+import { getFirestore } from "firebase/firestore";
 
 // Your web app's Firebase configuration
-// Replace with your actual Firebase config values
-// IMPORTANT: Use environment variables for sensitive data
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
   authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
@@ -17,8 +15,21 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-// Export auth instance
+// Export Auth instance
 export const auth = getAuth(app);
 
 // Export Firestore instance
 export const db = getFirestore(app);
+
+// Define collection names
+export const COLLECTIONS = {
+  SERVICES: 'services',
+  PROJECTS: 'projects',
+  SETTINGS: 'settings'
+};
+
+// Cloudinary Configuration (Variables defined in .env file)
+export const CLOUDINARY_CONFIG = {
+    CLOUD_NAME: import.meta.env.VITE_CLOUDINARY_CLOUD_NAME,
+    UPLOAD_PRESET: import.meta.env.VITE_CLOUDINARY_PRESET
+};

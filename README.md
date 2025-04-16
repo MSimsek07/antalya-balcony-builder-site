@@ -151,4 +151,4 @@ Katkılarınızı bekliyoruz! Lütfen şunları yapın:
 
 ---
 
-Developed with ❤️ in Antalya
+# .env file

@@ -1,3 +1,4 @@
+import { useState, useEffect, useCallback } from "react";
 import Layout from "@/components/Layout";
 import Hero from "@/components/Hero";
 import ServiceCard from "@/components/ServiceCard";
@@ -5,7 +6,8 @@ import StatsCounter from "@/components/StatsCounter";
 import Accordion from "@/components/Accordion";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { Check, ChevronRight, Users, Award, Wrench } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { Check, ChevronRight, Users, Award, Wrench, Loader2, ImageOff } from "lucide-react"; // Added ImageOff
 import {
   Carousel,
   CarouselContent,
@@ -15,29 +17,99 @@ import {
 } from "@/components/ui/carousel";
 import { Card } from "@/components/ui/card";
 import Autoplay from "embla-carousel-autoplay";
+import { db, COLLECTIONS } from "@/firebaseConfig";
+import {
+  collection,
+  getDocs,
+  query,
+  orderBy,
+  limit
+} from "firebase/firestore";
+import { useToast } from "@/hooks/use-toast";
+
+// --- Interfaces ---
+interface ServiceData {
+  title: string;
+  description: string;
+  imageUrl: string;
+}
+
+interface ServiceItem extends ServiceData {
+  id: string;
+  link: string;
+}
+
+interface ProjectData {
+    description: string;
+    imageUrl: string;
+    // No need for category here
+}
+
+interface ProjectItem extends ProjectData {
+    id: string;
+}
+
 
 const HomePage = () => {
-  const services = [
-    {
-      title: "Cam Balkon",
-      description: "Balkonunuzu dört mevsim kullanılabilir bir alana çeviriyoruz. Farklı sistemler ve özel çözümlerle ihtiyacınıza en uygun cam balkon sistemini sunuyoruz.",
-      image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fGJhbGNvbnl8ZW58MHx8MHx8fDA%3D",
-      link: "/services"
-    },
-    {
-      title: "Isıcamlı PVC Pencere",
-      description: "Yüksek ısı ve ses yalıtımı sağlayan, estetik ve dayanıklı ısıcamlı PVC pencere sistemleri ile evinizde konfor ve tasarruf sunuyoruz.",
-      image: "https://images.unsplash.com/photo-1600573472556-e636c2acda88?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fHdpbmRvd3N8ZW58MHx8MHx8fDA%3D",
-      link: "/services"
-    },
-    {
-      title: "Ofis Cam Bölmesi",
-      description: "Modern ofis alanları için şık ve fonksiyonel cam bölme sistemleri. Aydınlık, ferah ve profesyonel çalışma alanları için ideal çözümler.",
-      image: "https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8b2ZmaWNlJTIwZ2xhc3N8ZW58MHx8MHx8fDA%3D",
-      link: "/services"
-    }
-  ];
+  // const { toast } = useToast(); // toast is unused currently, can be removed if not needed elsewhere
+  const [homeServices, setHomeServices] = useState<ServiceItem[]>([]);
+  const [isLoadingServices, setIsLoadingServices] = useState(true);
+  const [carouselProjects, setCarouselProjects] = useState<ProjectItem[]>([]);
+  const [isLoadingProjects, setIsLoadingProjects] = useState(true);
+  const navigate = useNavigate();
 
+  // --- Data Fetching ---
+  const fetchHomeServices = useCallback(async () => {
+    setIsLoadingServices(true);
+    const servicesCollectionRef = collection(db, COLLECTIONS.SERVICES);
+    try {
+      const q = query(servicesCollectionRef, orderBy("createdAt", "desc"), limit(3));
+      const data = await getDocs(q);
+      const fetchedServices = data.docs.map((doc) => {
+        const serviceData = doc.data() as ServiceData;
+        return {
+          ...serviceData,
+          id: doc.id,
+          link: `/services#${doc.id}`,
+        };
+      });
+      setHomeServices(fetchedServices);
+    } catch (error) {
+      console.error("Error fetching home services:", error);
+    } finally {
+      setIsLoadingServices(false);
+    }
+  }, []);
+
+  const fetchCarouselProjects = useCallback(async () => {
+    setIsLoadingProjects(true);
+    const projectsCollectionRef = collection(db, COLLECTIONS.PROJECTS);
+    try {
+      // Query for the latest 10 projects for the carousel
+      const q = query(projectsCollectionRef, orderBy("createdAt", "desc"), limit(10));
+      const data = await getDocs(q);
+      const fetchedProjects = data.docs.map((doc) => {
+        const projectData = doc.data() as ProjectData;
+        return {
+          ...projectData,
+          id: doc.id,
+        };
+      });
+      setCarouselProjects(fetchedProjects);
+    } catch (error) {
+      console.error("Error fetching carousel projects:", error);
+    } finally {
+      setIsLoadingProjects(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchHomeServices();
+    fetchCarouselProjects();
+  }, [fetchHomeServices, fetchCarouselProjects]);
+
+
+  // --- Static Data ---
   const faqItems = [
     {
       title: "Cam balkon sistemleri hangi ortalama ömrü var?",
@@ -57,6 +129,7 @@ const HomePage = () => {
     }
   ];
 
+  // --- Render --- 
   return (
     <Layout>
       <Hero
@@ -66,7 +139,7 @@ const HomePage = () => {
         buttonLink="/contact"
       />
 
-      {/* Image Carousel Section */}
+      {/* Image Carousel Section - Updated with Project Images */}
       <section className="py-16">
         <div className="container-custom">
           <div className="text-center mb-12">
@@ -76,44 +149,64 @@ const HomePage = () => {
             </p>
           </div>
 
-          <Carousel
-            opts={{
-              align: "start",
-              loop: true,
-            }}
-            plugins={[
-              Autoplay({
-                delay: 5000,
-              }),
-            ]}
-            className="w-full"
-          >
-            <CarouselContent className="-ml-2 md:-ml-4">
-              {[
-                "/carousel_images/2022-03-22 (1).jpg",
-                "/carousel_images/2022-03-22 (2).jpg",
-                "/carousel_images/2022-03-22.jpg",
-                "/carousel_images/2025-01-28 (1).jpg",
-                "/carousel_images/2025-01-28.jpg"
-              ].map((src, index) => (
-                <CarouselItem key={index} className="pl-2 md:pl-4 transition-opacity duration-300 data-[active]:opacity-100 data-[inactive]:opacity-40">
-                  <Card className="overflow-hidden rounded-lg">
-                    <div className="relative aspect-[16/9] transform transition-transform duration-500 hover:scale-105">
-                      <img
-                        src={src}
-                        alt={`Carousel Image ${index + 1}`}
-                        className="object-cover w-full h-full"
-                      />
-                    </div>
-                  </Card>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <div className="hidden md:block">
-              <CarouselPrevious className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white border-none transition-all duration-200 hover:scale-110" />
-              <CarouselNext className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white border-none transition-all duration-200 hover:scale-110" />
-            </div>
-          </Carousel>
+           {isLoadingProjects ? (
+              <div className="flex justify-center items-center h-64">
+                <Loader2 className="h-10 w-10 text-theme-teal animate-spin" />
+              </div>
+            ) : carouselProjects.length === 0 ? (
+              <div className="text-center py-8 text-gray-500">
+                Gösterilecek proje bulunmamaktadır.
+              </div>
+            ) : (
+              <Carousel
+                opts={{
+                  align: "start",
+                  loop: carouselProjects.length > 1, // Only loop if more than one image
+                }}
+                plugins={[
+                  Autoplay({
+                    delay: 5000,
+                  }),
+                ]}
+                className="w-full"
+              >
+                <CarouselContent className="-ml-2 md:-ml-4">
+                  {carouselProjects.map((project) => (
+                    <CarouselItem key={project.id} className="pl-2 md:pl-4 transition-opacity duration-300">
+                      <Link to="/gallery" className="block group" title="Tüm projeleri gör"> {/* Link to gallery page */}
+                        <Card className="overflow-hidden rounded-lg shadow-sm">
+                          <div className="relative aspect-[16/9] bg-gray-100 flex items-center justify-center">
+                           {project.imageUrl ? (
+                              <img
+                                src={project.imageUrl}
+                                alt={project.description || `Proje ${project.id}`}
+                                className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
+                                onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; (e.target as HTMLImageElement).nextElementSibling?.classList.remove('hidden'); }} // Hide broken image, show fallback
+                              />
+                              ) : null}
+                            <div className={`absolute inset-0 flex items-center justify-center ${project.imageUrl ? 'hidden' : ''}`}> {/* Fallback Icon */} 
+                                <ImageOff className="h-12 w-12 text-gray-400" /> 
+                            </div>
+                            {/* Optional: Add an overlay on hover if desired 
+                            <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                               <span className="text-white font-bold text-lg">Galeriyi Gör</span>
+                            </div>
+                             */}
+                          </div>
+                        </Card>
+                       </Link>
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                {carouselProjects.length > 1 && (
+                  <div className="hidden md:block">
+                      <CarouselPrevious className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white border-none transition-all duration-200 hover:scale-110" />
+                      <CarouselNext className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white border-none transition-all duration-200 hover:scale-110" />
+                  </div>
+                )}
+              </Carousel>
+            )
+            }
         </div>
       </section>
 
@@ -196,7 +289,7 @@ const HomePage = () => {
       </section>
 
       {/* Why Choose Us Section */}
-      <section className="py-16 bg-gray-50">
+       <section className="py-16 bg-gray-50">
         <div className="container-custom">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-theme-blue mb-4">Neden Biz?</h2>
@@ -239,7 +332,7 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* Services Section */}
+      {/* Services Section - Updated to use fetched data */}
       <section className="py-16 md:py-24">
         <div className="container-custom">
           <div className="text-center mb-12">
@@ -249,23 +342,33 @@ const HomePage = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {services.map((service, index) => (
-              <ServiceCard
-                key={index}
-                title={service.title}
-                description={service.description}
-                image={service.image}
-                link={service.link}
-                onDetailsClick={() => {
-                  console.log(`Details clicked for: ${service.title}`);
-                }}
-              />
-            ))}
-          </div>
+          {isLoadingServices ? (
+            <div className="flex justify-center items-center p-8">
+              <Loader2 className="h-10 w-10 text-theme-teal animate-spin" />
+            </div>
+          ) : homeServices.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {homeServices.map((service) => (
+                <ServiceCard
+                  key={service.id} // Use Firestore document ID as key
+                  title={service.title}
+                  description={service.description}
+                  image={service.imageUrl}
+                  link={service.link}
+                  onDetailsClick={() => navigate(service.link)}
+                  // Add onDetailsClick if needed for homepage context
+                  // onDetailsClick={() => { /* Handle click if necessary */ }}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-8">
+              <p className="text-gray-500">Sunulan hizmet bulunmamaktadır.</p>
+            </div>
+          )}
 
           <div className="text-center mt-12">
-            <Link to="/services">
+            <Link to="/services"> {/* Link to the full services page */}
               <Button className="bg-theme-teal hover:bg-theme-teal/90">
                 Tüm Hizmetlerimiz
               </Button>
