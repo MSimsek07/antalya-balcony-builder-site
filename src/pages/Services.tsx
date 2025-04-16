@@ -176,15 +176,6 @@ const ServicesPage = () => {
           
           <div className="bg-white rounded-xl shadow-sm p-8">
             <AntalyaMap />
-            
-            <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {["Merkez", "Kemer", "Serik", "Manavgat", "Kumluca", "Elmalı", "Korkuteli"].map((district) => (
-                <div key={district} className="flex items-center gap-2">
-                  <MapPin className="h-5 w-5 text-theme-teal shrink-0" />
-                  <span className="text-gray-600">{district}</span>
-                </div>
-              ))}
-            </div>
           </div>
         </div>
       </section>
