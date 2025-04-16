@@ -7,79 +7,94 @@
 [![shadcn/ui](https://img.shields.io/badge/shadcn/ui-Latest-black.svg)](https://ui.shadcn.com/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-Modern, profesyonel ve kullanıcı dostu bir cam balkon şirketi web sitesi.
+Modern, professional, and user-friendly website for a cam balkon (glass balcony) company.
 
 ![Website Preview](public/placeholder.svg)
 
-## 📚 İçindekiler
+## 📚 Table of Contents
 
-- [🚀 Özellikler](#-özellikler)
-- [⚙️ Teknolojiler](#️-teknolojiler)
-- [🛠️ Kurulum](#️-kurulum)
-- [👩‍💻 Geliştirme](#-geliştirme)
-- [📋 Proje Yapısı](#-proje-yapısı)
-- [🔒 Admin Paneli](#-admin-paneli)
+- [🚀 Features](#-features)
+- [⚙️ Technologies](#️-technologies)
+- [🛠️ Installation](#️-installation)
+- [👩‍💻 Development](#-development)
+- [📋 Project Structure](#-project-structure)
+- [🔒 Admin Panel](#-admin-panel)
 - [🌐 Deployment](#-deployment)
-- [📄 Lisans](#-lisans)
+- [🤝 Contributing](#-contributing)
+- [📄 License](#-license)
+- [📧 Contact](#-contact)
 
-## 🚀 Özellikler
+## 🚀 Features
 
-- ✨ Modern ve duyarlı tasarım
-- 📱 Mobil öncelikli kullanıcı arayüzü
-- 🎨 Özelleştirilebilir tema sistemi
-- 🖼️ Dinamik galeri ve portföy yönetimi
-- 📝 Blog ve içerik yönetim sistemi
-- 📊 Kapsamlı admin paneli
-- 🔍 SEO optimizasyonu
-- 🌍 Çoklu dil desteği (TR/EN)
-- 💬 WhatsApp entegrasyonu
-- 📈 Google Analytics entegrasyonu
+- ✨ Modern and responsive design
+- 📱 Mobile-first user interface
+- 🎨 Customizable theme system
+- 🖼️ Dynamic gallery and portfolio management
+- 📝 Blog and content management system
+- 📊 Comprehensive admin panel
+- 🔍 SEO optimization
+- 🌍 Multi-language support (TR/EN)
+- 💬 WhatsApp integration
+- 📈 Google Analytics integration
+- ♿ Accessibility enhancements
 
-## ⚙️ Teknolojiler
+## ⚙️ Technologies
 
 - **Frontend Framework:** React 18
-- **Dil:** TypeScript
+- **Language:** TypeScript
 - **Build Tool:** Vite
 - **Styling:** Tailwind CSS
 - **UI Components:** shadcn/ui
 - **State Management:** React Context
 - **Form Management:** React Hook Form
-- **Validasyon:** Zod
+- **Validation:** Zod
 - **Routing:** React Router
 - **HTTP Client:** Axios
 - **Icons:** Lucide Icons
+- **Cloudinary:** Image and video management
+- **Firebase:** Authentication and data storage
 
-## 🛠️ Kurulum
+## 🛠️ Installation
 
 ```bash
-# Depoyu klonlayın
+# Clone the repository
 git clone https://github.com/yourusername/antalya-balcony-builder-site.git
 
-# Proje dizinine gidin
+# Navigate to the project directory
 cd antalya-balcony-builder-site
 
-# Bağımlılıkları yükleyin
+# Install dependencies
 npm install
 
-# Geliştirme sunucusunu başlatın
+# Start the development server
 npm run dev
 ```
 
-## 👩‍💻 Geliştirme
+## 👩‍💻 Development
 
-### Ortam Değişkenleri
+### Environment Variables
 
-\`.env\` dosyasını oluşturun:
+Create a \`.env\` file:
 
 ```env
 VITE_API_URL=your_api_url
 VITE_WHATSAPP_NUMBER=your_whatsapp_number
+VITE_FIREBASE_API_KEY=your_firebase_api_key
+VITE_FIREBASE_AUTH_DOMAIN=your_firebase_auth_domain
+VITE_FIREBASE_PROJECT_ID=your_firebase_project_id
+VITE_FIREBASE_STORAGE_BUCKET=your_firebase_storage_bucket
+VITE_FIREBASE_MESSAGING_SENDER_ID=your_firebase_messaging_sender_id
+VITE_FIREBASE_APP_ID=your_firebase_app_id
+VITE_FIREBASE_MEASUREMENT_ID=your_firebase_measurement_id
+VITE_CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
+VITE_CLOUDINARY_API_KEY=your_cloudinary_api_key
+VITE_CLOUDINARY_API_SECRET=your_cloudinary_api_secret
 ```
 
-### Komutlar
+### Commands
 
 ```bash
-# Geliştirme sunucusu
+# Development server
 npm run dev
 
 # Production build
@@ -95,60 +110,62 @@ npm run lint
 npm run typecheck
 ```
 
-## 📋 Proje Yapısı
+## 📋 Project Structure
 
 ```
 src/
-├── components/     # UI bileşenleri
+├── components/     # UI components
 ├── hooks/         # Custom React hooks
-├── lib/           # Yardımcı fonksiyonlar
-├── pages/         # Sayfa bileşenleri
-└── admin/         # Admin panel bileşenleri
+├── lib/           # Utility functions
+├── pages/         # Page components
+├── admin/         # Admin panel components
+├── data/          # Static data
+└── types/         # TypeScript types
 ```
 
-## 🔒 Admin Paneli
+## 🔒 Admin Panel
 
-Admin paneli şu özelliklere sahiptir:
+The admin panel includes the following features:
 
-- 📊 Dashboard ve analitikler
-- 🖼️ Galeri yönetimi
-- 📝 İçerik yönetimi
-- 💬 Mesaj yönetimi
-- ⚙️ Site ayarları
-- 👥 Kullanıcı yönetimi
+- 📊 Dashboard and analytics
+- 🖼️ Gallery management
+- 📝 Content management
+- 💬 Message management
+- ⚙️ Site settings
+- 👥 User management
 
 ## 🌐 Deployment
 
-Bu proje [Lovable](https://lovable.dev) platformunda barındırılmaktadır.
+This project is hosted on [Lovable](https://lovable.dev).
 
-### Özel Alan Adı Yapılandırması
+### Custom Domain Configuration
 
-1. DNS sağlayıcınızda bir CNAME kaydı oluşturun
-2. Lovable'da "Domains" bölümüne gidin
-3. Alan adınızı ekleyin ve yapılandırın
+1. Create a CNAME record in your DNS provider.
+2. Go to the "Domains" section in Lovable.
+3. Add and configure your domain.
 
-Detaylı bilgi için: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain)
+For detailed information: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain)
 
-## 📄 Lisans
+## 🤝 Contributing
 
-Bu proje MIT lisansı altında lisanslanmıştır. Detaylar için [LICENSE](LICENSE) dosyasına bakın.
+We welcome contributions! Please follow these steps:
 
-## 🤝 Katkıda Bulunma
+1. Fork the repository.
+2. Create a new feature branch (`git checkout -b feature/amazing-feature`).
+3. Commit your changes (`git commit -m 'feat: add amazing feature'`).
+4. Push to the branch (`git push origin feature/amazing-feature`).
+5. Open a Pull Request.
 
-Katkılarınızı bekliyoruz! Lütfen şunları yapın:
+### Contributors
 
-1. Bu depoyu fork edin
-2. Yeni bir özellik dalı oluşturun (`git checkout -b feature/amazing-feature`)
-3. Değişikliklerinizi commit edin (`git commit -m 'feat: add amazing feature'`)
-4. Dalınıza push yapın (`git push origin feature/amazing-feature`)
-5. Bir Pull Request açın
+*   [Your Name](https://github.com/yourusername)
 
-## 📧 İletişim
+## 📄 License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+## 📧 Contact
 
 - Website: [cambalkonantalya.com](https://cambalkonantalya.com)
 - Email: [info@cambalkonantalya.com](mailto:info@cambalkonantalya.com)
 - WhatsApp: [+90 555 555 55 55](https://wa.me/905454043462)
-
----
-
-# .env file
