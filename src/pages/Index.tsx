@@ -173,7 +173,7 @@ const HomePage = () => {
                 <CarouselContent className="-ml-2 md:-ml-4">
                   {carouselProjects.map((project) => (
                     <CarouselItem key={project.id} className="pl-2 md:pl-4 transition-opacity duration-300">
-                      <Link to="/gallery" className="block group" title="Tüm projeleri gör"> {/* Link to gallery page */}
+                      <Link to="/projects" className="block group" title="Tüm projeleri gör"> {/* Link to gallery page */}
                         <Card className="overflow-hidden rounded-lg shadow-sm">
                           <div className="relative aspect-[16/9] bg-gray-100 flex items-center justify-center">
                            {project.imageUrl ? (

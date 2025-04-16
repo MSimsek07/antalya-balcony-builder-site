@@ -37,7 +37,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { db, COLLECTIONS } from "@/firebaseConfig"; // No need for Cloudinary config here
+import { db, COLLECTIONS } from "@/firebaseConfig";
 import {
   collection,
   getDocs,
@@ -49,7 +49,7 @@ import {
   query,
   orderBy
 } from "firebase/firestore";
-import { uploadToCloudinary } from "@/lib/cloudinaryUtils"; // Import the unsigned upload function
+import { uploadToCloudinary } from "@/lib/cloudinaryUtils";
 
 // --- Interfaces ---
 interface ServiceInfo {
@@ -122,7 +122,7 @@ const AdminProjects = () => {
         setServices([]); // Ensure services is empty on error
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [toast, editingProjectId]); // Added editingProjectId dependency
+  }, [toast, editingProjectId]);
 
   const fetchProjects = useCallback(async () => {
     setIsLoading(true);
@@ -218,6 +218,7 @@ const AdminProjects = () => {
     }
   };
 
+  // <<< START UPDATED handleSubmit >>>
   const handleSubmit = async () => {
     if (!formState.description || !formState.category) {
       toast({ title: "Eksik Bilgi", description: "Açıklama ve kategori zorunludur.", variant: "destructive" });
@@ -237,19 +238,24 @@ const AdminProjects = () => {
     }
 
     setIsProcessing(true);
+    console.log("handleSubmit triggered. Editing:", !!editingProjectId); // Log start
+    console.log("Form state:", formState); // Log current form state
 
     try {
       let finalImageUrl = formState.imageUrl; // Default to existing or preview URL
 
       // If a new image file is selected, upload it using unsigned method
       if (formState.imageFile) {
-        console.log("Attempting unsigned upload to Cloudinary for project...");
+        console.log("Attempting unsigned upload to Cloudinary for project with file:", formState.imageFile.name); // Log before upload
         finalImageUrl = await uploadToCloudinary(formState.imageFile);
-        console.log("Cloudinary Upload Successful, URL:", finalImageUrl);
+        console.log("Cloudinary Upload Successful, URL:", finalImageUrl); // Log after upload
+      } else {
+         console.log("No new image file selected. Using existing/previous URL:", finalImageUrl);
       }
 
       if (!finalImageUrl) {
          // Safeguard
+         console.error("Image URL is missing after potential upload."); // Log error
          throw new Error("Proje resmi URL'si alınamadı veya oluşturulamadı.");
       }
 
@@ -259,17 +265,22 @@ const AdminProjects = () => {
         category: formState.category, // Use the selected service title
         imageUrl: finalImageUrl,
       };
+       console.log("Data to be saved/updated in Firestore:", projectData); // Log data before Firestore
 
       if (editingProjectId) {
         // Update existing project
         projectData.updatedAt = serverTimestamp();
         const projectDocRef = doc(db, COLLECTIONS.PROJECTS, editingProjectId);
+        console.log("Updating Firestore document:", editingProjectId); // Log before update
         await updateDoc(projectDocRef, projectData);
+        console.log("Firestore update successful."); // Log after update
         toast({ title: "Başarılı", description: "Proje güncellendi." });
       } else {
         // Add new project
         projectData.createdAt = serverTimestamp();
-        await addDoc(projectsCollectionRef, projectData);
+        console.log("Adding new document to Firestore collection:", COLLECTIONS.PROJECTS); // Log before add
+        const docRef = await addDoc(projectsCollectionRef, projectData);
+        console.log("Firestore add successful. New doc ID:", docRef.id); // Log after add
         toast({ title: "Başarılı", description: "Yeni proje eklendi." });
       }
 
@@ -277,12 +288,14 @@ const AdminProjects = () => {
       fetchProjects(); // Refresh the projects list
 
     } catch (error: any) {
-      console.error("Error saving project:", error);
+      console.error("Error saving project:", error); // Log the actual error object
       toast({ title: "Hata", description: `Proje kaydedilemedi: ${error.message}`, variant: "destructive" });
     } finally {
       setIsProcessing(false);
+      console.log("handleSubmit finished."); // Log end
     }
   };
+  // <<< END UPDATED handleSubmit >>>
 
   // --- Delete Handling ---
    const openDeleteDialog = (project: ProjectItem) => {
@@ -314,7 +327,6 @@ const AdminProjects = () => {
   };
 
   // --- Render (JSX) ---
-  // (JSX Structure remains largely the same as your previous version)
   return (
      <div className="space-y-6">
        {/* Header and Add Button */}

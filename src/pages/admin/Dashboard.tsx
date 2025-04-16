@@ -8,13 +8,15 @@ import {
   Building,
   Globe,
   Lock,
-  ArrowLeft
+  ArrowLeft,
+  Briefcase // Changed icon for Projects
 } from "lucide-react";
 import { useState } from "react";
 import { useNavigate, Routes, Route, Link } from "react-router-dom";
 import AdminHome from "./Home";
 import AdminServices from "./Services";
-import AdminGallery from "./Gallery";
+// import AdminGallery from "./Gallery"; // Removed AdminGallery
+import AdminProjects from "./Projects"; // Added AdminProjects
 import AdminProfileSettings from "./settings/ProfileSettings";
 import AdminSecuritySettings from "./settings/SecuritySettings";
 import AdminCompanySettings from "./settings/CompanySettings";
@@ -55,7 +57,7 @@ const AdminDashboard = ({ onLogout }: AdminDashboardProps) => {
   const mainNavItems = [
     { name: "Panel", icon: Home, path: "/admin" },
     { name: "Hizmetler", icon: Package, path: "/admin/services" },
-    { name: "Projeler", icon: Image, path: "/admin/gallery" },
+    { name: "Projeler", icon: Briefcase, path: "/admin/projects" }, // Updated path and icon
   ];
 
   const settingsNavItems = [
@@ -137,7 +139,7 @@ const AdminDashboard = ({ onLogout }: AdminDashboardProps) => {
             <Routes>
               <Route path="/" element={<AdminHome />} />
               <Route path="/services" element={<AdminServices />} />
-              <Route path="/gallery" element={<AdminGallery />} />
+              <Route path="/projects" element={<AdminProjects />} /> {/* Updated path and element */}
               <Route path="/settings/profile" element={<AdminProfileSettings />} />
               <Route path="/settings/security" element={<AdminSecuritySettings />} />
               <Route path="/settings/company" element={<AdminCompanySettings />} />

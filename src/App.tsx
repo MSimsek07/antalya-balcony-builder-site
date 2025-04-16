@@ -12,7 +12,8 @@ import AboutPage from "./pages/About";
 import ServicesPage from "./pages/Services";
 import ContactPage from "./pages/Contact";
 import FAQPage from "./pages/FAQ";
-import GalleryPage from "./pages/Gallery";
+// import GalleryPage from "./pages/Gallery"; // Removed GalleryPage import
+import ProjectsPage from "./pages/Projects"; // Added ProjectsPage import
 import AdminLoginPage from "./pages/admin/Login";
 import AdminDashboard from "./pages/admin/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -40,24 +41,24 @@ const App = () => {
             <Route path="/" element={<HomePage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/services" element={<ServicesPage />} />
-            <Route path="/gallery" element={<GalleryPage />} />
+            {/* <Route path="/gallery" element={<GalleryPage />} />  Removed gallery route */}
+            <Route path="/projects" element={<ProjectsPage />} /> {/* Added projects route */}
             <Route path="/faq" element={<FAQPage />} />
             <Route path="/contact" element={<ContactPage />} />
-            
+
             {/* Admin Routes */}
             <Route path="/admin/login" element={<AdminLoginPage onLogin={handleLogin} />} />
-            <Route 
-              path="/admin/*" 
+            <Route
+              path="/admin/*"
               element={
-                <ProtectedRoute 
-                  isAuthenticated={isAuthenticated} 
+                <ProtectedRoute
                   redirectPath="/admin/login"
                 >
                   <AdminDashboard onLogout={handleLogout} />
                 </ProtectedRoute>
-              } 
+              }
             />
-            
+
             {/* Catch-all route */}
             <Route path="*" element={<NotFound />} />
           </Routes>
