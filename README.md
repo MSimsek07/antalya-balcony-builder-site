@@ -9,7 +9,7 @@
 
 Modern, professional, and user-friendly website for a cam balkon (glass balcony) company.
 
-![Website Preview](public/placeholder.svg)
+![Website Preview](![image](https://github.com/user-attachments/assets/8841c35c-244a-44c5-b795-6b25675170a4))
 
 ## 📚 Table of Contents
 
@@ -134,10 +134,6 @@ The admin panel includes the following features:
 - ⚙️ Site settings
 - 👥 User management
 
-## 🌐 Deployment
-
-This project is hosted on [Lovable](https://lovable.dev).
-
 ### Custom Domain Configuration
 
 1. Create a CNAME record in your DNS provider.
@@ -158,14 +154,10 @@ We welcome contributions! Please follow these steps:
 
 ### Contributors
 
-*   [Your Name](https://github.com/yourusername)
+*   [Müşerref Selçuk Özdemir](https://github.com/SelcukOzdemir23)
+*   [Ahmet Yıldız](https://github.com/AhmtYldz0772)
 
 ## 📄 License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-## 📧 Contact
-
-- Website: [cambalkonantalya.com](https://cambalkonantalya.com)
-- Email: [info@cambalkonantalya.com](mailto:info@cambalkonantalya.com)
-- WhatsApp: [+90 555 555 55 55](https://wa.me/905454043462)
