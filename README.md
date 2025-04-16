@@ -9,7 +9,7 @@
 
 Modern, professional, and user-friendly website for a cam balkon (glass balcony) company.
 
-![Website Preview](![image](https://github.com/user-attachments/assets/8841c35c-244a-44c5-b795-6b25675170a4))
+[image](https://github.com/user-attachments/assets/8841c35c-244a-44c5-b795-6b25675170a4)
 
 ## 📚 Table of Contents
 
