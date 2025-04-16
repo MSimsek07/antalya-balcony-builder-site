@@ -1,29 +1,63 @@
-# Logs
-logs
-*.log
-.env
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+
+# production build
+/build
+/dist
+
+# misc
+.DS_Store
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
+.env
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
-lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
-
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
-.DS_Store
+# editor directories and files
+.vscode/
+.idea/
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
-*.sw?
+
+# macOS system files
+*.DS_Store
+
+# log files
+logs
+*.log
+
+# optional: TypeScript cache
+*.tsbuildinfo
+
+# optional: Next.js if you’re using it
+.next
+
+# optional: parcel-bundler cache
+.cache/
+
+# optional: eslint cache
+.eslintcache
+
+# optional: local coverage reports
+/.nyc_output/
+
+# optional: Vite cache
+/.vite/
+
+# optional: storybook
+.out/
+storybook-static/
+
+# optional: bun cache
+.bun/
