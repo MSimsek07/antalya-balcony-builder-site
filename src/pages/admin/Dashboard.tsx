@@ -15,9 +15,7 @@ import { useState } from "react";
 import { useNavigate, Routes, Route, Link } from "react-router-dom";
 import AdminHome from "./Home";
 import AdminServices from "./Services";
-// import AdminGallery from "./Gallery"; // Removed AdminGallery
 import AdminProjects from "./Projects"; // Added AdminProjects
-import AdminProfileSettings from "./settings/ProfileSettings";
 import AdminSecuritySettings from "./settings/SecuritySettings";
 import AdminCompanySettings from "./settings/CompanySettings";
 import AdminWebsiteSettings from "./settings/WebsiteSettings";
@@ -61,7 +59,6 @@ const AdminDashboard = ({ onLogout }: AdminDashboardProps) => {
   ];
 
   const settingsNavItems = [
-    { name: "Profil", icon: User, path: "/admin/settings/profile" },
     { name: "Güvenlik", icon: Lock, path: "/admin/settings/security" },
     { name: "Şirket", icon: Building, path: "/admin/settings/company" },
     { name: "Web Sitesi", icon: Globe, path: "/admin/settings/website" },
@@ -140,7 +137,6 @@ const AdminDashboard = ({ onLogout }: AdminDashboardProps) => {
               <Route path="/" element={<AdminHome />} />
               <Route path="/services" element={<AdminServices />} />
               <Route path="/projects" element={<AdminProjects />} /> {/* Updated path and element */}
-              <Route path="/settings/profile" element={<AdminProfileSettings />} />
               <Route path="/settings/security" element={<AdminSecuritySettings />} />
               <Route path="/settings/company" element={<AdminCompanySettings />} />
               <Route path="/settings/website" element={<AdminWebsiteSettings />} />

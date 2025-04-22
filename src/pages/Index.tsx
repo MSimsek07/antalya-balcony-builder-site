@@ -7,7 +7,7 @@ import Accordion from "@/components/Accordion";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { Check, ChevronRight, Users, Award, Wrench, Loader2, ImageOff } from "lucide-react"; // Added ImageOff
+import { Check, ChevronRight, Users, Award, Wrench, Loader2, ImageOff } from "lucide-react";
 import {
   Carousel,
   CarouselContent,
@@ -23,7 +23,9 @@ import {
   getDocs,
   query,
   orderBy,
-  limit
+  limit,
+  doc,
+  getDoc
 } from "firebase/firestore";
 import { useToast } from "@/hooks/use-toast";
 
@@ -42,23 +44,49 @@ interface ServiceItem extends ServiceData {
 interface ProjectData {
     description: string;
     imageUrl: string;
-    // No need for category here
 }
 
 interface ProjectItem extends ProjectData {
     id: string;
 }
 
+// Interface for Website Settings (matching WebsiteSettings.tsx)
+interface WebsiteSettingsData {
+  siteTitle: string;
+  siteDescription: string;
+  // Include other fields if needed elsewhere, but Hero only needs these two
+}
 
 const HomePage = () => {
-  // const { toast } = useToast(); // toast is unused currently, can be removed if not needed elsewhere
+  // const { toast } = useToast(); // Still unused
   const [homeServices, setHomeServices] = useState<ServiceItem[]>([]);
   const [isLoadingServices, setIsLoadingServices] = useState(true);
   const [carouselProjects, setCarouselProjects] = useState<ProjectItem[]>([]);
   const [isLoadingProjects, setIsLoadingProjects] = useState(true);
+  const [websiteSettings, setWebsiteSettings] = useState<WebsiteSettingsData | null>(null);
+  const [isLoadingSettings, setIsLoadingSettings] = useState(true);
   const navigate = useNavigate();
 
   // --- Data Fetching ---
+  const fetchWebsiteSettings = useCallback(async () => {
+    setIsLoadingSettings(true);
+    const settingsDocRef = doc(db, COLLECTIONS.SETTINGS, "websiteConfig");
+    try {
+      const docSnap = await getDoc(settingsDocRef);
+      if (docSnap.exists()) {
+        setWebsiteSettings(docSnap.data() as WebsiteSettingsData);
+      } else {
+        console.warn("Website settings document not found in Firestore for HomePage.");
+        setWebsiteSettings({ siteTitle: "Hoş Geldiniz", siteDescription: "Sitemizi ziyaret ettiğiniz için teşekkürler." }); // Fallback defaults
+      }
+    } catch (error) {
+      console.error("Error fetching website settings for HomePage:", error);
+      setWebsiteSettings({ siteTitle: "Hata", siteDescription: "Ayarlar yüklenemedi." }); // Error state defaults
+    } finally {
+      setIsLoadingSettings(false);
+    }
+  }, []);
+
   const fetchHomeServices = useCallback(async () => {
     setIsLoadingServices(true);
     const servicesCollectionRef = collection(db, COLLECTIONS.SERVICES);
@@ -85,7 +113,6 @@ const HomePage = () => {
     setIsLoadingProjects(true);
     const projectsCollectionRef = collection(db, COLLECTIONS.PROJECTS);
     try {
-      // Query for the latest 10 projects for the carousel
       const q = query(projectsCollectionRef, orderBy("createdAt", "desc"), limit(10));
       const data = await getDocs(q);
       const fetchedProjects = data.docs.map((doc) => {
@@ -104,12 +131,12 @@ const HomePage = () => {
   }, []);
 
   useEffect(() => {
+    fetchWebsiteSettings(); // Fetch website settings
     fetchHomeServices();
     fetchCarouselProjects();
-  }, [fetchHomeServices, fetchCarouselProjects]);
+  }, [fetchWebsiteSettings, fetchHomeServices, fetchCarouselProjects]); // Add fetchWebsiteSettings to dependencies
 
-
-  // --- Static Data ---
+  // --- Static Data (FAQ - unchanged) ---
   const faqItems = [
     {
       title: "Cam balkon sistemleri hangi ortalama ömrü var?",
@@ -132,14 +159,15 @@ const HomePage = () => {
   // --- Render --- 
   return (
     <Layout>
+      {/* Use fetched website settings for Hero title and subtitle */}
       <Hero
-        title="İşimizi Severek Yapıyoruz"
-        subtitle="Profesyonel hizmet anlayışımız, kaliteli ürünlerimiz ve deneyimli ekibimiz ile Antalya'nın lider cam balkon firmasıyız."
+        title={isLoadingSettings ? "Yükleniyor..." : (websiteSettings?.siteTitle || "Başlık Yüklenemedi")}
+        subtitle={isLoadingSettings ? "Açıklama yükleniyor..." : (websiteSettings?.siteDescription || "Açıklama yüklenemedi")}
         buttonText="İletişime Geçin"
         buttonLink="/contact"
       />
 
-      {/* Image Carousel Section - Updated with Project Images */}
+      {/* Image Carousel Section - Unchanged */}
       <section className="py-16">
         <div className="container-custom">
           <div className="text-center mb-12">
@@ -148,7 +176,6 @@ const HomePage = () => {
               Tamamladığımız başarılı projeleri ve müşterilerimize sunduğumuz kaliteli hizmetleri keşfedin
             </p>
           </div>
-
            {isLoadingProjects ? (
               <div className="flex justify-center items-center h-64">
                 <Loader2 className="h-10 w-10 text-theme-teal animate-spin" />
@@ -161,7 +188,7 @@ const HomePage = () => {
               <Carousel
                 opts={{
                   align: "start",
-                  loop: carouselProjects.length > 1, // Only loop if more than one image
+                  loop: carouselProjects.length > 1,
                 }}
                 plugins={[
                   Autoplay({
@@ -173,7 +200,7 @@ const HomePage = () => {
                 <CarouselContent className="-ml-2 md:-ml-4">
                   {carouselProjects.map((project) => (
                     <CarouselItem key={project.id} className="pl-2 md:pl-4 transition-opacity duration-300">
-                      <Link to="/projects" className="block group" title="Tüm projeleri gör"> {/* Link to gallery page */}
+                      <Link to="/projects" className="block group" title="Tüm projeleri gör">
                         <Card className="overflow-hidden rounded-lg shadow-sm">
                           <div className="relative aspect-[16/9] bg-gray-100 flex items-center justify-center">
                            {project.imageUrl ? (
@@ -181,17 +208,12 @@ const HomePage = () => {
                                 src={project.imageUrl}
                                 alt={project.description || `Proje ${project.id}`}
                                 className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
-                                onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; (e.target as HTMLImageElement).nextElementSibling?.classList.remove('hidden'); }} // Hide broken image, show fallback
+                                onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; (e.target as HTMLImageElement).nextElementSibling?.classList.remove('hidden'); }}
                               />
                               ) : null}
-                            <div className={`absolute inset-0 flex items-center justify-center ${project.imageUrl ? 'hidden' : ''}`}> {/* Fallback Icon */} 
+                            <div className={`absolute inset-0 flex items-center justify-center ${project.imageUrl ? 'hidden' : ''}`}> 
                                 <ImageOff className="h-12 w-12 text-gray-400" /> 
                             </div>
-                            {/* Optional: Add an overlay on hover if desired 
-                            <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                               <span className="text-white font-bold text-lg">Galeriyi Gör</span>
-                            </div>
-                             */}
                           </div>
                         </Card>
                        </Link>
@@ -210,7 +232,7 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* Company Profile Section */}
+      {/* Company Profile Section - Unchanged */}
       <section className="py-16 md:py-24 bg-white">
         <div className="container-custom">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -239,43 +261,43 @@ const HomePage = () => {
               </p>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-                <div className="flex items-start">
-                  <div className="bg-theme-teal/10 p-2 rounded-full mr-3">
-                    <Check className="h-5 w-5 text-theme-teal" />
-                  </div>
-                  <div>
-                    <h4 className="font-medium text-theme-blue">Kaliteli Ürünler</h4>
-                    <p className="text-sm text-gray-500">En iyi malzemeler, uzun ömürlü çözümler</p>
-                  </div>
-                </div>
-                <div className="flex items-start">
-                  <div className="bg-theme-teal/10 p-2 rounded-full mr-3">
-                    <Check className="h-5 w-5 text-theme-teal" />
-                  </div>
-                  <div>
-                    <h4 className="font-medium text-theme-blue">Profesyonel Ekip</h4>
-                    <p className="text-sm text-gray-500">Deneyimli ustalar ve teknik kadro</p>
-                  </div>
-                </div>
-                <div className="flex items-start">
-                  <div className="bg-theme-teal/10 p-2 rounded-full mr-3">
-                    <Check className="h-5 w-5 text-theme-teal" />
-                  </div>
-                  <div>
-                    <h4 className="font-medium text-theme-blue">Hızlı Teslimat</h4>
-                    <p className="text-sm text-gray-500">Zamanında ve sorunsuz montaj</p>
-                  </div>
-                </div>
-                <div className="flex items-start">
-                  <div className="bg-theme-teal/10 p-2 rounded-full mr-3">
-                    <Check className="h-5 w-5 text-theme-teal" />
-                  </div>
-                  <div>
-                    <h4 className="font-medium text-theme-blue">Garanti</h4>
-                    <p className="text-sm text-gray-500">Tüm ürünlerde 2 yıl garanti</p>
-                  </div>
-                </div>
-              </div>
+                 <div className="flex items-start">
+                   <div className="bg-theme-teal/10 p-2 rounded-full mr-3">
+                     <Check className="h-5 w-5 text-theme-teal" />
+                   </div>
+                   <div>
+                     <h4 className="font-medium text-theme-blue">Kaliteli Ürünler</h4>
+                     <p className="text-sm text-gray-500">En iyi malzemeler, uzun ömürlü çözümler</p>
+                   </div>
+                 </div>
+                 <div className="flex items-start">
+                   <div className="bg-theme-teal/10 p-2 rounded-full mr-3">
+                     <Check className="h-5 w-5 text-theme-teal" />
+                   </div>
+                   <div>
+                     <h4 className="font-medium text-theme-blue">Profesyonel Ekip</h4>
+                     <p className="text-sm text-gray-500">Deneyimli ustalar ve teknik kadro</p>
+                   </div>
+                 </div>
+                 <div className="flex items-start">
+                   <div className="bg-theme-teal/10 p-2 rounded-full mr-3">
+                     <Check className="h-5 w-5 text-theme-teal" />
+                   </div>
+                   <div>
+                     <h4 className="font-medium text-theme-blue">Hızlı Teslimat</h4>
+                     <p className="text-sm text-gray-500">Zamanında ve sorunsuz montaj</p>
+                   </div>
+                 </div>
+                 <div className="flex items-start">
+                   <div className="bg-theme-teal/10 p-2 rounded-full mr-3">
+                     <Check className="h-5 w-5 text-theme-teal" />
+                   </div>
+                   <div>
+                     <h4 className="font-medium text-theme-blue">Garanti</h4>
+                     <p className="text-sm text-gray-500">Tüm ürünlerde 2 yıl garanti</p>
+                   </div>
+                 </div>
+               </div>
 
               <Link to="/about">
                 <Button className="bg-theme-teal hover:bg-theme-teal/90 flex items-center">
@@ -288,7 +310,7 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* Why Choose Us Section */}
+      {/* Why Choose Us Section - Unchanged */}
        <section className="py-16 bg-gray-50">
         <div className="container-custom">
           <div className="text-center mb-12">
@@ -297,42 +319,39 @@ const HomePage = () => {
               Antalya'nın en çok tercih edilen cam balkon ve PVC firması olmamızın arkasındaki nedenler
             </p>
           </div>
-
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-white p-8 rounded-lg shadow-sm text-center">
-              <div className="bg-theme-teal/10 w-16 h-16 flex items-center justify-center rounded-full mx-auto mb-6">
-                <Users className="h-8 w-8 text-theme-teal" />
-              </div>
-              <h3 className="text-xl font-bold text-theme-blue mb-3">Zamanında Teslimat</h3>
-              <p className="text-gray-600">
-                Projenizi belirlenen sürede tamamlar, sizi bekletmeyiz. Teslimat tarihlerimize sadık kalır, planlarınızın aksamasını önleriz.
-              </p>
-            </div>
-
-            <div className="bg-white p-8 rounded-lg shadow-sm text-center">
-              <div className="bg-theme-teal/10 w-16 h-16 flex items-center justify-center rounded-full mx-auto mb-6">
-                <Award className="h-8 w-8 text-theme-teal" />
-              </div>
-              <h3 className="text-xl font-bold text-theme-blue mb-3">Avrupa Standartları Üretim</h3>
-              <p className="text-gray-600">
-                Üretim süreçlerimizde Avrupa standartlarını takip eder, uluslararası kalite kriterlerine uygun ürünler sunarız.
-              </p>
-            </div>
-
-            <div className="bg-white p-8 rounded-lg shadow-sm text-center">
-              <div className="bg-theme-teal/10 w-16 h-16 flex items-center justify-center rounded-full mx-auto mb-6">
-                <Wrench className="h-8 w-8 text-theme-teal" />
-              </div>
-              <h3 className="text-xl font-bold text-theme-blue mb-3">Ücretsiz Teknik Keşif</h3>
-              <p className="text-gray-600">
-                Uzman ekibimiz projeleriniz için ücretsiz keşif hizmeti sunar. İhtiyacınıza en uygun çözümler için doğru ölçüm ve planlama yaparız.
-              </p>
-            </div>
-          </div>
+             <div className="bg-white p-8 rounded-lg shadow-sm text-center">
+               <div className="bg-theme-teal/10 w-16 h-16 flex items-center justify-center rounded-full mx-auto mb-6">
+                 <Users className="h-8 w-8 text-theme-teal" />
+               </div>
+               <h3 className="text-xl font-bold text-theme-blue mb-3">Zamanında Teslimat</h3>
+               <p className="text-gray-600">
+                 Projenizi belirlenen sürede tamamlar, sizi bekletmeyiz. Teslimat tarihlerimize sadık kalır, planlarınızın aksamasını önleriz.
+               </p>
+             </div>
+             <div className="bg-white p-8 rounded-lg shadow-sm text-center">
+               <div className="bg-theme-teal/10 w-16 h-16 flex items-center justify-center rounded-full mx-auto mb-6">
+                 <Award className="h-8 w-8 text-theme-teal" />
+               </div>
+               <h3 className="text-xl font-bold text-theme-blue mb-3">Avrupa Standartları Üretim</h3>
+               <p className="text-gray-600">
+                 Üretim süreçlerimizde Avrupa standartlarını takip eder, uluslararası kalite kriterlerine uygun ürünler sunarız.
+               </p>
+             </div>
+             <div className="bg-white p-8 rounded-lg shadow-sm text-center">
+               <div className="bg-theme-teal/10 w-16 h-16 flex items-center justify-center rounded-full mx-auto mb-6">
+                 <Wrench className="h-8 w-8 text-theme-teal" />
+               </div>
+               <h3 className="text-xl font-bold text-theme-blue mb-3">Ücretsiz Teknik Keşif</h3>
+               <p className="text-gray-600">
+                 Uzman ekibimiz projeleriniz için ücretsiz keşif hizmeti sunar. İhtiyacınıza en uygun çözümler için doğru ölçüm ve planlama yaparız.
+               </p>
+             </div>
+           </div>
         </div>
       </section>
 
-      {/* Services Section - Updated to use fetched data */}
+      {/* Services Section - Fetched data, Unchanged logic */}
       <section className="py-16 md:py-24">
         <div className="container-custom">
           <div className="text-center mb-12">
@@ -341,7 +360,6 @@ const HomePage = () => {
               Kaliteli ürünler ve profesyonel montaj hizmetleri ile yaşam alanlarınıza değer katıyoruz
             </p>
           </div>
-
           {isLoadingServices ? (
             <div className="flex justify-center items-center p-8">
               <Loader2 className="h-10 w-10 text-theme-teal animate-spin" />
@@ -350,14 +368,12 @@ const HomePage = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {homeServices.map((service) => (
                 <ServiceCard
-                  key={service.id} // Use Firestore document ID as key
+                  key={service.id}
                   title={service.title}
                   description={service.description}
                   image={service.imageUrl}
                   link={service.link}
                   onDetailsClick={() => navigate(service.link)}
-                  // Add onDetailsClick if needed for homepage context
-                  // onDetailsClick={() => { /* Handle click if necessary */ }}
                 />
               ))}
             </div>
@@ -366,9 +382,8 @@ const HomePage = () => {
               <p className="text-gray-500">Sunulan hizmet bulunmamaktadır.</p>
             </div>
           )}
-
           <div className="text-center mt-12">
-            <Link to="/services"> {/* Link to the full services page */}
+            <Link to="/services">
               <Button className="bg-theme-teal hover:bg-theme-teal/90">
                 Tüm Hizmetlerimiz
               </Button>
@@ -377,10 +392,10 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* Stats Counter */}
+      {/* Stats Counter - Unchanged */}
       <StatsCounter />
 
-      {/* FAQ Section */}
+      {/* FAQ Section - Unchanged */}
       <section className="py-16 md:py-24 bg-gray-50">
         <div className="container-custom">
           <div className="text-center mb-12">
@@ -389,10 +404,8 @@ const HomePage = () => {
               Cam balkon sistemleri hakkında merak ettiğiniz soruların cevapları
             </p>
           </div>
-
           <div className="max-w-3xl mx-auto">
             <Accordion items={faqItems} />
-
             <div className="text-center mt-12">
               <Link to="/faq">
                 <Button variant="outline" className="border-theme-teal text-theme-teal hover:bg-theme-teal hover:text-white">
@@ -404,7 +417,7 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
+      {/* CTA Section - Unchanged */}
       <section className="py-16 bg-theme-blue text-white">
         <div className="container-custom">
           <div className="text-center">
