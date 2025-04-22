@@ -13,17 +13,18 @@ import {
 import { db, COLLECTIONS } from "@/firebaseConfig"; // Import Firestore instance and collections
 import { doc, getDoc } from "firebase/firestore";
 
-// Define the structure for company information (from companyInfo doc)
+// Updated interface to include telephone2
 interface CompanyInfo {
   address: string;
   telephone: string;
+  telephone2?: string; // Optional second phone number
   email: string;
   workingHours: string;
 }
 
 // Define the structure for website settings (from websiteConfig doc)
 interface WebsiteSettingsData {
-  siteTitle: string; // Though not used here, defining for consistency
+  siteTitle: string;
   siteDescription: string;
   faceAccount: string;
   instagramAccount: string;
@@ -50,6 +51,7 @@ const Footer = () => {
         setCompanyInfo({ 
           address: "Adres bilgisi yok", 
           telephone: "Telefon bilgisi yok", 
+          telephone2: "", // Default to empty
           email: "Email bilgisi yok", 
           workingHours: "Çalışma saati bilgisi yok"
          });
@@ -59,6 +61,7 @@ const Footer = () => {
       setCompanyInfo({ 
           address: "Adres yüklenemedi", 
           telephone: "Telefon yüklenemedi", 
+          telephone2: "", // Default to empty
           email: "Email yüklenemedi", 
           workingHours: "Çalışma saati yüklenemedi"
          });
@@ -194,52 +197,69 @@ const Footer = () => {
             {/* Optional: Add dynamic service links here if needed */}
           </div>
 
-          {/* Contact Info - Now Dynamic (Based on companyInfo) */}
+          {/* Contact Info - Updated to include telephone2 */}
           <div>
             <h3 className="text-xl font-bold mb-4">İletişim</h3>
             {isLoadingCompany ? (
               <div className="space-y-3">
+                {/* Skeleton loaders */}
                 <div className="flex items-start space-x-2">
                   <div className="h-5 w-5 bg-gray-700 rounded shrink-0 animate-pulse mt-0.5"></div>
                   <div className="h-5 bg-gray-700 rounded w-3/4 animate-pulse"></div>
                 </div>
-                 <div className="flex items-center space-x-2">
-                   <div className="h-5 w-5 bg-gray-700 rounded shrink-0 animate-pulse"></div>
-                   <div className="h-5 bg-gray-700 rounded w-1/2 animate-pulse"></div>
-                 </div>
-                 <div className="flex items-center space-x-2">
-                   <div className="h-5 w-5 bg-gray-700 rounded shrink-0 animate-pulse"></div>
-                   <div className="h-5 bg-gray-700 rounded w-2/3 animate-pulse"></div>
-                 </div>
-                 <div className="flex items-start space-x-2">
-                   <div className="h-5 w-5 bg-gray-700 rounded shrink-0 animate-pulse mt-0.5"></div>
-                   <div className="h-5 bg-gray-700 rounded w-3/5 animate-pulse"></div>
-                 </div>
+                <div className="flex items-center space-x-2">
+                  <div className="h-5 w-5 bg-gray-700 rounded shrink-0 animate-pulse"></div>
+                  <div className="h-5 bg-gray-700 rounded w-1/2 animate-pulse"></div>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <div className="h-5 w-5 bg-gray-700 rounded shrink-0 animate-pulse"></div>
+                  <div className="h-5 bg-gray-700 rounded w-1/2 animate-pulse"></div> {/* Added for phone 2 */} 
+                </div>
+                <div className="flex items-center space-x-2">
+                  <div className="h-5 w-5 bg-gray-700 rounded shrink-0 animate-pulse"></div>
+                  <div className="h-5 bg-gray-700 rounded w-2/3 animate-pulse"></div>
+                </div>
+                <div className="flex items-start space-x-2">
+                  <div className="h-5 w-5 bg-gray-700 rounded shrink-0 animate-pulse mt-0.5"></div>
+                  <div className="h-5 bg-gray-700 rounded w-3/5 animate-pulse"></div>
+                </div>
               </div>
             ) : companyInfo ? (
               <ul className="space-y-3">
                 <li className="flex items-start">
                   <MapPin className="mr-2 h-5 w-5 text-theme-teal shrink-0 mt-0.5" />
                   <span className="text-gray-300">
-                    {companyInfo.address}
+                    {companyInfo.address || "Adres belirtilmemiş"}
                   </span>
                 </li>
-                <li className="flex items-center">
-                  <Phone className="mr-2 h-5 w-5 text-theme-teal" />
-                  <a href={`tel:${companyInfo.telephone.replace(/\s/g, '')}`} className="text-gray-300 hover:text-theme-teal transition-colors">
-                    {companyInfo.telephone}
-                  </a>
-                </li>
+                {/* Display first telephone number */}
+                {companyInfo.telephone && (
+                  <li className="flex items-center">
+                    <Phone className="mr-2 h-5 w-5 text-theme-teal" />
+                    <a href={`tel:${companyInfo.telephone.replace(/\s/g, '')}`} className="text-gray-300 hover:text-theme-teal transition-colors">
+                      {companyInfo.telephone}
+                    </a>
+                  </li>
+                )}
+                 {/* Conditionally display second telephone number */}
+                {companyInfo.telephone2 && (
+                  <li className="flex items-center">
+                    <Phone className="mr-2 h-5 w-5 text-theme-teal" />
+                    <a href={`tel:${companyInfo.telephone2.replace(/\s/g, '')}`} className="text-gray-300 hover:text-theme-teal transition-colors">
+                      {companyInfo.telephone2}
+                    </a>
+                  </li>
+                )}
                 <li className="flex items-center">
                   <Mail className="mr-2 h-5 w-5 text-theme-teal" />
                   <a href={`mailto:${companyInfo.email}`} className="text-gray-300 hover:text-theme-teal transition-colors">
-                    {companyInfo.email}
+                    {companyInfo.email || "E-posta belirtilmemiş"}
                   </a>
                 </li>
                 <li className="flex items-start">
                   <Clock className="mr-2 h-5 w-5 text-theme-teal shrink-0 mt-0.5" />
                   <span className="text-gray-300">
-                    {companyInfo.workingHours}
+                    {companyInfo.workingHours || "Çalışma saatleri belirtilmemiş"}
                   </span>
                 </li>
               </ul>

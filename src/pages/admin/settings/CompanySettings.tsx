@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react"; // Import useCallback
+import { useState, useEffect, useCallback } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,9 +9,11 @@ import { useToast } from "@/hooks/use-toast";
 import { db } from "@/firebaseConfig";
 import { doc, getDoc, setDoc, serverTimestamp } from "firebase/firestore";
 
+// Updated interface to include telephone2
 interface CompanyInfo {
   address: string;
   telephone: string;
+  telephone2?: string; // Optional second phone number
   email: string;
   workingHours: string;
   updatedAt?: any;
@@ -24,6 +26,7 @@ const AdminCompanySettings = () => {
   const [formData, setFormData] = useState<CompanyInfo>({
     address: "",
     telephone: "",
+    telephone2: "", // Initialize second phone number
     email: "",
     workingHours: "",
   });
@@ -38,10 +41,12 @@ const AdminCompanySettings = () => {
         const docSnap = await getDoc(companyInfoRef);
         if (isMounted) {
           if (docSnap.exists()) {
-            setFormData(docSnap.data() as CompanyInfo);
+            // Ensure telephone2 defaults to empty string if not present in Firestore
+            const data = docSnap.data() as CompanyInfo;
+            setFormData({ telephone2: "", ...data }); // Spread existing data, ensuring telephone2 has a default
           } else {
             console.log("No company info document found, initializing form.");
-            setFormData({ address: "", telephone: "", email: "", workingHours: "" });
+            setFormData({ address: "", telephone: "", telephone2: "", email: "", workingHours: "" });
           }
         }
       } catch (error) {
@@ -52,7 +57,7 @@ const AdminCompanySettings = () => {
             description: "Şirket bilgileri alınırken bir hata oluştu.",
             variant: "destructive",
           });
-           setFormData({ address: "", telephone: "", email: "", workingHours: "" });
+           setFormData({ address: "", telephone: "", telephone2: "", email: "", workingHours: "" });
         }
       } finally {
         if (isMounted) {
@@ -83,6 +88,8 @@ const AdminCompanySettings = () => {
     try {
       const dataToSave = {
         ...formData,
+        // Explicitly include telephone2, even if empty, to ensure it's saved
+        telephone2: formData.telephone2 || "", 
         updatedAt: serverTimestamp(),
       };
       await setDoc(companyInfoRef, dataToSave, { merge: true });
@@ -126,7 +133,7 @@ const AdminCompanySettings = () => {
         <CardContent className="space-y-6">
           <form onSubmit={(e) => {
             e.preventDefault();
-            handleSave(); // Use the memoized save function
+            handleSave();
           }} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="address">Adres</Label>
@@ -134,21 +141,34 @@ const AdminCompanySettings = () => {
                 id="address"
                 name="address"
                 value={formData.address}
-                onChange={handleChange} // Use the memoized change handler
+                onChange={handleChange}
                 placeholder="Şirketinizin tam adresi"
                 rows={3}
               />
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="telephone">Telefon Numarası</Label>
-              <Input
-                id="telephone"
-                name="telephone"
-                value={formData.telephone}
-                onChange={handleChange} // Use the memoized change handler
-                placeholder="+90 XXX XXX XX XX"
-              />
+            {/* Telephone Numbers in a Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="telephone">Telefon Numarası 1</Label>
+                <Input
+                  id="telephone"
+                  name="telephone"
+                  value={formData.telephone}
+                  onChange={handleChange}
+                  placeholder="+90 XXX XXX XX XX"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="telephone2">Telefon Numarası 2 (Opsiyonel)</Label>
+                <Input
+                  id="telephone2"
+                  name="telephone2"
+                  value={formData.telephone2 || ''} // Ensure value is controlled and defaults to empty string
+                  onChange={handleChange}
+                  placeholder="+90 YYY YYY YY YY"
+                />
+              </div>
             </div>
 
             <div className="space-y-2">
@@ -158,7 +178,7 @@ const AdminCompanySettings = () => {
                 name="email"
                 type="email"
                 value={formData.email}
-                onChange={handleChange} // Use the memoized change handler
+                onChange={handleChange}
                 placeholder="info@example.com"
               />
             </div>
@@ -169,7 +189,7 @@ const AdminCompanySettings = () => {
                 id="workingHours"
                 name="workingHours"
                 value={formData.workingHours}
-                onChange={handleChange} // Use the memoized change handler
+                onChange={handleChange}
                 placeholder="Örn: Hafta içi 09:00 - 18:00, Cmt 10:00 - 15:00"
               />
             </div>

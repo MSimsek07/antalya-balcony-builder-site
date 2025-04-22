@@ -9,10 +9,11 @@ import { MapPin, Phone, Mail, Clock, Loader2 } from "lucide-react";
 import { db } from "@/firebaseConfig"; // Import Firestore instance
 import { doc, getDoc } from "firebase/firestore";
 
-// Define the structure for company information (should match admin settings)
+// Updated interface to include telephone2
 interface CompanyInfo {
   address: string;
   telephone: string;
+  telephone2?: string; // Optional second phone number
   email: string;
   workingHours: string;
 }
@@ -40,20 +41,20 @@ const ContactPage = () => {
           setCompanyInfo(docSnap.data() as CompanyInfo);
         } else {
           console.log("No company info document found in Firestore for Contact Page.");
-          // Set default or empty values if data isn't found
           setCompanyInfo({ 
             address: "Adres bilgisi bulunamadı", 
             telephone: "Telefon bilgisi bulunamadı", 
+            telephone2: "", // Default empty
             email: "Email bilgisi bulunamadı", 
             workingHours: "Çalışma saati bilgisi bulunamadı"
            });
         }
       } catch (error) {
         console.error("Error fetching company info for Contact Page:", error);
-        // Set error values
          setCompanyInfo({ 
             address: "Adres yüklenemedi", 
             telephone: "Telefon yüklenemedi", 
+            telephone2: "", // Default empty
             email: "Email yüklenemedi", 
             workingHours: "Çalışma saati yüklenemedi"
            });
@@ -78,7 +79,6 @@ const ContactPage = () => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulate form submission (Replace with actual API call if needed)
     console.log("Form Data Submitted:", formData);
     setTimeout(() => {
       toast({
@@ -152,12 +152,12 @@ const ContactPage = () => {
               </form>
             </div>
             
-            {/* Contact Info - Now Dynamic */}
+            {/* Contact Info - Updated to include telephone2 */}
             <div className="lg:col-span-1">
               <h2 className="section-title mb-8">İletişim Bilgilerimiz</h2>
               {infoLoading ? (
                  <div className="space-y-6">
-                  {[...Array(4)].map((_, i) => ( // Skeleton loader for 4 items
+                  {[...Array(5)].map((_, i) => ( // Skeleton loader for 5 items (added one for phone 2)
                     <div key={i} className="flex items-start">
                       <div className="bg-gray-200 p-3 rounded-full mr-4 h-12 w-12 flex items-center justify-center animate-pulse">
                          <Loader2 className="h-6 w-6 text-gray-400 animate-spin" />
@@ -179,23 +179,34 @@ const ContactPage = () => {
                     <div>
                       <h3 className="font-medium text-theme-blue text-lg mb-1">Adres</h3>
                       <p className="text-gray-600">
-                        {companyInfo.address}
+                        {companyInfo.address || "Adres belirtilmemiş"}
                       </p>
                     </div>
                   </div>
                   
-                  {/* Telephone */}
+                  {/* Telephone 1 & 2 Combined */}
                   <div className="flex items-start">
                     <div className="bg-theme-teal/10 p-3 rounded-full mr-4 shrink-0">
                       <Phone className="h-6 w-6 text-theme-teal" />
                     </div>
                     <div>
                       <h3 className="font-medium text-theme-blue text-lg mb-1">Telefon</h3>
-                      <p className="text-gray-600">
-                        <a href={`tel:${companyInfo.telephone.replace(/\s/g, '')}`} className="hover:text-theme-teal transition-colors">
-                          {companyInfo.telephone}
-                        </a>
-                      </p>
+                      {/* Display first phone number */} 
+                      {companyInfo.telephone && (
+                        <p className="text-gray-600">
+                          <a href={`tel:${companyInfo.telephone.replace(/\s/g, '')}`} className="hover:text-theme-teal transition-colors">
+                            {companyInfo.telephone}
+                          </a>
+                        </p>
+                      )}
+                      {/* Conditionally display second phone number */} 
+                      {companyInfo.telephone2 && (
+                        <p className="text-gray-600 mt-1"> {/* Added margin-top for spacing */}
+                          <a href={`tel:${companyInfo.telephone2.replace(/\s/g, '')}`} className="hover:text-theme-teal transition-colors">
+                            {companyInfo.telephone2}
+                          </a>
+                        </p>
+                      )}
                     </div>
                   </div>
                   
@@ -208,20 +219,19 @@ const ContactPage = () => {
                       <h3 className="font-medium text-theme-blue text-lg mb-1">E-posta</h3>
                       <p className="text-gray-600">
                         <a href={`mailto:${companyInfo.email}`} className="hover:text-theme-teal transition-colors">
-                          {companyInfo.email}
+                          {companyInfo.email || "E-posta belirtilmemiş"}
                         </a>
                       </p>
                     </div>
                   </div>
                   
-                  {/* Working Hours - Corrected split and map */}
+                  {/* Working Hours */}
                   <div className="flex items-start">
                     <div className="bg-theme-teal/10 p-3 rounded-full mr-4 shrink-0">
                       <Clock className="h-6 w-6 text-theme-teal" />
                     </div>
                     <div>
                       <h3 className="font-medium text-theme-blue text-lg mb-1">Çalışma Saatleri</h3>
-                      {/* Check if workingHours exists before splitting */}
                       {companyInfo.workingHours && companyInfo.workingHours.split('  ').map((line, index) => (
                         <p key={index} className="text-gray-600">{line}</p>
                       ))}
@@ -234,9 +244,9 @@ const ContactPage = () => {
             </div>
           </div>
         </div>
-      </section> {/* Added closing tag */}
+      </section> 
 
-      {/* Map Section - Remains the same */}
+      {/* Map Section */}
       <section className="py-8 pb-16">
         <div className="container-custom">
           <div className="bg-white rounded-lg shadow-md overflow-hidden">
@@ -252,8 +262,8 @@ const ContactPage = () => {
             ></iframe>
           </div>
         </div>
-      </section> {/* Added closing tag */} 
-    </Layout> // Added closing tag
+      </section> 
+    </Layout> 
   );
 };
 
