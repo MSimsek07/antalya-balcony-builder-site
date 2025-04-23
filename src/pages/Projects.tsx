@@ -108,9 +108,8 @@ const ProjectsPage = () => {
     <Layout>
       <Hero
         title="Projelerimiz" // Use a relevant title
-        subtitle="Gerçekleştirdiğimiz projelere göz atarak işçiliğimiz ve kalitemiz hakkında fikir edinebilirsiniz." // Use a relevant subtitle
-         // You might want to use a different image or none here
-         // image="https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2074&q=80"
+        subtitle="Gerçekleştirdiğimiz projelere göz atarak işçiliğimiz ve kalitemiz hakkında fikir edinebilirsiniz." 
+        image="https://res.cloudinary.com/drxariwwg/image/upload/v1745410258/wgqo5yz5kzb6dgtptysk.jpg"
       />
 
       <section className="py-16 md:py-24">

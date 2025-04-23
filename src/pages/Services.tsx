@@ -69,7 +69,7 @@ const ServicesPage = () => {
       <Hero
         title="Hizmetlerimiz"
         subtitle="Kaliteli malzemeler ve profesyonel ekibimizle Antalya'nın cam balkon ve PVC ihtiyaçlarına çözüm üretiyoruz."
-        image="https://images.unsplash.com/photo-1600607687644-c7f33055a191?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80"
+        image="https://res.cloudinary.com/drxariwwg/image/upload/v1745410259/mcq2drftac2ujyiffusy.jpg"
       />
 
       {/* Services Overview */}

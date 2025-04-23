@@ -12,7 +12,7 @@ const AboutPage = () => {
       <Hero
         title="Hakkımızda"
         subtitle="2009 yılından beri Antalya'da cam balkon ve PVC pencere sistemleri alanında kaliteli hizmet sunuyoruz."
-        image="https://ısıcamlıcambalkon.com/wp-content/uploads/2020/03/cankaya-cam-balkon-isicamli-cambalkon.jpg"
+        image="https://res.cloudinary.com/drxariwwg/image/upload/v1745410259/hmehonepoyb1ssheqkme.jpg"
       />
 
       {/* About Us Content */}
@@ -33,7 +33,7 @@ const AboutPage = () => {
             </div>
             <div>
               <img
-                src="/interface_images/images (4).jpg"
+                src="https://res.cloudinary.com/drxariwwg/image/upload/v1745410258/qpsuemj4lua8ydxdsjql.jpg"
                 alt="Cam Balkon Antalya Ekibi"
                 className="rounded-lg shadow-xl"
               />

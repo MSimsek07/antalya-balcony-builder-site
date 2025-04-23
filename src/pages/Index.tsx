@@ -239,12 +239,12 @@ const HomePage = () => {
             <div>
               <div className="relative">
                 <img
-                  src="/interface_images/images (8).jpg"
+                  src="https://res.cloudinary.com/drxariwwg/image/upload/v1745410257/uevg8o4zlolfkkxzynv7.jpg"
                   alt="Cam Balkon Antalya Binası"
                   className="rounded-lg shadow-xl"
                 />
                 <div className="absolute -bottom-6 -right-6 bg-theme-teal text-white py-4 px-6 rounded-lg shadow-lg hidden md:block">
-                  <p className="text-lg font-bold">13+ Yıllık Tecrübe</p>
+                  <p className="text-lg font-bold">Yılların Tecrübesi</p>
                 </div>
               </div>
             </div>

@@ -60,7 +60,7 @@ const FAQPage = () => {
       <Hero
         title="Sıkça Sorulan Sorular"
         subtitle="Cam balkon ve PVC sistemleri hakkında merak ettiğiniz tüm soruların cevapları burada."
-        image="https://images.unsplash.com/photo-1557804506-669a67965ba0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2074&q=80"
+        image="https://res.cloudinary.com/drxariwwg/image/upload/v1745410986/xi2mbvlkhxdfpfgjuv2i.jpg"
       />
 
       <section className="py-16 md:py-24">
