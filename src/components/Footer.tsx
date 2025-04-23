@@ -12,6 +12,14 @@ import {
 } from "lucide-react";
 import { db, COLLECTIONS } from "@/firebaseConfig"; // Import Firestore instance and collections
 import { doc, getDoc } from "firebase/firestore";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"; // Import Dialog components
 
 // Updated interface to include telephone2
 interface CompanyInfo {
@@ -37,6 +45,10 @@ const Footer = () => {
   const [websiteSettings, setWebsiteSettings] = useState<WebsiteSettingsData | null>(null);
   const [isLoadingCompany, setIsLoadingCompany] = useState(true);
   const [isLoadingWebsite, setIsLoadingWebsite] = useState(true);
+  
+  // State for dialog visibility
+  const [isPrivacyPolicyOpen, setIsPrivacyPolicyOpen] = useState(false);
+  const [isTermsOfServiceOpen, setIsTermsOfServiceOpen] = useState(false);
 
   // Fetch Company Info
   const fetchCompanyInfo = useCallback(async () => {
@@ -112,6 +124,89 @@ const Footer = () => {
   const isValidUrl = (url: string | undefined): boolean => {
     return !!url && (url.startsWith('http://') || url.startsWith('https://'));
   }
+
+  // Placeholder Content (Replace with actual legal text)
+  const privacyPolicyText = `
+**Gizlilik Politikası**
+
+**Son Güncelleme: 2025**
+
+Zen Yapı Antalya olarak, web sitemizi ziyaret edenlerin gizliliğine önem veriyoruz. Bu gizlilik politikası, kişisel verilerinizi nasıl topladığımızı, kullandığımızı ve koruduğumuzu açıklamaktadır.
+
+**Topladığımız Kişisel Veriler**
+
+Web sitemiz aracılığıyla, iletişim formları, teklif talepleri veya diğer etkileşimler sırasında adınız, e-posta adresiniz, telefon numaranız ve mesaj içeriğiniz gibi kişisel bilgilerinizi toplayabiliriz.
+
+**Kişisel Verilerinizi Nasıl Kullanırız?**
+
+Topladığımız kişisel verileri aşağıdaki amaçlarla kullanırız:
+
+*   Taleplerinize yanıt vermek ve size hizmet sunmak.
+*   Sizinle iletişim kurmak.
+*   Web sitemizi ve hizmetlerimizi iyileştirmek.
+*   Yasal yükümlülüklerimizi yerine getirmek.
+
+**Kişisel Veri Güvenliği**
+
+Kişisel verilerinizin güvenliğini sağlamak için uygun fiziksel, elektronik ve yönetimsel prosedürleri uygulamaktayız.
+
+**Çerezler (Cookies)**
+
+Web sitemiz, kullanıcı deneyimini geliştirmek amacıyla çerezler kullanabilir. Çerezler hakkında daha fazla bilgi için Çerez Politikamızı inceleyebilirsiniz (eğer ayrı bir politikanız varsa).
+
+**Üçüncü Taraf Bağlantıları**
+
+Web sitemiz üçüncü taraf web sitelerine bağlantılar içerebilir. Bu sitelerin gizlilik uygulamalarından sorumlu değiliz. Ziyaret ettiğiniz her sitenin gizlilik politikasını incelemenizi öneririz.
+
+**Değişiklikler**
+
+Bu gizlilik politikasını zaman zaman güncelleyebiliriz. Güncellemeler bu sayfada yayınlanacaktır.
+
+**İletişim**
+
+Gizlilik politikamız hakkında sorularınız varsa, lütfen iletişim sayfamızdan bize ulaşın.
+
+`;
+
+  const termsOfServiceText = `
+**Kullanım Şartları**
+
+**Son Güncelleme: 2025**
+
+Zen Yapı Antalya web sitesini kullanarak bu kullanım şartlarını kabul etmiş sayılırsınız. Lütfen dikkatlice okuyunuz.
+
+**Web Sitesinin Kullanımı**
+
+Web sitemizi yalnızca yasal amaçlarla ve bu şartlara uygun olarak kullanabilirsiniz. Web sitemizi aşağıdaki şekillerde kullanmamayı kabul ediyorsunuz:
+
+*   Herhangi bir yasa veya yönetmeliği ihlal eden bir şekilde.
+*   Başka birinin kişisel bilgilerini toplamak veya saklamak amacıyla.
+*   Web sitesinin işleyişine müdahale eden, zarar veren veya bozan herhangi bir faaliyette bulunmak.
+
+**Fikri Mülkiyet Hakları**
+
+Web sitesindeki tüm içerik (metin, grafikler, logolar, görseller vb.) Zen Yapı Antalya'ya aittir ve telif hakları yasaları ile korunmaktadır. İçeriğin izinsiz kullanımı yasaktır.
+
+**Sorumluluk Reddi**
+
+Web sitemiz "olduğu gibi" sunulmaktadır. Web sitesinin kesintisiz, hatasız veya güvenli olacağına dair herhangi bir garanti vermemekteyiz. Web sitesini kullanımınızdan doğacak riskler size aittir.
+
+**Bağlantılar**
+
+Web sitemiz üçüncü taraf sitelerine bağlantılar içerebilir. Bu sitelerin içeriğinden veya uygulamalarından sorumlu değiliz.
+
+**Şartların Değişikliği**
+
+Bu kullanım şartlarını dilediğimiz zaman değiştirme hakkını saklı tutarız. Değişiklikler web sitesinde yayınlandığında yürürlüğe girer.
+
+**Geçerli Hukuk**
+
+Bu şartlar Türkiye Cumhuriyeti yasalarına tabidir.
+
+**İletişim**
+
+Bu kullanım şartları hakkında sorularınız varsa, lütfen iletişim sayfamızdan bize ulaşın.
+`;
 
   return (
     <footer className="bg-theme-dark-blue text-white">
@@ -270,20 +365,64 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* Bottom Footer - Unchanged */}
+      {/* Bottom Footer */}
       <div className="border-t border-gray-800">
         <div className="container-custom py-6 flex flex-col md:flex-row justify-between items-center">
           <p className="text-gray-400 text-sm">
             &copy; {currentYear} Zen Yapı Antalya. Tüm hakları saklıdır.
           </p>
-          <div className="mt-4 md:mt-0">
-            <a href="#" className="text-gray-400 text-sm hover:text-theme-teal transition-colors">
-              Gizlilik Politikası
-            </a>
-            <span className="mx-2 text-gray-600">|</span>
-            <a href="#" className="text-gray-400 text-sm hover:text-theme-teal transition-colors">
-              Kullanım Şartları
-            </a>
+          <div className="mt-4 md:mt-0 flex space-x-4 text-sm">
+            {/* Privacy Policy Dialog Trigger */}
+            <Dialog open={isPrivacyPolicyOpen} onOpenChange={setIsPrivacyPolicyOpen}>
+              <DialogTrigger asChild>
+                <button
+                  onClick={(e) => {
+                    e.preventDefault(); // Prevent default link behavior
+                    setIsPrivacyPolicyOpen(true);
+                  }}
+                  className="text-gray-400 hover:text-theme-teal transition-colors cursor-pointer"
+                >
+                  Gizlilik Politikası
+                </button>
+              </DialogTrigger>
+              {/* Adjusted DialogContent for better scrolling and appearance */}
+              <DialogContent className="max-w-lg md:max-w-3xl h-[80vh] overflow-hidden p-6 flex flex-col"> {/* Fixed height, overflow-hidden, flex flex-col */}
+                <DialogHeader className="flex-shrink-0 pb-4"> {/* Prevent header from shrinking */}
+                  <DialogTitle className="text-xl font-bold text-theme-blue">Gizlilik Politikası</DialogTitle>
+                </DialogHeader>
+                 {/* Scrollable Description */}
+                <DialogDescription className="text-gray-700 whitespace-pre-wrap text-sm flex-1 overflow-y-auto pr-2"> {/* flex-1 and overflow-y-auto for scrolling */}
+                    {privacyPolicyText}
+                </DialogDescription>
+              </DialogContent>
+            </Dialog>
+
+            <span className="mx-1 text-gray-600">|</span> 
+
+            {/* Terms of Service Dialog Trigger */}
+            <Dialog open={isTermsOfServiceOpen} onOpenChange={setIsTermsOfServiceOpen}>
+              <DialogTrigger asChild>
+                 <button
+                  onClick={(e) => {
+                    e.preventDefault(); // Prevent default link behavior
+                    setIsTermsOfServiceOpen(true);
+                  }}
+                  className="text-gray-400 hover:text-theme-teal transition-colors cursor-pointer"
+                >
+                  Kullanım Şartları
+                </button>
+              </DialogTrigger>
+               {/* Adjusted DialogContent for better scrolling and appearance */}
+               <DialogContent className="max-w-lg md:max-w-3xl h-[80vh] overflow-hidden p-6 flex flex-col"> {/* Fixed height, overflow-hidden, flex flex-col */}
+                <DialogHeader className="flex-shrink-0 pb-4"> {/* Prevent header from shrinking */}
+                  <DialogTitle className="text-xl font-bold text-theme-blue">Kullanım Şartları</DialogTitle>
+                </DialogHeader>
+                 {/* Scrollable Description */}
+                <DialogDescription className="text-gray-700 whitespace-pre-wrap text-sm flex-1 overflow-y-auto pr-2"> {/* flex-1 and overflow-y-auto for scrolling */}
+                    {termsOfServiceText}
+                </DialogDescription>
+              </DialogContent>
+            </Dialog>
           </div>
         </div>
       </div>
