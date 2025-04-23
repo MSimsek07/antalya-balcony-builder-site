@@ -13,18 +13,17 @@ import { useToast } from "@/hooks/use-toast";
 // Interface for data fetched from Firestore
 interface ServiceData {
   title: string;
-  description: string;
+  description: string; // This will be the short description for the card
+  detailedDescription?: string; // Optional field for a longer description in the modal
   imageUrl: string;
-  // Add other fields if they exist in Firestore
+  // Add other fields if they exist in Firestore, like features
 }
 
 // Interface for the component's state
 interface ServiceItem extends ServiceData {
   id: string;
-  // Define how link, detailedDescription, features map from Firestore data or are generated
   link: string; // Example: Generate link based on title or id
-  detailedDescription?: string; // Use description for now
-  features?: { title: string; description: string }[]; // Omit for now
+  features?: { title: string; description: string }[]; // Example structure if you add features later
 }
 
 const ServicesPage = () => {
@@ -47,8 +46,12 @@ const ServicesPage = () => {
           ...serviceData,
           id: doc.id,
           link: `/services#${doc.id}`, // Simple link generation
-          detailedDescription: serviceData.description, // Use basic description for details modal
-          features: [], // No features stored in Firestore currently
+          // If you add 'detailedDescription' to Firestore, use it here:
+          // detailedDescription: serviceData.detailedDescription || serviceData.description,
+          // For now, just use the main description for both card and modal if detailed isn't present
+          detailedDescription: serviceData.detailedDescription, // Keep optional
+          // Map features if they exist
+          // features: serviceData.features || [],
         };
       });
       setServices(fetchedServices);
@@ -96,7 +99,7 @@ const ServicesPage = () => {
                 <ServiceCard
                   key={service.id}
                   title={service.title}
-                  description={service.description} // Use the description from Firestore
+                  description={service.description} // Use the description from Firestore for the card
                   image={service.imageUrl}     // Use imageUrl from Firestore
                   link={service.link}
                   onDetailsClick={() => setSelectedService(service)}
@@ -107,61 +110,68 @@ const ServicesPage = () => {
         </div>  
       </section>
 
-      {/* Service Details Modal (Uses fetched data, features omitted) */}
+      {/* Service Details Modal - Updated for better scrolling and appearance */}
       <Dialog open={!!selectedService} onOpenChange={() => setSelectedService(null)}>
-        <DialogContent className="max-w-3xl">
-          {selectedService && (
-            <>
-              <DialogHeader className="border-b pb-4">
-                <DialogTitle className="text-2xl font-bold text-theme-blue">{selectedService.title}</DialogTitle>
-                <DialogDescription className="text-base text-gray-600 mt-2">
-                  {selectedService.detailedDescription || selectedService.description}
-                </DialogDescription>
-              </DialogHeader>
+        {selectedService && (
+          <DialogContent className="flex flex-col w-full max-w-screen-md md:max-w-screen-lg h-[90vh] p-6"> {/* Adjusted classes for size and flex */} 
+            <DialogHeader className="flex-shrink-0 pb-4"> {/* Prevent header from shrinking */}
+              <DialogTitle className="text-2xl font-bold text-theme-blue">{selectedService.title}</DialogTitle>
+              {/* Moved short description here or keep it only in card? Decided to keep long desc in body */} 
+              {/* <DialogDescription className="text-base text-gray-600 mt-2">{selectedService.description}</DialogDescription> */}
+            </DialogHeader>
 
-              <div className="mt-6 space-y-6">
-                <div className="aspect-[16/9] w-full overflow-hidden rounded-lg bg-gray-100">
-                  <img 
-                    src={selectedService.imageUrl} // Use imageUrl
-                    alt={selectedService.title}
-                    className="w-full h-full object-cover"
-                    onError={(e) => { e.currentTarget.src = '/placeholder.svg'; e.currentTarget.onerror = null; }} // Fallback
-                  />
-                </div>
-
-                {/* Features section can be conditionally rendered or removed 
-                {selectedService.features && selectedService.features.length > 0 && (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {selectedService.features.map((feature, index) => (
-                      <div key={index} className="flex items-start gap-3">
-                         <div className="bg-theme-teal/10 p-2 rounded-full shrink-0">
-                           <Check className="h-5 w-5 text-theme-teal" />
-                         </div>
-                         <div>
-                           <h4 className="font-medium text-theme-blue">{feature.title}</h4>
-                           <p className="text-sm text-gray-600 mt-1">{feature.description}</p>
-                         </div>
-                       </div>
-                    ))}
-                  </div>
-                )} 
-                */} 
-
-                <div className="border-t pt-6 mt-6 flex justify-end">
-                  <a 
-                    href="https://api.whatsapp.com/send?phone=905454043462" // Consider making phone dynamic
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-medium transition-colors"
-                  >
-                    <img src="/whatsapp.png" alt="WhatsApp" className="h-5 w-5" />
-                    Teklif Al
-                  </a>
-                </div>
+            {/* Scrollable Body Content */}
+            <div className="flex-1 overflow-y-auto mt-6 pr-4"> {/* flex-1 to fill space, overflow-y-auto for scrolling, pr-4 for scrollbar gap */}
+              <div className="aspect-[16/9] w-full overflow-hidden rounded-lg bg-gray-100 mb-6"> {/* Added bottom margin */} 
+                <img 
+                  src={selectedService.imageUrl} 
+                  alt={selectedService.title}
+                  className="w-full h-full object-cover"
+                  onError={(e) => { e.currentTarget.src = '/placeholder.svg'; e.currentTarget.onerror = null; }} // Fallback
+                />
               </div>
-            </>
-          )}
-        </DialogContent>
+
+              {/* Detailed Description */} 
+              {/* Use detailedDescription if available, otherwise fallback to regular description */} 
+              <DialogDescription className="text-base text-gray-600 mb-6"> {/* Added bottom margin */} 
+                {selectedService.detailedDescription || selectedService.description}
+              </DialogDescription>
+
+              {/* Features section can be conditionally rendered if you add features to Firestore */}
+              {/* 
+              {selectedService.features && selectedService.features.length > 0 && (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6"> // Added bottom margin
+                  {selectedService.features.map((feature, index) => (
+                    <div key={index} className="flex items-start gap-3">
+                       <div className="bg-theme-teal/10 p-2 rounded-full shrink-0">
+                         <Check className="h-5 w-5 text-theme-teal" />
+                       </div>
+                       <div>
+                         <h4 className="font-medium text-theme-blue">{feature.title}</h4>
+                         <p className="text-sm text-gray-600 mt-1">{feature.description}</p>
+                       </div>
+                     </div>
+                  ))}
+                </div>
+              )} 
+              */}
+
+            </div> {/* End Scrollable Body Content */}
+
+            {/* Footer/Action button - fixed at the bottom */}
+            <div className="flex-shrink-0 border-t pt-4 mt-4 flex justify-end"> {/* Added top padding/margin and flex-shrink-0 */}
+              <a 
+                href="https://api.whatsapp.com/send?phone=905454043462" // Consider making phone dynamic from settings
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-medium transition-colors"
+              >
+                <img src="/whatsapp.png" alt="WhatsApp" className="h-5 w-5" />
+                Teklif Al
+              </a>
+            </div>
+          </DialogContent>
+        )}
       </Dialog>
 
       {/* Service Areas Map (Static for now) */}
