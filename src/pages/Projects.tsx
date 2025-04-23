@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
-import Layout from "@/components/Layout"; // Assuming ProjectsPage should use Layout
-import Hero from "@/components/Hero";     // Assuming ProjectsPage should use Hero
+import Layout from "@/components/Layout";
+import Hero from "@/components/Hero";
 import { db, COLLECTIONS } from "@/firebaseConfig";
 import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import { useToast } from "@/hooks/use-toast";
@@ -9,7 +9,10 @@ import {
   Dialog,
   DialogContent,
   DialogTrigger,
-  DialogClose
+  DialogClose,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
 } from "@/components/ui/dialog";
 
 // --- Interfaces ---
@@ -158,7 +161,7 @@ const ProjectsPage = () => {
                         src={project.imageUrl}
                         alt={project.description}
                         className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                        onError={(e) => { 
+                        onError={(e) => {
                             const target = e.target as HTMLImageElement;
                             target.src = '/placeholder.svg'; 
                             target.onerror = null; // Prevent infinite loops
@@ -186,59 +189,65 @@ const ProjectsPage = () => {
         </div>
       </section>
 
-       {/* Lightbox Dialog */}
+       {/* Project Details Dialog */}
        <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
             {selectedProject && (
                 <DialogContent
-                    className="max-w-none w-[95vw] h-[90vh] md:w-[80vw] md:h-[80vh] lg:w-[70vw] lg:h-[85vh] bg-black/80 border-none shadow-none p-2 md:p-4 flex items-center justify-center data-[state=open]:animate-contentShow data-[state=closed]:animate-contentHide"
-                    onInteractOutside={(e) => e.preventDefault()} // Prevent closing on outside click for easier navigation
+                    className="flex flex-col w-full max-w-screen-md md:max-w-screen-lg h-[90vh] bg-white border-none shadow-lg data-[state=open]:animate-contentShow data-[state=closed]:animate-contentHide"
+                    onInteractOutside={(e) => { /* Allow closing on outside click */ }} 
                 >
-                    <div className="relative w-full h-full flex items-center justify-center">
-                        {/* Close Button */}
-                        <DialogClose
-                            className="absolute top-2 right-2 md:top-4 md:right-4 z-50 bg-black/60 hover:bg-black/80 text-white p-1.5 rounded-full transition-colors"
-                            aria-label="Kapat"
-                        >
-                            <X className="h-5 w-5 md:h-6 md:w-6" />
-                        </DialogClose>
+                    {/* Dialog Header with Title */}
+                    <DialogHeader className="flex-shrink-0 px-6 pt-6 pb-4 border-b border-gray-200"> 
+                        <DialogTitle className="text-2xl font-bold text-theme-blue">{selectedProject.category} Projesi</DialogTitle>
+                    </DialogHeader>
 
+                    {/* Scrollable Content Area (Image and Description) */}
+                    {/* This div is designed to be vertically scrollable */} 
+                    <div className="flex-1 overflow-y-auto overflow-x-hidden py-4 px-6"> 
                         {/* Image Display */}
-                        <div className="relative w-full h-full flex items-center justify-center">
+                        <div className="aspect-[16/9] w-full overflow-hidden rounded-lg bg-gray-100 mb-6"> 
                              <img
                                 src={selectedProject.imageUrl}
                                 alt={selectedProject.description}
-                                className="max-h-full max-w-full object-contain block"
+                                className="w-full h-full object-contain block" 
+                                onError={(e) => { 
+                                    const target = e.target as HTMLImageElement;
+                                    target.src = '/placeholder.svg'; 
+                                    target.onerror = null;
+                                    target.classList.add('p-4', 'object-contain'); 
+                                }}
                             />
                         </div>
 
-                        {/* Prev Button */}
-                        {filteredProjects.length > 1 && (
+                        {/* Project Description */} 
+                        {/* The parent div is scrollable, so DialogDescription itself does not need overflow */}
+                        <DialogDescription className="text-base text-gray-600 whitespace-pre-wrap"> 
+                            {selectedProject.description}
+                        </DialogDescription>
+                    </div>
+
+                    {/* Navigation Buttons - Placed outside the scrollable area */}
+                    <div className="flex-shrink-0 pt-4 flex justify-between items-center px-6"> 
+                         {filteredProjects.length > 1 && (
                             <button
                                 onClick={() => navigateImage("prev")}
-                                className="absolute left-2 top-1/2 transform -translate-y-1/2 z-50 bg-black/60 hover:bg-black/80 text-white p-1.5 md:p-2 rounded-full transition-colors"
-                                aria-label="Önceki Resim"
+                                className="flex items-center text-theme-blue hover:text-theme-blue/80 disabled:opacity-50 disabled:pointer-events-none"
+                                aria-label="Önceki Proje"
+                                disabled={filteredProjects.length <= 1}
                             >
-                                <ChevronLeft className="h-5 w-5 md:h-6 md:w-6" />
+                                <ChevronLeft className="h-5 w-5 mr-1" /> Önceki
                             </button>
-                        )}
-
-                        {/* Next Button */}
-                        {filteredProjects.length > 1 && (
-                            <button
+                         )}
+                         {filteredProjects.length > 1 && (
+                             <button
                                 onClick={() => navigateImage("next")}
-                                className="absolute right-2 top-1/2 transform -translate-y-1/2 z-50 bg-black/60 hover:bg-black/80 text-white p-1.5 md:p-2 rounded-full transition-colors"
-                                aria-label="Sonraki Resim"
+                                className="flex items-center text-theme-blue hover:text-theme-blue/80 disabled:opacity-50 disabled:pointer-events-none"
+                                aria-label="Sonraki Proje"
+                                disabled={filteredProjects.length <= 1}
                             >
-                                <ChevronRight className="h-5 w-5 md:h-6 md:w-6" />
+                                Sonraki <ChevronRight className="h-5 w-5 ml-1" />
                             </button>
-                        )}
-
-                         {/* Optional: Description below image */}
-                         {/*
-                         <div className="absolute bottom-4 left-4 right-4 p-2 bg-black/50 text-white text-center rounded text-sm">
-                            {selectedProject.description}
-                         </div>
-                         */}
+                         )}
                     </div>
                 </DialogContent>
             )}
