@@ -67,7 +67,7 @@ const Navbar = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2" onClick={closeMenu}>
             <img
-              src="/logo.jpg"
+              src="/logo.png"
               alt="Zen Yapı Antalya Logo"
               className="h-12 w-auto rounded-full" // Adjusted size and added rounded-full
             />
