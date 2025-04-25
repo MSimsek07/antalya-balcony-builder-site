@@ -214,7 +214,22 @@ Bu kullanım şartları hakkında sorularınız varsa, lütfen iletişim sayfam�
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Company Info & Socials */}
           <div>
-            <h3 className="text-xl font-bold mb-4">ZEN YAPI ANTALYA</h3>
+            <div className="flex items-center space-x-3 mb-4">
+              <img
+                src="/logo.png"
+                alt="Zen Yapı Antalya Logo"
+                className="h-12 w-auto rounded-full"
+              />
+              <div className="flex flex-col">
+                <span className="text-xl font-bold text-white">
+                  ZEN YAPI ANTALYA
+                </span>
+                <div className="w-full h-[1px] bg-white my-0.5"></div>
+                <span className="text-sm font-medium text-white text-center">
+                  Cam Balkon
+                </span>
+              </div>
+            </div>
             {isLoadingWebsite ? (
               <div className="space-y-2">
                  <div className="h-4 bg-gray-700 rounded w-full animate-pulse"></div>

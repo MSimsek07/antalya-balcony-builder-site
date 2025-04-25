@@ -69,15 +69,27 @@ const Navbar = () => {
             <img
               src="/logo.png"
               alt="Zen Yapı Antalya Logo"
-              className="h-12 w-auto rounded-full" // Adjusted size and added rounded-full
+              className="h-12 w-auto rounded-full"
             />
-            <span
-              className={`text-xl font-bold ${
-                scrolled || isOpen ? "text-theme-blue" : "text-white"
-              }`}
-            >
-              Zen Yapı Antalya
-            </span>
+            <div className="flex flex-col">
+              <span
+                className={`text-xl font-bold ${
+                  scrolled || isOpen ? "text-theme-blue" : "text-white"
+                }`}
+              >
+                ZEN YAPI ANTALYA
+              </span>
+              <div className={`w-full h-[1px] ${
+                scrolled || isOpen ? "bg-theme-blue" : "bg-white"
+              } my-0.5`}></div>
+              <span
+                className={`text-sm font-medium text-center ${
+                  scrolled || isOpen ? "text-theme-blue" : "text-white"
+                }`}
+              >
+                Cam Balkon
+              </span>
+            </div>
           </Link>
 
           {/* Desktop Navigation */}
