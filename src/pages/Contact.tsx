@@ -305,7 +305,7 @@ const ContactPage = () => {
         <div className="container-custom">
           <div className="bg-white rounded-lg shadow-md overflow-hidden">
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3189.66941557505!2d30.63650821193798!3d36.92216777209671!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14c38f7450b22087%3A0x812c96aee98ee421!2sAntalya%20cam%20balkon%20zen%20yap%C4%B1!5e0!3m2!1str!2str!4v1744400754687!5m2!1str!2str"
+              src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3189.5729900347737!2d30.629060775843964!3d36.92447277221191!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMzbCsDU1JzI4LjEiTiAzMMKwMzcnNTMuOSJF!5e0!3m2!1str!2str!4v1745611209745!5m2!1str!2str"
               width="100%"
               height="450"
               style={{ border: 0 }}
