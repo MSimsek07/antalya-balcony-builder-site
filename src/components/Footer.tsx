@@ -383,9 +383,23 @@ Bu kullanım şartları hakkında sorularınız varsa, lütfen iletişim sayfam�
       {/* Bottom Footer */}
       <div className="border-t border-gray-800">
         <div className="container-custom py-6 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-gray-400 text-sm">
-            &copy; {currentYear} Zen Yapı Antalya. Tüm hakları saklıdır.
-          </p>
+          <div className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-4">
+            <p className="text-gray-400 text-sm">
+              &copy; {currentYear} Zen Yapı Antalya. Tüm hakları saklıdır.
+            </p>
+            <div className="text-gray-500 text-sm">
+              <span>Made by </span>
+              <a 
+                href="https://linktr.ee/muserrefselcukozdemir" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-theme-teal hover:text-theme-teal/80 transition-colors"
+              >
+                Proje Kulübü
+              </a>
+            </div>
+          </div>
+
           <div className="mt-4 md:mt-0 flex space-x-4 text-sm">
             {/* Privacy Policy Dialog Trigger */}
             <Dialog open={isPrivacyPolicyOpen} onOpenChange={setIsPrivacyPolicyOpen}>
