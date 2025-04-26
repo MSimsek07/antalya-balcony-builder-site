@@ -28,7 +28,7 @@ const AboutPage = () => {
                 Kurulduğumuz günden bu yana kaliteden ödün vermeden, müşteri memnuniyetini ön planda tutarak hizmet veriyoruz. Deneyimli ekibimiz ve modern üretim tesisimiz ile her projeye özel çözümler sunuyoruz.
               </p>
               <p className="text-gray-600 mb-6">
-                Firmanın kurucuları Mehmet ve Ahmet Yılmaz kardeşler, sektördeki 20 yıllık deneyimleriyle, müşterilerimizin beklentilerini en üst düzeyde karşılamak için çalışıyorlar. Kaliteli malzeme kullanımı, zamanında teslimat ve profesyonel montaj hizmetleri firmamızın temel prensipleridir.
+                Firmanın kurucusu Mehmet İlhan, sektördeki uzun yıllık deneyimiyle, müşterilerimizin beklentilerini en üst düzeyde karşılamak için çalışıyor. Kaliteli malzeme kullanımı, zamanında teslimat ve profesyonel montaj hizmetleri firmamızın temel prensipleridir.
               </p>
             </div>
             <div>

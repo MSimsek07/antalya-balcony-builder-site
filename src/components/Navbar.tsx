@@ -65,15 +65,15 @@ const Navbar = () => {
       <div className="container-custom mx-auto px-4">
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2" onClick={closeMenu}>
+          <Link to="/" className="flex items-center space-x-2 sm:space-x-3" onClick={closeMenu}>
             <img
               src="/logo.png"
               alt="Zen Yapı Antalya Logo"
-              className="h-12 w-auto rounded-full"
+              className="h-8 w-8 sm:h-10 sm:w-10 md:h-12 md:w-auto rounded-full"
             />
             <div className="flex flex-col">
               <span
-                className={`text-xl font-bold ${
+                className={`text-base sm:text-lg md:text-xl font-bold leading-tight ${
                   scrolled || isOpen ? "text-theme-blue" : "text-white"
                 }`}
               >
@@ -83,7 +83,7 @@ const Navbar = () => {
                 scrolled || isOpen ? "bg-theme-blue" : "bg-white"
               } my-0.5`}></div>
               <span
-                className={`text-sm font-medium text-center ${
+                className={`text-xs sm:text-sm font-medium text-center ${
                   scrolled || isOpen ? "text-theme-blue" : "text-white"
                 }`}
               >

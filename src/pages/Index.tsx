@@ -254,7 +254,7 @@ const HomePage = () => {
                 Antalya'nın En Güvenilir Cam Balkon ve PVC Pencere Firması
               </h3>
               <p className="text-gray-600 mb-6">
-                2009 yılından bu yana Antalya ve çevresinde hizmet veren firmamız, cam balkon, PVC pencere ve kapı sistemleri, ofis bölme, sineklik ve panjur sistemleri gibi geniş bir ürün yelpazesi sunmaktadır.
+                Uzun yıllardan beri Antalya ve çevresinde hizmet veren firmamız, cam balkon, PVC pencere ve kapı sistemleri, ofis bölme, sineklik ve panjur sistemleri gibi geniş bir ürün yelpazesi sunmaktadır.
               </p>
               <p className="text-gray-600 mb-6">
                 Müşteri memnuniyetini ön planda tutan anlayışımız, kaliteli malzemeler ve ustalıkla gerçekleştirilen montaj hizmetlerimiz ile binlerce müşterimizin güvenini kazandık.
