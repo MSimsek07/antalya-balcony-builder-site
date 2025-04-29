@@ -13,9 +13,9 @@ import { cn } from "@/lib/utils";
 const languages = {
   tr: { name: 'TR', flag: '/turkey.png', fullName: 'Türkçe', googleCode: 'tr' },
   en: { name: 'EN', flag: '/england.png', fullName: 'English', googleCode: 'en' },
-  ru: { name: 'RU', flag: '/placeholder.svg', fullName: 'Русский', googleCode: 'ru' },
-  de: { name: 'DE', flag: '/placeholder.svg', fullName: 'Deutsch', googleCode: 'de' },
-  fr: { name: 'FR', flag: '/placeholder.svg', fullName: 'Français', googleCode: 'fr' },
+  ru: { name: 'RU', flag: '/russia.png', fullName: 'Русский', googleCode: 'ru' },
+  de: { name: 'DE', flag: '/germany.png', fullName: 'Deutsch', googleCode: 'de' },
+  fr: { name: 'FR', flag: '/france.png', fullName: 'Français', googleCode: 'fr' },
 };
 
 const Navbar = () => {
