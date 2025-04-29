@@ -1,7 +1,8 @@
 import Navbar from "./Navbar";
+import Topbar from "./Topbar";
 import Footer from "./Footer";
 import { Phone } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 interface LayoutProps {
@@ -17,6 +18,7 @@ const Layout = ({ children }: LayoutProps) => {
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
+      <Topbar />
       <Navbar />
       <main className="flex-grow">{children}</main>
       <Footer />
@@ -47,9 +49,9 @@ const Layout = ({ children }: LayoutProps) => {
             title="WhatsApp ile İletişim"
           >
             <div className="relative w-7 h-7 whatsapp-bounce">
-              <img 
-                src="/whatsapp.png" 
-                alt="WhatsApp" 
+              <img
+                src="/whatsapp.png"
+                alt="WhatsApp"
                 className="w-full h-full object-contain"
               />
             </div>

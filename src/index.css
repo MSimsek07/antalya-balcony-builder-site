@@ -99,24 +99,24 @@
   .container-custom {
     @apply container mx-auto px-4 md:px-8;
   }
-  
+
   .btn-primary {
     @apply bg-theme-teal hover:bg-theme-teal/90 text-white px-6 py-2 rounded-md font-medium transition-colors;
   }
-  
+
   .btn-outline {
     @apply border border-theme-teal text-theme-teal hover:bg-theme-teal hover:text-white px-6 py-2 rounded-md font-medium transition-colors;
   }
-  
+
   .section-title {
     @apply text-2xl md:text-3xl font-bold mb-8 text-theme-blue relative;
   }
-  
+
   .section-title::after {
     content: '';
     @apply block absolute bottom-0 left-0 w-16 h-1 bg-theme-teal mt-2;
   }
-  
+
   .section-padding {
     @apply py-16 md:py-24;
   }
@@ -144,4 +144,74 @@
     animation: phone-vibrate 2s infinite;
     display: inline-block;
   }
+}
+
+/* Google Translate Widget Styling */
+.goog-te-gadget {
+  margin: 0 !important;
+  padding: 0 !important;
+  background-color: transparent !important;
+}
+
+.goog-te-gadget-simple {
+  background-color: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  line-height: normal !important;
+  margin: 0 !important;
+}
+
+.goog-te-menu-value {
+  color: inherit !important;
+  border: none !important;
+  background: transparent !important;
+}
+
+/* Style the Google Translate banner that appears at the top */
+.goog-te-banner-frame {
+  position: fixed !important;
+  top: 40px !important; /* Position below the topbar */
+  left: 0 !important;
+  width: 100% !important;
+  height: 40px !important;
+  z-index: 9998 !important; /* Higher z-index to ensure it's above navbar but below topbar */
+  border: none !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* When Google Translate is active, adjust the navbar position */
+body.translated-ltr header,
+body.translated-rtl header {
+  top: 80px !important; /* 40px for topbar + 40px for Google Translate bar */
+  transition: top 0.3s ease;
+}
+
+/* Visually hidden but still accessible to screen readers and scripts */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* Topbar styling */
+.topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 40px;
+  z-index: 9999; /* Highest z-index to ensure it's above everything */
+  display: flex;
+  align-items: center;
+}
+
+/* Adjust main content when topbar is present */
+main {
+  padding-top: 20px; /* Add some padding to account for the fixed navbar */
 }
