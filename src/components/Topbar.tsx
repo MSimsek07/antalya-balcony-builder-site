@@ -88,19 +88,22 @@ const Topbar = () => {
   };
 
   return (
-    <div className="topbar bg-theme-blue text-white py-2 w-full">
-      <div className="container-custom mx-auto px-4">
-        <div className="flex flex-wrap justify-between items-center">
+    <div className="topbar bg-theme-blue text-white py-1 sm:py-2 w-full">
+      <div className="container-custom mx-auto px-2 sm:px-4">
+        <div className="flex flex-wrap justify-center sm:justify-between items-center">
           {/* Contact Information */}
           <div className="flex flex-wrap items-center gap-4 text-xs sm:text-sm">
             {isLoading ? (
               <>
+                {/* Always show first loading placeholder (for phone) */}
                 <div className="w-24 h-3 bg-gray-700 rounded animate-pulse"></div>
-                <div className="w-32 h-3 bg-gray-700 rounded animate-pulse"></div>
+                {/* Hide other placeholders on mobile */}
+                <div className="hidden sm:block w-32 h-3 bg-gray-700 rounded animate-pulse"></div>
                 <div className="hidden sm:block w-28 h-3 bg-gray-700 rounded animate-pulse"></div>
               </>
             ) : (
               <>
+                {/* Always show primary phone number on all screen sizes */}
                 {companyInfo?.telephone && (
                   <a
                     href={`tel:${companyInfo.telephone.replace(/\s/g, '')}`}
@@ -111,26 +114,29 @@ const Topbar = () => {
                   </a>
                 )}
 
+                {/* Hide secondary phone on mobile */}
                 {companyInfo?.telephone2 && (
                   <a
                     href={`tel:${companyInfo.telephone2.replace(/\s/g, '')}`}
-                    className="flex items-center gap-1 hover:text-gray-200 transition-colors"
+                    className="hidden sm:flex items-center gap-1 hover:text-gray-200 transition-colors"
                   >
                     <Phone className="h-3 w-3" />
                     <span>{companyInfo.telephone2}</span>
                   </a>
                 )}
 
+                {/* Hide email on mobile */}
                 {companyInfo?.email && (
                   <a
                     href={`mailto:${companyInfo.email}`}
-                    className="flex items-center gap-1 hover:text-gray-200 transition-colors"
+                    className="hidden sm:flex items-center gap-1 hover:text-gray-200 transition-colors"
                   >
                     <Mail className="h-3 w-3" />
                     <span>{companyInfo.email}</span>
                   </a>
                 )}
 
+                {/* Already hidden on mobile */}
                 {companyInfo?.workingHours && (
                   <div className="hidden sm:flex items-center gap-1">
                     <Clock className="h-3 w-3" />
@@ -141,8 +147,8 @@ const Topbar = () => {
             )}
           </div>
 
-          {/* Social Media Links */}
-          <div className="flex items-center gap-3">
+          {/* Social Media Links - Hidden on mobile */}
+          <div className="hidden sm:flex items-center gap-3">
             {isLoading ? (
               <>
                 <div className="w-4 h-4 bg-gray-700 rounded-full animate-pulse"></div>

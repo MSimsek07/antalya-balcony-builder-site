@@ -170,7 +170,7 @@
 /* Style the Google Translate banner that appears at the top */
 .goog-te-banner-frame {
   position: fixed !important;
-  top: 40px !important; /* Position below the topbar */
+  top: 30px !important; /* Position below the topbar on mobile */
   left: 0 !important;
   width: 100% !important;
   height: 40px !important;
@@ -179,11 +179,24 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
 }
 
+@media (min-width: 640px) {
+  .goog-te-banner-frame {
+    top: 40px !important; /* Position below the topbar on desktop */
+  }
+}
+
 /* When Google Translate is active, adjust the navbar position */
 body.translated-ltr header,
 body.translated-rtl header {
-  top: 80px !important; /* 40px for topbar + 40px for Google Translate bar */
+  top: 70px !important; /* 30px for topbar + 40px for Google Translate bar on mobile */
   transition: top 0.3s ease;
+}
+
+@media (min-width: 640px) {
+  body.translated-ltr header,
+  body.translated-rtl header {
+    top: 80px !important; /* 40px for topbar + 40px for Google Translate bar on desktop */
+  }
 }
 
 /* Visually hidden but still accessible to screen readers and scripts */
@@ -205,10 +218,16 @@ body.translated-rtl header {
   top: 0;
   left: 0;
   width: 100%;
-  height: 40px;
+  height: 30px; /* Smaller on mobile */
   z-index: 9999; /* Highest z-index to ensure it's above everything */
   display: flex;
   align-items: center;
+}
+
+@media (min-width: 640px) {
+  .topbar {
+    height: 40px; /* Taller on desktop */
+  }
 }
 
 /* Adjust main content when topbar is present */

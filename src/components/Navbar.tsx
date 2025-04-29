@@ -96,7 +96,7 @@ const Navbar = () => {
       </div>
 
       <header
-        className={`fixed top-[40px] left-0 w-full z-50 transition-all duration-300 ${
+        className={`fixed top-[30px] sm:top-[40px] left-0 w-full z-50 transition-all duration-300 ${
           scrolled || isOpen ? "bg-white shadow-md" : "bg-transparent"
         }`}
       >
