@@ -1,165 +1,74 @@
-# 🏗️ Cam Balkon Antalya Website
+# 🏗️ Zen Yapı Cam Balkon Antalya Website
 
 [![React](https://img.shields.io/badge/React-18.x-blue.svg)](https://reactjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue.svg)](https://www.typescriptlang.org/)
 [![Vite](https://img.shields.io/badge/Vite-5.x-646CFF.svg)](https://vitejs.dev/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.x-38B2AC.svg)](https://tailwindcss.com/)
 [![shadcn/ui](https://img.shields.io/badge/shadcn/ui-Latest-black.svg)](https://ui.shadcn.com/)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-Modern, professional, and user-friendly website for a cam balkon (glass balcony) company.
+Modern ve profesyonel bir cam balkon firması web sitesi projesi. Antalya'nın önde gelen cam balkon firmalarından Zen Yapı için geliştirilmiştir.
 
-<img width="1280" alt="image" src="https://github.com/user-attachments/assets/320a064b-9e5a-45d6-b44d-d97894fb477c" />
+🌐 **[Canlı Site](https://zenyapiantalyacambalkon.com/)**
 
+![Website Preview](project-preview.gif)
 
+## 🚀 Proje Hakkında
 
-## 📚 Table of Contents
+Bu proje, Zen Yapı Cam Balkon firmasının online varlığını güçlendirmek ve müşterilerine daha iyi hizmet verebilmek amacıyla geliştirilmiştir. Modern teknolojiler kullanılarak oluşturulan web sitesi, kullanıcı dostu arayüzü ve responsive tasarımı ile öne çıkmaktadır.
 
-- [🚀 Features](#-features)
-- [⚙️ Technologies](#️-technologies)
-- [🛠️ Installation](#️-installation)
-- [👩‍💻 Development](#-development)
-- [📋 Project Structure](#-project-structure)
-- [🔒 Admin Panel](#-admin-panel)
-- [🌐 Deployment](#-deployment)
-- [🤝 Contributing](#-contributing)
-- [📄 License](#-license)
-- [📧 Contact](#-contact)
+## ⚙️ Kullanılan Teknolojiler
 
-## 🚀 Features
-
-- ✨ Modern and responsive design
-- 📱 Mobile-first user interface
-- 🎨 Customizable theme system
-- 🖼️ Dynamic gallery and portfolio management
-- 📝 Blog and content management system
-- 📊 Comprehensive admin panel
-- 🔍 SEO optimization
-- 🌍 Multi-language support (TR/EN)
-- 💬 WhatsApp integration
-- 📈 Google Analytics integration
-- ♿ Accessibility enhancements
-
-## ⚙️ Technologies
-
-- **Frontend Framework:** React 18
-- **Language:** TypeScript
+- **Frontend:** React 18
+- **Dil:** TypeScript
 - **Build Tool:** Vite
-- **Styling:** Tailwind CSS
-- **UI Components:** shadcn/ui
-- **State Management:** React Context
-- **Form Management:** React Hook Form
-- **Validation:** Zod
-- **Routing:** React Router
-- **HTTP Client:** Axios
-- **Icons:** Lucide Icons
-- **Cloudinary:** Image and video management
-- **Firebase:** Authentication and data storage
+- **Stil:** Tailwind CSS
+- **UI Bileşenleri:** shadcn/ui
+- **Veritabanı:** Firebase
+- **Medya Yönetimi:** Cloudinary
+- **Form Yönetimi:** React Hook Form
+- **API İstekleri:** Axios
+- **İkonlar:** Lucide Icons
 
-## 🛠️ Installation
+## 🌟 Özellikler
 
-```bash
-# Clone the repository
-git clone https://github.com/yourusername/antalya-balcony-builder-site.git
+- ✨ Modern ve responsive tasarım
+- 📱 Mobil uyumlu arayüz
+- 🌍 Çoklu dil desteği (TR/EN)
+- 📊 Yönetim paneli
+- 🔍 SEO optimizasyonu
+- 💬 WhatsApp entegrasyonu
 
-# Navigate to the project directory
-cd antalya-balcony-builder-site
+## 👥 Katkıda Bulunanlar
 
-# Install dependencies
-npm install
+<table>
+  <tr>
+    <td align="center">
+      <a href="https://github.com/SelcukOzdemir23">
+        <img src="https://github.com/SelcukOzdemir23.png" width="100px;" alt="Müşerref Selçuk Özdemir"/>
+        <br />
+        <sub><b>Müşerref Selçuk Özdemir</b></sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/MSimsek07">
+        <img src="https://github.com/MSimsek07.png" width="100px;" alt="Mehmet Şimşek"/>
+        <br />
+        <sub><b>Mehmet Şimşek</b></sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/AhmtYldz0772">
+        <img src="https://github.com/AhmtYldz0772.png" width="100px;" alt="Ahmet Yıldız"/>
+        <br />
+        <sub><b>Ahmet Yıldız</b></sub>
+      </a>
+    </td>
+  </tr>
+</table>
 
-# Start the development server
-npm run dev
-```
+## 📬 İletişim
 
-## 👩‍💻 Development
+Proje hakkında sorularınız için:
 
-### Environment Variables
-
-Create a \`.env\` file:
-
-```env
-VITE_API_URL=your_api_url
-VITE_WHATSAPP_NUMBER=your_whatsapp_number
-VITE_FIREBASE_API_KEY=your_firebase_api_key
-VITE_FIREBASE_AUTH_DOMAIN=your_firebase_auth_domain
-VITE_FIREBASE_PROJECT_ID=your_firebase_project_id
-VITE_FIREBASE_STORAGE_BUCKET=your_firebase_storage_bucket
-VITE_FIREBASE_MESSAGING_SENDER_ID=your_firebase_messaging_sender_id
-VITE_FIREBASE_APP_ID=your_firebase_app_id
-VITE_FIREBASE_MEASUREMENT_ID=your_firebase_measurement_id
-VITE_CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
-VITE_CLOUDINARY_API_KEY=your_cloudinary_api_key
-VITE_CLOUDINARY_API_SECRET=your_cloudinary_api_secret
-```
-
-### Commands
-
-```bash
-# Development server
-npm run dev
-
-# Production build
-npm run build
-
-# Preview production build
-npm run preview
-
-# Linting
-npm run lint
-
-# Type checking
-npm run typecheck
-```
-
-## 📋 Project Structure
-
-```
-src/
-├── components/     # UI components
-├── hooks/         # Custom React hooks
-├── lib/           # Utility functions
-├── pages/         # Page components
-├── admin/         # Admin panel components
-├── data/          # Static data
-└── types/         # TypeScript types
-```
-
-## 🔒 Admin Panel
-
-The admin panel includes the following features:
-
-- 📊 Dashboard and analytics
-- 🖼️ Gallery management
-- 📝 Content management
-- 💬 Message management
-- ⚙️ Site settings
-- 👥 User management
-
-### Custom Domain Configuration
-
-1. Create a CNAME record in your DNS provider.
-2. Go to the "Domains" section in Lovable.
-3. Add and configure your domain.
-
-For detailed information: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain)
-
-## 🤝 Contributing
-
-We welcome contributions! Please follow these steps:
-
-1. Fork the repository.
-2. Create a new feature branch (`git checkout -b feature/amazing-feature`).
-3. Commit your changes (`git commit -m 'feat: add amazing feature'`).
-4. Push to the branch (`git push origin feature/amazing-feature`).
-5. Open a Pull Request.
-
-### Contributors
-
-*   [Müşerref Selçuk Özdemir](https://github.com/SelcukOzdemir23)
-*   [Ahmet Yıldız](https://github.com/AhmtYldz0772)
-
-## 📄 License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+📧 [selcuk.ozdemir2360@gmail.com](mailto:selcuk.ozdemir2360@gmail.com)
 
