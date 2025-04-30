@@ -6,7 +6,7 @@
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.x-38B2AC.svg)](https://tailwindcss.com/)
 [![shadcn/ui](https://img.shields.io/badge/shadcn/ui-Latest-black.svg)](https://ui.shadcn.com/)
 
-Modern ve profesyonel bir cam balkon firması internet sitesi projesi. Antalya'nın önde gelen cam balkon firmalarından *Zen Yapı* için geliştirilmiştir.
+Antalya Zen Yapı Cam Balkon firması için geliştirilmiş internet sitesi projesi. 
 
 🌐 **(https://zenyapiantalyacambalkon.com/)**
 
@@ -18,7 +18,7 @@ Modern ve profesyonel bir cam balkon firması internet sitesi projesi. Antalya'n
 
 ## 🚀 Proje Hakkında
 
-Bu proje, Zen Yapı Cam Balkon firmasının çevrimiçi varlığını güçlendirmek ve müşterilerine daha iyi hizmet verebilmek amacıyla geliştirilmiştir. Modern teknolojiler kullanılarak oluşturulan internet sitesi, kullanıcı dostu arayüzü ve farklı cihazlar için kullanıcı dostu tasarımı ile öne çıkmaktadır.
+Bu proje, Zen Yapı Cam Balkon firmasının çevrimiçi varlığını güçlendirmek ve müşterilerine daha iyi hizmet verebilmek amacıyla geliştirilmiştir. Modern teknolojiler kullanılarak oluşturulan internet sitesi, farklı cihazlar için kullanıcı dostu tasarımı ile öne çıkmaktadır.
 
 ## ⚙️ Kullanılan Teknolojiler
 
