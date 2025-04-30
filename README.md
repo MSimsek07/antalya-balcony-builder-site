@@ -8,7 +8,7 @@
 
 Modern ve profesyonel bir cam balkon firması web sitesi projesi. Antalya'nın önde gelen cam balkon firmalarından Zen Yapı için geliştirilmiştir.
 
-🌐 **[Canlı Site](https://zenyapiantalyacambalkon.com/)**
+🌐 **(https://zenyapiantalyacambalkon.com/)**
 
 ![Website Preview](project-preview.gif)
 
@@ -53,7 +53,7 @@ Bu proje, Zen Yapı Cam Balkon firmasının online varlığını güçlendirmek 
       <a href="https://github.com/MSimsek07">
         <img src="https://github.com/MSimsek07.png" width="100px;" alt="Mehmet Şimşek"/>
         <br />
-        <sub><b>Mehmet Şimşek</b></sub>
+        <sub><b>Muhammet Ali Şimşek</b></sub>
       </a>
     </td>
     <td align="center">
@@ -70,5 +70,8 @@ Bu proje, Zen Yapı Cam Balkon firmasının online varlığını güçlendirmek 
 
 Proje hakkında sorularınız için:
 
+📧 [7207.yildiz@gmail.com](mailto:7207.yildiz@gmail.com)
+📧 [masimsek.official@gmail.com](mailto:masimsek.official@gmail.com)
 📧 [selcuk.ozdemir2360@gmail.com](mailto:selcuk.ozdemir2360@gmail.com)
+
 
