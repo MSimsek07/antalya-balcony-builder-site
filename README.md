@@ -6,15 +6,19 @@
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.x-38B2AC.svg)](https://tailwindcss.com/)
 [![shadcn/ui](https://img.shields.io/badge/shadcn/ui-Latest-black.svg)](https://ui.shadcn.com/)
 
-Modern ve profesyonel bir cam balkon firması web sitesi projesi. Antalya'nın önde gelen cam balkon firmalarından Zen Yapı için geliştirilmiştir.
+Antalya Zen Yapı Cam Balkon firması için geliştirilmiş internet sitesi projesi. 
 
-🌐 **[Canlı Site](https://zenyapiantalyacambalkon.com/)**
+🌐 **(https://zenyapiantalyacambalkon.com/)**
 
-![Website Preview](project-preview.gif)
+![image](https://github.com/user-attachments/assets/f2e4051b-f378-4def-ae4f-3d40e1860794)
+![image](https://github.com/user-attachments/assets/7bb10ea2-4956-44ff-8c5b-41682049faf8)
+![image](https://github.com/user-attachments/assets/8d4d124f-8cfe-4689-bbc9-1179f0f71c42)
+![image](https://github.com/user-attachments/assets/b3e3347e-6825-4d65-854f-925e4cbc480b)
+
 
 ## 🚀 Proje Hakkında
 
-Bu proje, Zen Yapı Cam Balkon firmasının online varlığını güçlendirmek ve müşterilerine daha iyi hizmet verebilmek amacıyla geliştirilmiştir. Modern teknolojiler kullanılarak oluşturulan web sitesi, kullanıcı dostu arayüzü ve responsive tasarımı ile öne çıkmaktadır.
+Bu proje, Zen Yapı Cam Balkon firmasının çevrimiçi varlığını güçlendirmek ve müşterilerine daha iyi hizmet verebilmek amacıyla geliştirilmiştir. Modern teknolojiler kullanılarak oluşturulan internet sitesi, farklı cihazlar için kullanıcı dostu tasarımı ile öne çıkmaktadır.
 
 ## ⚙️ Kullanılan Teknolojiler
 
@@ -33,7 +37,7 @@ Bu proje, Zen Yapı Cam Balkon firmasının online varlığını güçlendirmek 
 
 - ✨ Modern ve responsive tasarım
 - 📱 Mobil uyumlu arayüz
-- 🌍 Çoklu dil desteği (TR/EN)
+- 🌍 Çoklu dil desteği (TR/EN/RU/FR)
 - 📊 Yönetim paneli
 - 🔍 SEO optimizasyonu
 - 💬 WhatsApp entegrasyonu
@@ -53,7 +57,7 @@ Bu proje, Zen Yapı Cam Balkon firmasının online varlığını güçlendirmek 
       <a href="https://github.com/MSimsek07">
         <img src="https://github.com/MSimsek07.png" width="100px;" alt="Mehmet Şimşek"/>
         <br />
-        <sub><b>Mehmet Şimşek</b></sub>
+        <sub><b>Muhammet Ali Şimşek</b></sub>
       </a>
     </td>
     <td align="center">
@@ -70,5 +74,8 @@ Bu proje, Zen Yapı Cam Balkon firmasının online varlığını güçlendirmek 
 
 Proje hakkında sorularınız için:
 
+📧 [7207.yildiz@gmail.com](mailto:7207.yildiz@gmail.com)
+📧 [masimsek.official@gmail.com](mailto:masimsek.official@gmail.com)
 📧 [selcuk.ozdemir2360@gmail.com](mailto:selcuk.ozdemir2360@gmail.com)
+
 
