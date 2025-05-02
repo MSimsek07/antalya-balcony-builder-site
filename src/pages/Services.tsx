@@ -166,7 +166,7 @@ const ServicesPage = () => {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-medium transition-colors"
               >
-                <img src="/whatsapp.png" alt="WhatsApp" className="h-5 w-5" />
+                <img src="/whatsapp.png" alt="WhatsApp iletişim simgesi" className="h-5 w-5" />
                 Teklif Al
               </a>
             </div>

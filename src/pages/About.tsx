@@ -1,4 +1,3 @@
-
 import Layout from "@/components/Layout";
 import Hero from "@/components/Hero";
 import { Check, Users, Award, ThumbsUp, ClipboardCheck } from "lucide-react";

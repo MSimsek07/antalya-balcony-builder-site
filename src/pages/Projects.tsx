@@ -156,7 +156,7 @@ const ProjectsPage = () => {
                 <div key={project.id} className="group relative overflow-hidden rounded-lg aspect-square cursor-pointer bg-gray-100">
                     <img
                         src={project.imageUrl}
-                        alt={project.description}
+                        alt={project.description || 'Proje görseli'}
                         className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                         onError={(e) => {
                             const target = e.target as HTMLImageElement;

@@ -431,7 +431,7 @@ const HomePage = () => {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-md bg-green-500 hover:bg-green-600 px-8 py-2.5 text-lg font-medium text-white transition-colors"
             >
-              <img src="/whatsapp.png" alt="WhatsApp" className="h-6 w-6" />
+              <img src="/whatsapp.png" alt="WhatsApp iletişim simgesi" className="h-6 w-6" />
               WhatsApp ile İletişim
             </a>
           </div>
