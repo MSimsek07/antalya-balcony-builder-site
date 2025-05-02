@@ -38,6 +38,8 @@ import {
   SidebarTrigger,
   useSidebar // Import useSidebar hook
 } from "@/components/ui/sidebar";
+import { signOut } from "firebase/auth";
+import { auth } from "@/firebaseConfig"; // Import Firebase auth instance
 
 interface AdminDashboardProps {
   onLogout: () => void;
@@ -48,17 +50,27 @@ const AdminDashboard = ({ onLogout }: AdminDashboardProps) => {
   const navigate = useNavigate();
   const { isMobile, setOpenMobile } = useSidebar(); // Get sidebar context
 
-  const handleLogout = () => {
-    toast({
-      title: "Çıkış yapıldı",
-      description: "Başarıyla çıkış yaptınız.",
-    });
-    onLogout();
-    // Close mobile sidebar on logout if open
-    if (isMobile) {
+  const handleLogout = async () => {
+    try {
+      await signOut(auth); // Log out the user
+      toast({
+        title: "Çıkış yapıldı",
+        description: "Başarıyla çıkış yaptınız.",
+      });
+      onLogout();
+      // Close mobile sidebar on logout if open
+      if (isMobile) {
         setOpenMobile(false);
+      }
+      navigate("/admin/login");
+    } catch (error) {
+      console.error("Logout failed:", error);
+      toast({
+        title: "Çıkış yapılamadı",
+        description: "Bir hata oluştu. Lütfen tekrar deneyin.",
+        variant: "destructive",
+      });
     }
-    navigate("/admin/login");
   };
 
   // Helper function to handle navigation and close mobile sidebar
